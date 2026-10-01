@@ -79,14 +79,6 @@
     t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
   }));
 
-  // ---------- dish arrows: ask on WhatsApp ----------
-  $$('[data-ask]').forEach(a => {
-    if (a.classList.contains('go') || a.getAttribute('href') === '#') {
-      a.href = `https://wa.me/${WA}?text=` + encodeURIComponent(`Hello BOOMiiS, I'd like to ask about the ${a.dataset.ask}.`);
-      a.target = '_blank'; a.rel = 'noopener';
-    }
-  });
-
   // ---------- reservation -> WhatsApp ----------
   const form = $('#form'), guests = $('#guests');
   let g = 2;

@@ -3,6 +3,7 @@
 Edit a price or add a dish here, then run:  python3 scripts/build_menu.py
 Prices are in Ghana cedis and were transcribed from the printed BOOMiiS menu.
 """
+import json
 from html import escape
 from pathlib import Path
 
@@ -216,10 +217,33 @@ def render():
         items = "".join(render_item(i) for i in c["items"])
         sections.append(f'<section class="cat" id="{c["id"]}">{banner}<ul class="dishes">{items}</ul></section>')
     total = sum(len(c["items"]) for c in MENU)
+    base = "https://boomiis-restaurant.vercel.app"
+
+    def offers(price):
+        if isinstance(price, list):
+            return [{"@type": "Offer", "name": lbl, "price": str(p), "priceCurrency": "GHS"} for lbl, p in price]
+        return {"@type": "Offer", "price": str(price), "priceCurrency": "GHS"}
+
+    schema = {"@context": "https://schema.org", "@graph": [
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": base + "/"},
+            {"@type": "ListItem", "position": 2, "name": "Menu", "item": base + "/menu"}]},
+        {"@type": "Menu", "@id": base + "/menu#menu", "name": "BOOMiiS Restaurant Menu", "url": base + "/menu",
+         "inLanguage": "en-GH", "offers": {"@type": "Offer", "priceCurrency": "GHS"},
+         "isPartOf": {"@id": base + "/#restaurant"},
+         "hasMenuSection": [{
+             "@type": "MenuSection", "name": c["title"], "description": c["blurb"],
+             **({"image": f"{base}/assets/{c['img']}"} if c["img"] else {}),
+             "hasMenuItem": [{
+                 "@type": "MenuItem", "name": i[0],
+                 **({"description": i[1]} if i[1] else {}),
+                 **({"image": f"{base}/assets/{i[3]}"} if len(i) > 3 else {}),
+                 "offers": offers(i[2])} for i in c["items"]]} for c in MENU]}]}
     tpl = (ROOT / "scripts" / "menu.template.html").read_text()
     html = (tpl.replace("{{TABS}}", tabs)
                .replace("{{SECTIONS}}", "\n".join(sections))
-               .replace("{{TOTAL}}", str(total)))
+               .replace("{{TOTAL}}", str(total))
+               .replace("{{SCHEMA}}", json.dumps(schema, ensure_ascii=False)))
     (ROOT / "menu.html").write_text(html)
     print(f"menu.html written: {len(MENU)} sections, {total} dishes")
 

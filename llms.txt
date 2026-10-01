@@ -1,0 +1,26 @@
+# BOOMiiS Restaurant
+
+> Authentic Nigerian restaurant at No. 47, Adjiringano Road, East Legon, Accra, Ghana. Serves Yoruba and wider Nigerian dishes plus Proudly Ghanaian classics, with indoor dining and an outdoor garden bar. Rated 4.3/5 from 73 Google reviews. Typical spend GH₵50–100 per person.
+
+## Key facts
+- Address: No. 47, Adjiringano Road, East Legon, Accra, Ghana
+- Phone and WhatsApp: +233 50 638 7636 (also +233 27 290 0911 for calls)
+- Email: boomiisgh@gmail.com
+- Instagram: https://www.instagram.com/boomiisgh
+- Hours: open until 10:00 pm
+- Reservations: yes, via the website form or WhatsApp
+- Ordering: pickup orders on WhatsApp from the online menu; delivery via Bolt Food
+- Features: outdoor seating, kids' menu, cocktails
+
+## Signature dishes (prices in Ghana cedis)
+- Mission's Delight: ofada rice and ayamase sauce, GH₵80
+- Buka Style: amala, ewedu, gbegiri, stew, goat meat, beef, ponmo and tripe, GH₵75
+- Many Nations GH: jollof, fried rice, plantain, fried beef, chicken and coleslaw, GH₵50
+- Jollof rice with chicken, GH₵62
+- Egusi soup GH₵70; efo riro GH₵78; catfish pepper soup GH₵90
+- Swallows: eba GH₵6, amala GH₵15, pounded yam GH₵25
+- Proudly Ghanaian: banku and tilapia GH₵55, fufu and light soup GH₵55
+
+## Pages
+- [Home](https://boomiis-restaurant.vercel.app/): overview, photos, reservations, FAQ, map
+- [Full menu with prices](https://boomiis-restaurant.vercel.app/menu): all 72 dishes in 10 sections

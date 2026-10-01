@@ -7,10 +7,9 @@
 
   // ---------- payment details: edit here when the final MoMo number / bank account is confirmed ----------
   const PAY = {
-    // first account is the default choice in the basket
+    // add more accounts to this list to let customers choose a network; the first is the default
     momo: [
-      { number: '0242165783', name: 'BOOMiiS Restaurant' },
-      { number: '0506387636', name: 'BOOMiiS Restaurant' }
+      { number: '0242165783', name: 'BOOMIIS LIMITED' }
     ],
     bank: null // e.g. { bank: 'GCB Bank', name: 'BOOMiiS Restaurant', account: '1234567890', branch: 'East Legon' }
   };

@@ -9,7 +9,8 @@
   const PAY = {
     // add more accounts to this list to let customers choose a network; the first is the default
     momo: [
-      { number: '0242165783', name: 'BOOMIIS LIMITED' }
+      { number: '0242165783', name: 'BOOMIIS LIMITED' },
+      { number: '0506387636', name: 'BOOMIIS LIMITED' }
     ],
     bank: null // e.g. { bank: 'GCB Bank', name: 'BOOMiiS Restaurant', account: '1234567890', branch: 'East Legon' }
   };

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en-GH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Menu | BOOMiiS Restaurant, East Legon, Accra</title>
+<meta name="description" content="The full BOOMiiS menu with prices: Omo Naija combos, jollof and rice meals, egusi and Nigerian soups, swallows, grills, pepper dishes, stews and Proudly Ghanaian classics. Order on WhatsApp.">
+<meta name="theme-color" content="#0b0b0b">
+<meta name="application-name" content="BOOMiiS">
+<meta name="apple-mobile-web-app-title" content="BOOMiiS">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="canonical" href="https://boomiis-restaurant.vercel.app/menu">
+<meta property="og:site_name" content="BOOMiiS Restaurant">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_GH">
+<meta property="og:url" content="https://boomiis-restaurant.vercel.app/menu">
+<meta property="og:title" content="The BOOMiiS Menu | Nigerian &amp; Ghanaian dishes in Accra">
+<meta property="og:description" content="{{TOTAL}} dishes with prices. Build your order and send it on WhatsApp in one tap.">
+<meta property="og:image" content="https://boomiis-restaurant.vercel.app/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://boomiis-restaurant.vercel.app/og-image.jpg">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="menu.css">
+</head>
+<body class="menu-page">
+<script>document.documentElement.classList.add('js')</script>
+<a class="skip" href="#combos">Skip to the menu</a>
+
+<header class="top solid" id="header">
+  <div class="wrap">
+    <a class="logo" href="/" aria-label="BOOMiiS Restaurant home"><img src="assets/logo.png" alt="" width="38" height="38"><span>BOOM<i>ii</i>S<small>Restaurant</small></span></a>
+    <nav aria-label="Primary">
+      <a href="/#best">Dishes</a>
+      <a href="menu.html" aria-current="page">Menu</a>
+      <a href="/#gallery">Gallery</a>
+      <a href="/#reserve">Reserve</a>
+      <a href="/#visit">Visit</a>
+    </nav>
+    <div class="head-actions">
+      <a class="btn btn--sm" href="/#reserve">Reserve</a>
+      <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu-overlay"><span><i></i><i></i></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="menu-overlay" id="menu-overlay">
+  <a class="big" href="/">Home</a>
+  <a class="big" href="menu.html">Menu</a>
+  <a class="big" href="/#gallery">Gallery</a>
+  <a class="big" href="/#reserve">Reserve</a>
+  <a class="big" href="/#visit">Find us</a>
+  <div class="meta"><span>47 Adjiringano Road, East Legon</span><a href="tel:+233506387636">050 638 7636</a></div>
+</div>
+
+<main>
+  <section class="mhero">
+    <img src="assets/jollof-chicken.jpg" alt="" fetchpriority="high">
+    <div class="wrap mhero__in">
+      <span class="kicker">The BOOMiiS Menu</span>
+      <h1>Omo Naija.<br><em>Proudly Ghanaian.</em></h1>
+      <p>{{TOTAL}} dishes, from ofada and buka-style amala to banku and tilapia. Tap <b>+</b> to build your order, then send it on WhatsApp.</p>
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="Search jollof, egusi, suya…" autocomplete="off" aria-label="Search the menu">
+      </label>
+    </div>
+  </section>
+
+  <nav class="tabs" id="tabs" aria-label="Menu sections"><div class="tabs__in">{{TABS}}</div></nav>
+
+  <div class="wrap menu-body">
+    {{SECTIONS}}
+    <p class="empty" id="empty" hidden>No dishes match that search. Try “rice”, “soup” or “fish”.</p>
+    <p class="menu-note">Prices are in Ghana cedis and may change. For special orders and large groups, <a href="https://wa.me/233506387636" target="_blank" rel="noopener">message us on WhatsApp</a>.</p>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__copy">© <span id="yr">2026</span> BOOMiiS Restaurant · 47 Adjiringano Road, East Legon, Accra · <a href="tel:+233506387636">050 638 7636</a></div>
+</footer>
+
+<!-- order bar + basket -->
+<button class="orderbar" id="orderbar" type="button" aria-controls="basket" aria-expanded="false">
+  <span class="orderbar__count" id="obCount">0</span>
+  <span class="orderbar__label">View your order</span>
+  <span class="orderbar__total" id="obTotal">GH₵0</span>
+</button>
+
+<div class="sheet-bg" id="sheetBg"></div>
+<aside class="sheet" id="basket" aria-label="Your order" aria-hidden="true">
+  <div class="sheet__grip"></div>
+  <div class="sheet__head">
+    <h2 class="title"><span>Your Order</span></h2>
+    <button class="sheet__x" id="closeSheet" type="button" aria-label="Close order">×</button>
+  </div>
+  <ul class="lines" id="lines"></ul>
+  <div class="sheet__total"><span>Total</span><b id="sheetTotal">GH₵0</b></div>
+  <form class="form sheet__form" id="orderForm" novalidate>
+    <div class="seg" role="radiogroup" aria-label="How would you like it?">
+      <label><input type="radio" name="mode" value="Dine in" checked><span>Dine in</span></label>
+      <label><input type="radio" name="mode" value="Pickup"><span>Pickup</span></label>
+      <label><input type="radio" name="mode" value="Delivery"><span>Delivery</span></label>
+    </div>
+    <label>Your name<input name="name" autocomplete="name" placeholder="e.g. Ama Mensah" required></label>
+    <label class="addr" hidden>Delivery address<input name="addr" autocomplete="street-address" placeholder="Area, street, landmark"></label>
+    <label>Note<textarea name="note" rows="2" placeholder="Spice level, allergies, time…"></textarea></label>
+    <button class="btn btn--wa" type="submit"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.6-.1 1.1Z"/></svg>Send order on WhatsApp</button>
+    <button class="clear" id="clear" type="button">Clear order</button>
+  </form>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="menu.js"></script>
+</body>
+</html>

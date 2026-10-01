@@ -39,7 +39,7 @@
 <link rel="icon" href="/icons/favicon-16.png" sizes="16x16" type="image/png">
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="preload" as="image" href="assets/jollof-chicken.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="assets/interior.jpg" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -57,7 +57,7 @@
     <a class="logo" href="#top" aria-label="BOOMiiS Restaurant"><img src="assets/logo.png" alt="" width="38" height="38"><span>BOOM<i>ii</i>S<small>Restaurant</small></span></a>
     <nav aria-label="Primary">
       <a href="#best">Dishes</a>
-      <a href="#menu">Menu</a>
+      <a href="menu.html">Menu</a>
       <a href="#gallery">Gallery</a>
       <a href="#reserve">Reserve</a>
       <a href="#visit">Visit</a>
@@ -71,7 +71,7 @@
 
 <div class="menu-overlay" id="menu-overlay">
   <a class="big" href="#best">Dishes</a>
-  <a class="big" href="#menu">Menu</a>
+  <a class="big" href="menu.html">Full menu</a>
   <a class="big" href="#gallery">Gallery</a>
   <a class="big" href="#reserve">Reserve</a>
   <a class="big" href="#visit">Find us</a>
@@ -83,12 +83,10 @@
 <!-- ========== HERO ========== -->
 <section class="hero">
   <div class="slides" aria-hidden="true">
-    <div class="slide active"><img src="assets/jollof-chicken.jpg" alt="" fetchpriority="high" style="object-position:40% 50%"></div>
-    <div class="slide"><img src="assets/yam-soup.jpg" alt="" loading="lazy" style="object-position:50% 60%"></div>
-    <div class="slide"><img src="assets/room.jpg" alt="" loading="lazy" style="object-position:50% 55%"></div>
-    <div class="slide"><img src="assets/yam-egusi.jpg" alt="" loading="lazy" style="object-position:60% 60%"></div>
+    <div class="slide active"><img src="assets/interior.jpg" alt="" fetchpriority="high" style="object-position:50% 62%"></div>
+    <div class="slide"><img src="assets/outdoor-bar.jpg" alt="" style="object-position:50% 55%"></div>
   </div>
-  <div class="pager" id="pager" aria-label="Hero photos"><button class="on" aria-label="Photo 1"></button><button aria-label="Photo 2"></button><button aria-label="Photo 3"></button><button aria-label="Photo 4"></button></div>
+  <div class="pager" id="pager" aria-label="Hero photos"><button class="on" aria-label="Photo 1: the dining room"></button><button aria-label="Photo 2: the outdoor bar"></button></div>
   <div class="wrap hero-content">
     <span class="kicker">East Legon · Accra</span>
     <h1><span class="sr-only">BOOMiiS Restaurant, authentic Nigerian restaurant in Accra. </span>Taste Nigeria,<br>in the heart<br>of <em>Accra.</em></h1>
@@ -98,7 +96,7 @@
       <a class="btn" href="#reserve">Reserve a table
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
-      <a class="btn glass" href="#best">See the dishes</a>
+      <a class="btn glass" href="menu.html">View the menu</a>
     </div>
   </div>
 </section>
@@ -130,7 +128,7 @@
         <h3>Jollof, Chicken &amp; Coleslaw</h3>
         <p>Smoky party-style jollof with golden chicken, fried plantain and cool coleslaw.</p>
         <div class="feature__row"><span class="tag">Dine in · Takeaway</span>
-          <a class="btn btn--sm" href="#reserve" data-ask="Jollof, Chicken & Coleslaw">Order now</a>
+          <a class="btn btn--sm" href="menu.html#rice">Order now</a>
           <a class="go" href="#" data-ask="Jollof, Chicken & Coleslaw" aria-label="Ask about Jollof on WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
         </div>
       </div>
@@ -141,7 +139,7 @@
         <h3>Pounded Yam &amp; Vegetable Soup</h3>
         <p>Smooth pounded yam with rich vegetable soup and assorted meats, the Sunday classic.</p>
         <div class="feature__row"><span class="tag">Dine in · Takeaway</span>
-          <a class="btn btn--sm" href="#reserve">Order now</a>
+          <a class="btn btn--sm" href="menu.html#swallow">Order now</a>
           <a class="go" href="#" data-ask="Pounded Yam & Vegetable Soup" aria-label="Ask about Pounded Yam on WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
         </div>
       </div>
@@ -152,7 +150,7 @@
         <h3>Eba &amp; Egusi</h3>
         <p>Hearty egusi with bitter leaf, served with soft eba you can swallow with joy.</p>
         <div class="feature__row"><span class="tag">Dine in · Takeaway</span>
-          <a class="btn btn--sm" href="#reserve">Order now</a>
+          <a class="btn btn--sm" href="menu.html#soups">Order now</a>
           <a class="go" href="#" data-ask="Eba & Egusi" aria-label="Ask about Eba and Egusi on WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
         </div>
       </div>
@@ -164,14 +162,14 @@
 <section id="menu" class="alt">
   <div class="wrap">
     <h2 class="title reveal"><span>From the Kitchen</span></h2>
-    <p class="muted sub reveal">Tap the arrow on any dish to ask about it on WhatsApp.</p>
+    <p class="muted sub reveal">A taste of the menu. Tap the arrow on any dish to ask about it on WhatsApp.</p>
     <div class="grid">
-      <article class="tile reveal"><img src="assets/ofada.jpg" loading="lazy" width="828" height="370" alt="Ofada rice with vegetable soup"><h4>Ofada Rice &amp; Vegetable Soup</h4><p>Local ofada rice with rich ayamase-style sauce.</p><a class="go" href="#" data-ask="Ofada Rice & Vegetable Soup" aria-label="Ask about Ofada Rice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
-      <article class="tile reveal"><img src="assets/rice-beef.jpg" loading="lazy" width="828" height="708" alt="Plain rice with beef sauce"><h4>Plain Rice &amp; Beef Sauce</h4><p>Fluffy white rice with peppery beef sauce and plantain.</p><a class="go" href="#" data-ask="Plain Rice & Beef Sauce" aria-label="Ask about Plain Rice and Beef Sauce"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
-      <article class="tile reveal"><img src="assets/yam-egusi.jpg" loading="lazy" width="828" height="663" alt="Pounded yam and egusi stew"><h4>Pounded Yam &amp; Egusi Stew</h4><p>Wrapped in leaf, served beside a bowl of egusi.</p><a class="go" href="#" data-ask="Pounded Yam & Egusi Stew" aria-label="Ask about Pounded Yam and Egusi Stew"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
-      <article class="tile reveal"><img src="assets/jollof-plate.jpg" loading="lazy" width="828" height="827" alt="Jollof rice with chicken and plantain"><h4>Jollof &amp; Chicken</h4><p>Firewood-style jollof, plantain and glazed chicken.</p><a class="go" href="#" data-ask="Jollof & Chicken" aria-label="Ask about Jollof and Chicken"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
-      <article class="tile reveal"><img src="assets/swallow-soup.jpg" loading="lazy" width="828" height="502" alt="Swallow served with soup"><h4>Swallow &amp; Soup</h4><p>Your choice of swallow with soup of the day.</p><a class="go" href="#" data-ask="Swallow & Soup" aria-label="Ask about Swallow and Soup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
-      <article class="tile tile--more reveal"><div><b>And more</b><p>Amala &amp; Abula, Ghanaian fish light soup, tripe &amp; wele, pastries and cocktails.</p></div><a class="btn btn--sm" href="#reserve">Reserve</a></article>
+      <article class="tile reveal"><img src="assets/ofada.jpg" loading="lazy" width="828" height="370" alt="Ofada rice with vegetable soup"><h4>Mission's Delight</h4><p>Ofada rice and ayamase sauce.</p><b class="price">GH₵80</b><a class="go" href="#" data-ask="Mission's Delight (Ofada rice & ayamase)" aria-label="Ask about Ofada Rice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
+      <article class="tile reveal"><img src="assets/rice-beef.jpg" loading="lazy" width="828" height="708" alt="Plain rice with beef sauce"><h4>Simply Good</h4><p>Plain rice with tomato stew and your choice of protein.</p><b class="price">GH₵72</b><a class="go" href="#" data-ask="Simply Good (plain rice & stew)" aria-label="Ask about Plain Rice and Beef Sauce"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
+      <article class="tile reveal"><img src="assets/yam-egusi.jpg" loading="lazy" width="828" height="663" alt="Pounded yam and egusi stew"><h4>Pounded Yam &amp; Egusi</h4><p>Pounded yam GH₵25 with egusi soup GH₵70.</p><b class="price">GH₵95</b><a class="go" href="#" data-ask="Pounded Yam & Egusi" aria-label="Ask about Pounded Yam and Egusi Stew"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
+      <article class="tile reveal"><img src="assets/jollof-plate.jpg" loading="lazy" width="828" height="827" alt="Jollof rice with chicken and plantain"><h4>Jollof Rice &amp; Chicken</h4><p>Or with peppered goat, beef or turkey.</p><b class="price">GH₵62</b><a class="go" href="#" data-ask="Jollof Rice & Chicken" aria-label="Ask about Jollof and Chicken"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
+      <article class="tile reveal"><img src="assets/swallow-soup.jpg" loading="lazy" width="828" height="502" alt="Swallow served with soup"><h4>Buka Style</h4><p>Amala, ewedu, gbegiri, stew, goat meat, beef, ponmo and tripe.</p><b class="price">GH₵75</b><a class="go" href="#" data-ask="Buka Style" aria-label="Ask about Swallow and Soup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
+      <article class="tile tile--more reveal"><div><b>72 dishes on the full menu</b><p>Omo Naija combos, soups &amp; swallows, grills, pepper dishes, stews and Proudly Ghanaian classics.</p></div><a class="btn btn--sm" href="menu.html">Open menu</a></article>
     </div>
   </div>
 </section>
@@ -205,9 +203,9 @@
   <div class="wrap">
     <h2 class="title reveal"><span>The Space</span></h2>
     <div class="space reveal">
-      <img src="assets/room.jpg" width="828" height="1104" loading="lazy" alt="BOOMiiS dining room with dark wood tables and green living wall">
+      <img src="assets/interior.jpg" width="643" height="1318" loading="lazy" alt="The BOOMiiS dining room: warm timber ceiling, pendant lights and velvet blue chairs">
       <div class="space__body">
-        <p>Warm wood, living green walls and unhurried evenings. Settle in indoors or take a seat outside. Family lunches, celebrations and quiet dinners all feel at home here.</p>
+        <p>A warm timber ceiling, soft pendant lights and velvet chairs inside, and a shaded garden bar outside. Settle in indoors or take a seat outside. Family lunches, celebrations and quiet dinners all feel at home here.</p>
         <ul class="chips">
           <li>Outdoor seating</li><li>Great cocktails</li><li>Kids' menu</li><li>Delivery &amp; pickup</li>
         </ul>
@@ -228,7 +226,9 @@
       </div>
     </div>
     <div class="rail" id="rail">
-      <figure class="shot"><img src="assets/room.jpg" loading="lazy" alt="Dining room"><span>The dining room</span></figure>
+      <figure class="shot"><img src="assets/outdoor-bar.jpg" loading="lazy" alt="Outdoor garden bar"><span>The garden bar</span></figure>
+      <figure class="shot"><img src="assets/interior.jpg" loading="lazy" alt="Dining room"><span>The dining room</span></figure>
+      <figure class="shot"><img src="assets/room.jpg" loading="lazy" alt="Lounge with green walls"><span>The lounge</span></figure>
       <figure class="shot"><img src="assets/jollof-chicken.jpg" loading="lazy" alt="Jollof with chicken and coleslaw"><span>Jollof &amp; chicken</span></figure>
       <figure class="shot"><img src="assets/yam-soup.jpg" loading="lazy" alt="Pounded yam with soup"><span>Pounded yam</span></figure>
       <figure class="shot"><img src="assets/eba-egusi.jpg" loading="lazy" alt="Eba and egusi"><span>Eba &amp; egusi</span></figure>
@@ -301,7 +301,7 @@
     </div>
     <div>
       <h5>Quick links</h5>
-      <a href="#best">Dishes</a><a href="#menu">Menu</a><a href="#gallery">Gallery</a><a href="#reserve">Reserve</a>
+      <a href="#best">Dishes</a><a href="menu.html">Menu</a><a href="#gallery">Gallery</a><a href="#reserve">Reserve</a>
     </div>
     <div>
       <h5>Contact</h5>

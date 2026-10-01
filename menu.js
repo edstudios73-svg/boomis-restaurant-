@@ -18,6 +18,71 @@
 
   $('#yr').textContent = new Date().getFullYear();
 
+  // ---------- menu changes made in /admin (prices, sold out, new or removed dishes) ----------
+  const soldOut = li => {
+    li.classList.add('soldout');
+    li.querySelectorAll('.add, .opt').forEach(b => { b.disabled = true; b.setAttribute('aria-label', 'Sold out'); });
+    const tag = document.createElement('span'); tag.className = 'sold'; tag.textContent = 'Sold out';
+    li.querySelector('.dish__row').appendChild(tag);
+  };
+  const setDesc = (li, text) => {
+    let p = li.querySelector('.dish__main > p');
+    if (!text) { if (p) p.remove(); return; }
+    if (!p) { p = document.createElement('p'); li.querySelector('.dish__row').after(p); }
+    p.textContent = text;
+  };
+  if (window.BoomiisStore) {
+    const m = BoomiisStore.menuOverrides();
+    Object.entries(m.items).forEach(([id, o]) => {
+      const li = $(`.dish[data-id="${id}"]`);
+      if (!li) return;
+      if (o.deleted) { li.remove(); return; }
+      if (o.name) {
+        li.querySelector('h3').textContent = o.name;
+        const add = li.querySelector('.add'); if (add) add.dataset.name = o.name;
+        li.querySelectorAll('.opt').forEach(b => { b.dataset.name = b.dataset.name.replace(/^.*\(/, o.name + ' ('); });
+      }
+      if (o.desc !== undefined) setDesc(li, o.desc);
+      if (o.price != null) {
+        li.querySelector('.price').textContent = cedi(o.price);
+        let add = li.querySelector('.add');
+        if (add && add.tagName === 'A') {
+          const btn = document.createElement('button');
+          btn.type = 'button'; btn.className = 'add'; btn.innerHTML = '<svg aria-hidden="true"><use href="#i-plus"/></svg>';
+          btn.dataset.name = li.querySelector('h3').textContent; btn.setAttribute('aria-label', 'Add ' + btn.dataset.name + ' to your order');
+          add.replaceWith(btn); add = btn;
+        }
+        if (add) add.dataset.price = o.price;
+      }
+      if (Array.isArray(o.options)) {
+        const opts = li.querySelectorAll('.opt');
+        o.options.forEach((p, i) => { if (opts[i] && p != null) { opts[i].dataset.price = p; opts[i].querySelector('b').textContent = cedi(p); } });
+        const from = li.querySelector('.from'); if (from) from.textContent = 'from ' + cedi(Math.min(...[...opts].map(b => +b.dataset.price)));
+      }
+      li.dataset.search = (li.querySelector('h3').textContent + ' ' + (li.querySelector('.dish__main > p') || { textContent: '' }).textContent).toLowerCase();
+      if (o.available === false) soldOut(li);
+    });
+    m.added.forEach(a => {
+      const ul = $(`#${a.cat} .dishes`);
+      if (!ul || a.deleted) return;
+      const li = document.createElement('li');
+      li.className = 'dish'; li.dataset.id = a.id; li.dataset.search = (a.name + ' ' + (a.desc || '')).toLowerCase();
+      li.innerHTML = '<div class="dish__main"><div class="dish__row"><h3></h3><span class="dots"></span><span class="price"></span></div></div>'
+        + '<button type="button" class="add"><svg aria-hidden="true"><use href="#i-plus"/></svg></button>';
+      li.querySelector('h3').textContent = a.name;
+      li.querySelector('.price').textContent = cedi(+a.price);
+      setDesc(li, a.desc);
+      const add = li.querySelector('.add');
+      add.dataset.name = a.name; add.dataset.price = a.price; add.setAttribute('aria-label', 'Add ' + a.name + ' to your order');
+      ul.appendChild(li);
+      if (a.available === false) soldOut(li);
+    });
+    $$('.cat').forEach(c => {
+      const n = $$('.dish', c).length, eb = $('.cat__banner .eyebrow', c);
+      if (eb) eb.textContent = n + (n === 1 ? ' dish' : ' dishes');
+    });
+  }
+
   // ---------- mobile menu ----------
   const burger = $('#burger');
   const setMenu = open => {
@@ -251,16 +316,17 @@
     if (!order.length) return;
     const mode = f.mode.value, method = f.pay.value;
     const proof = method === 'bank' ? f.btxn : f.txn;
-    const required = [f.name, ...(mode === 'Delivery' ? [f.addr] : []), proof];
+    const required = [f.name, f.phone, ...(mode === 'Delivery' ? [f.addr] : []), proof];
     required.forEach(i => i.classList.toggle('err', !i.value.trim()));
     const missing = required.find(i => !i.value.trim());
     if (missing) {
       missing.focus();
-      say(missing === proof ? 'Pay first, then enter your ' + (method === 'bank' ? 'transfer reference' : 'MoMo transaction ID') : missing === f.addr ? 'Add your delivery address' : 'Add your name');
+      say(missing === proof ? 'Pay first, then enter your ' + (method === 'bank' ? 'transfer reference' : 'MoMo transaction ID')
+        : missing === f.addr ? 'Add your delivery address' : missing === f.phone ? 'Add your phone number' : 'Add your name');
       return;
     }
     const list = order.map(o => `• ${o.qty} × ${o.name}  ${cedi(o.price * o.qty)}`).join('\n');
-    let msg = `Hello BOOMiiS! Here is my paid online order (${mode}).\n\n${list}\n\nTotal: ${cedi(total())}\nName: ${f.name.value.trim()}`;
+    let msg = `Hello BOOMiiS! Here is my paid online order (${mode}).\n\n${list}\n\nTotal: ${cedi(total())}\nName: ${f.name.value.trim()}\nPhone: ${f.phone.value.trim()}`;
     if (mode === 'Delivery' && f.addr.value.trim()) msg += `\nAddress: ${f.addr.value.trim()}`;
     if (f.note.value.trim()) msg += `\nNote: ${f.note.value.trim()}`;
     if (method === 'bank' && PAY.bank) {
@@ -270,6 +336,18 @@
     }
     if (mode === 'Delivery') msg += '\nDelivery fee: I will pay the rider on delivery';
     msg += '\n\nThank you!';
+    if (window.BoomiisStore) {
+      BoomiisStore.addOrder({
+        ref, mode, note: f.note.value.trim(),
+        customer: { name: f.name.value.trim(), phone: f.phone.value.trim() },
+        address: mode === 'Delivery' ? f.addr.value.trim() : '',
+        items: order.map(o => ({ name: o.name, qty: o.qty, price: o.price })),
+        total: total(),
+        payment: method === 'bank' && PAY.bank
+          ? { method: 'bank', network: PAY.bank.bank, to: PAY.bank.account, txn: f.btxn.value.trim(), amount: total() }
+          : { method: 'momo', network: acct.net.name, to: acct.pretty, txn: f.txn.value.trim(), amount: total() }
+      });
+    }
     window.open(`https://wa.me/${WA}?text=` + encodeURIComponent(msg), '_blank', 'noopener');
   });
 

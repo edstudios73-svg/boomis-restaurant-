@@ -181,3 +181,7 @@ body.basket-open .sheet{transform:none}
 .paynote--fee{border-style:solid;border-color:rgba(163,48,74,.5);color:rgba(255,255,255,.85)}
 .form label .req{font-style:normal;font-size:.62rem;letter-spacing:.1em;color:var(--sand);margin-left:6px}
 .form .err{border-color:#ff6b5b!important;box-shadow:0 0 0 3px rgba(255,107,91,.18)}
+.dish.soldout h3,.dish.soldout .price,.dish.soldout p{opacity:.45}
+.dish.soldout .price{text-decoration:line-through}
+.dish .sold{flex:none;font-size:.66rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#111;background:var(--sand);padding:3px 8px;border-radius:999px}
+.add:disabled,.opt:disabled{opacity:.35;cursor:not-allowed}

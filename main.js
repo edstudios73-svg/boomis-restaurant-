@@ -88,10 +88,16 @@
   form.addEventListener('submit', e => {
     e.preventDefault();
     const f = form.elements; let ok = true;
-    [f.name, f.date].forEach(i => { const bad = !i.value.trim(); i.classList.toggle('err', bad); ok = ok && !bad; });
+    [f.name, f.phone, f.date].forEach(i => { const bad = !i.value.trim(); i.classList.toggle('err', bad); ok = ok && !bad; });
     if (!ok) return;
     const d = new Date(f.date.value + 'T12:00').toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
-    const msg = `Hello BOOMiiS! I'd like to reserve a table.\n\nName: ${f.name.value.trim()}\nGuests: ${g}\nDate: ${d}\nTime: ${f.time.value}\nSeating: ${f.seat.value}` + (f.note.value.trim() ? `\nNote: ${f.note.value.trim()}` : '') + '\n\nThank you!';
+    const msg = `Hello BOOMiiS! I'd like to reserve a table.\n\nName: ${f.name.value.trim()}\nPhone: ${f.phone.value.trim()}\nGuests: ${g}\nDate: ${d}\nTime: ${f.time.value}\nSeating: ${f.seat.value}` + (f.note.value.trim() ? `\nNote: ${f.note.value.trim()}` : '') + '\n\nThank you!';
+    if (window.BoomiisStore) {
+      BoomiisStore.addReservation({
+        name: f.name.value.trim(), phone: f.phone.value.trim(), guests: g,
+        date: f.date.value, time: f.time.value, seating: f.seat.value, note: f.note.value.trim()
+      });
+    }
     window.open(`https://wa.me/${WA}?text=` + encodeURIComponent(msg), '_blank', 'noopener');
   });
 })();

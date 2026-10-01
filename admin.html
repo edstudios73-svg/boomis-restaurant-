@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en-GH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Admin | BOOMiiS Restaurant</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0a1a13">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+  <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 3v4M16 3v4M3 10h18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.6-.1 1.1Z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<!-- ========== LOGIN ========== -->
+<main class="login" id="login">
+  <form class="login__card" id="loginForm" novalidate>
+    <img src="assets/logo.png" alt="BOOMiiS Restaurant" width="72" height="72">
+    <h1>BOOM<i>ii</i>S <span>Admin</span></h1>
+    <p class="muted">Orders, payments, bookings and the menu, in one place.</p>
+    <label>Username<input name="user" autocomplete="username" autocapitalize="none" spellcheck="false" required></label>
+    <label>Password<input name="pass" type="password" autocomplete="current-password" required></label>
+    <p class="login__err" id="loginErr" role="alert" hidden>Wrong username or password.</p>
+    <button class="btn btn--block" type="submit">Sign in</button>
+    <span class="demo-pill">Demo mode · data stays on this device</span>
+  </form>
+</main>
+
+<!-- ========== APP ========== -->
+<div class="app" id="app" hidden>
+  <header class="bar">
+    <a class="bar__brand" href="#overview"><img src="assets/logo.png" alt="" width="34" height="34"><span>BOOM<i>ii</i>S<small>Admin</small></span></a>
+    <span class="demo-pill demo-pill--sm">Demo</span>
+    <button class="bar__more" id="moreBtn" type="button" aria-label="Account and settings" aria-haspopup="true">B</button>
+  </header>
+
+  <nav class="tabs" id="tabs" aria-label="Admin sections">
+    <a href="#overview" data-tab="overview"><svg><use href="#i-home"/></svg><span>Home</span></a>
+    <a href="#orders" data-tab="orders"><svg><use href="#i-bag"/></svg><span>Orders</span><b class="badge" data-badge="orders" hidden></b></a>
+    <a href="#payments" data-tab="payments"><svg><use href="#i-cash"/></svg><span>Payments</span><b class="badge" data-badge="payments" hidden></b></a>
+    <a href="#bookings" data-tab="bookings"><svg><use href="#i-cal"/></svg><span>Bookings</span><b class="badge" data-badge="bookings" hidden></b></a>
+    <a href="#menu" data-tab="menu"><svg><use href="#i-menu"/></svg><span>Menu</span></a>
+  </nav>
+
+  <main class="main" id="main">
+    <section class="view" data-view="overview" aria-labelledby="h-overview"></section>
+    <section class="view" data-view="orders" aria-labelledby="h-orders" hidden></section>
+    <section class="view" data-view="payments" aria-labelledby="h-payments" hidden></section>
+    <section class="view" data-view="bookings" aria-labelledby="h-bookings" hidden></section>
+    <section class="view" data-view="menu" aria-labelledby="h-menu" hidden></section>
+  </main>
+</div>
+
+<div class="sheet-bg" id="sheetBg"></div>
+<aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="sheet__grip"></div>
+  <div id="sheetBody"></div>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="tip" id="tip" role="tooltip" hidden></div>
+
+<script src="store.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

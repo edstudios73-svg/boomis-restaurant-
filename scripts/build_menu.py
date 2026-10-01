@@ -5,6 +5,7 @@ Prices are in Ghana cedis, from the current BOOMiiS food menu.
 A price of None shows "Ask for price" with a WhatsApp link instead of an add button.
 """
 import json
+import re
 from urllib.parse import quote
 from html import escape
 from pathlib import Path
@@ -169,11 +170,15 @@ def add_btn(name, price, label=None):
             f'data-price="{price}" aria-label="{escape(aria, quote=True)}">{text}</button>')
 
 
-def render_item(item):
+def item_id(cat_id, name):
+    return cat_id + "-" + re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
+
+
+def render_item(item, cat_id):
     name, desc, price = item[0], item[1], item[2]
     photo = item[3] if len(item) > 3 else None
     search = f"{name} {desc}".lower()
-    out = [f'<li class="dish{" has-photo" if photo else ""}" data-search="{escape(search, quote=True)}">']
+    out = [f'<li class="dish{" has-photo" if photo else ""}" data-id="{item_id(cat_id, name)}" data-search="{escape(search, quote=True)}">']
     if photo:
         out.append(f'<img class="dish__img" src="assets/{photo}" alt="" loading="lazy">')
     out.append('<div class="dish__main"><div class="dish__row">')
@@ -214,7 +219,7 @@ def render():
             banner = (f'<div class="cat__banner cat__banner--plain"><div><span class="eyebrow">{count} '
                       f'{"dish" if count == 1 else "dishes"}</span><h2>{escape(c["title"])}</h2>'
                       f'<p>{escape(c["blurb"])}</p></div></div>')
-        items = "".join(render_item(i) for i in c["items"])
+        items = "".join(render_item(i, c["id"]) for i in c["items"])
         sections.append(f'<section class="cat" id="{c["id"]}">{banner}<ul class="dishes">{items}</ul></section>')
     total = sum(len(c["items"]) for c in MENU)
     base = "https://boomiis-restaurant.vercel.app"
@@ -247,6 +252,13 @@ def render():
                .replace("{{TOTAL}}", str(total))
                .replace("{{SCHEMA}}", json.dumps(schema, ensure_ascii=False)))
     (ROOT / "menu.html").write_text(html)
+
+    # Plain data copy of the menu for the admin dashboard (and for seeding a database later)
+    data = [{"id": c["id"], "title": c["title"], "short": c["short"], "items": [
+        {"id": item_id(c["id"], i[0]), "name": i[0], "desc": i[1],
+         **({"options": [{"label": l, "price": p} for l, p in i[2]]} if isinstance(i[2], list) else {"price": i[2]}),
+         **({"photo": i[3]} if len(i) > 3 else {})} for i in c["items"]]} for c in MENU]
+    (ROOT / "menu-data.json").write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n")
     print(f"menu.html written: {len(MENU)} sections, {total} dishes")
 
 

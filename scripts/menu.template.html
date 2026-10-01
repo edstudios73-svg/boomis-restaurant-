@@ -121,6 +121,7 @@
       <label><input type="radio" name="mode" value="Delivery"><span>Delivery</span></label>
     </div>
     <label>Your name<input name="name" autocomplete="name" placeholder="e.g. Ama Mensah" required></label>
+    <label>Phone<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="e.g. 024 123 4567" required></label>
     <label class="addr" hidden>Delivery address<input name="addr" autocomplete="street-address" placeholder="Area, street, landmark"></label>
     <p class="paynote paynote--fee" id="payFee" hidden>Pay for your food now. The <b>delivery fee is paid to the rider</b> when your order arrives.</p>
     <label>Note<textarea name="note" rows="2" placeholder="Spice level, allergies, time…"></textarea></label>
@@ -162,6 +163,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<script src="store.js"></script>
 <script src="menu.js"></script>
 </body>
 </html>

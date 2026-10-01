@@ -51,6 +51,9 @@
 <body>
 <script>document.documentElement.classList.add('js')</script>
 <a class="skip" href="#best">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
 
 <header class="top" id="header">
   <div class="wrap">
@@ -63,7 +66,7 @@
       <a href="#visit">Visit</a>
     </nav>
     <div class="head-actions">
-      <a class="btn btn--sm" href="#reserve">Reserve</a>
+      <a class="btn btn--sm" href="menu.html">Full menu</a>
       <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu-overlay"><span><i></i><i></i></span></button>
     </div>
   </div>
@@ -96,7 +99,7 @@
       <a class="btn" href="#reserve">Reserve a table
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
-      <a class="btn glass" href="menu.html">View the menu</a>
+      <a class="btn glass" href="#best">A glimpse of our dishes</a>
     </div>
   </div>
 </section>
@@ -127,9 +130,9 @@
       <div class="feature__body">
         <h3>Jollof, Chicken &amp; Coleslaw</h3>
         <p>Smoky party-style jollof with golden chicken, fried plantain and cool coleslaw.</p>
-        <div class="feature__row"><span class="tag">Dine in · Takeaway</span>
-          <a class="btn btn--sm" href="menu.html#rice">Order now</a>
-          <a class="go" href="#" data-ask="Jollof, Chicken & Coleslaw" aria-label="Ask about Jollof on WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+        <div class="feature__row"><span class="tag">Guest favourite</span>
+          <a class="btn btn--sm" href="menu.html#rice">Browse rice meals</a>
+          <a class="go" href="#" data-ask="Jollof, Chicken & Coleslaw" aria-label="Ask about Jollof on WhatsApp"><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
     </div>
@@ -138,9 +141,9 @@
       <div class="feature__body">
         <h3>Pounded Yam &amp; Vegetable Soup</h3>
         <p>Smooth pounded yam with rich vegetable soup and assorted meats, the Sunday classic.</p>
-        <div class="feature__row"><span class="tag">Dine in · Takeaway</span>
-          <a class="btn btn--sm" href="menu.html#swallow">Order now</a>
-          <a class="go" href="#" data-ask="Pounded Yam & Vegetable Soup" aria-label="Ask about Pounded Yam on WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+        <div class="feature__row"><span class="tag">Sunday classic</span>
+          <a class="btn btn--sm" href="menu.html#swallow">Browse swallows</a>
+          <a class="go" href="#" data-ask="Pounded Yam & Vegetable Soup" aria-label="Ask about Pounded Yam on WhatsApp"><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
     </div>
@@ -149,9 +152,9 @@
       <div class="feature__body">
         <h3>Eba &amp; Egusi</h3>
         <p>Hearty egusi with bitter leaf, served with soft eba you can swallow with joy.</p>
-        <div class="feature__row"><span class="tag">Dine in · Takeaway</span>
-          <a class="btn btn--sm" href="menu.html#soups">Order now</a>
-          <a class="go" href="#" data-ask="Eba & Egusi" aria-label="Ask about Eba and Egusi on WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+        <div class="feature__row"><span class="tag">Yoruba staple</span>
+          <a class="btn btn--sm" href="menu.html#soups">Browse soups</a>
+          <a class="go" href="#" data-ask="Eba & Egusi" aria-label="Ask about Eba and Egusi on WhatsApp"><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
     </div>
@@ -164,12 +167,12 @@
     <h2 class="title reveal"><span>From the Kitchen</span></h2>
     <p class="muted sub reveal">A taste of the menu. Tap the arrow on any dish to ask about it on WhatsApp.</p>
     <div class="grid">
-      <article class="tile reveal"><img src="assets/ofada.jpg" loading="lazy" width="828" height="370" alt="Ofada rice with vegetable soup"><h4>Mission's Delight</h4><p>Ofada rice and ayamase sauce.</p><b class="price">GH₵80</b><a class="go" href="#" data-ask="Mission's Delight (Ofada rice & ayamase)" aria-label="Ask about Ofada Rice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
-      <article class="tile reveal"><img src="assets/rice-beef.jpg" loading="lazy" width="828" height="708" alt="Plain rice with beef sauce"><h4>Simply Good</h4><p>Plain rice with tomato stew and your choice of protein.</p><b class="price">GH₵72</b><a class="go" href="#" data-ask="Simply Good (plain rice & stew)" aria-label="Ask about Plain Rice and Beef Sauce"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
-      <article class="tile reveal"><img src="assets/yam-egusi.jpg" loading="lazy" width="828" height="663" alt="Pounded yam and egusi stew"><h4>Pounded Yam &amp; Egusi</h4><p>Pounded yam GH₵25 with egusi soup GH₵70.</p><b class="price">GH₵95</b><a class="go" href="#" data-ask="Pounded Yam & Egusi" aria-label="Ask about Pounded Yam and Egusi Stew"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
-      <article class="tile reveal"><img src="assets/jollof-plate.jpg" loading="lazy" width="828" height="827" alt="Jollof rice with chicken and plantain"><h4>Jollof Rice &amp; Chicken</h4><p>Or with peppered goat, beef or turkey.</p><b class="price">GH₵62</b><a class="go" href="#" data-ask="Jollof Rice & Chicken" aria-label="Ask about Jollof and Chicken"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
-      <article class="tile reveal"><img src="assets/swallow-soup.jpg" loading="lazy" width="828" height="502" alt="Swallow served with soup"><h4>Buka Style</h4><p>Amala, ewedu, gbegiri, stew, goat meat, beef, ponmo and tripe.</p><b class="price">GH₵75</b><a class="go" href="#" data-ask="Buka Style" aria-label="Ask about Swallow and Soup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
-      <article class="tile tile--more reveal"><div><b>72 dishes on the full menu</b><p>Omo Naija combos, soups &amp; swallows, grills, pepper dishes, stews and Proudly Ghanaian classics.</p></div><a class="btn btn--sm" href="menu.html">Open menu</a></article>
+      <article class="tile reveal"><img src="assets/ofada.jpg" loading="lazy" width="828" height="370" alt="Ofada rice with vegetable soup"><h4>Mission's Delight</h4><p>Ofada rice and ayamase sauce.</p><b class="price">GH₵80</b><a class="go" href="#" data-ask="Mission's Delight (Ofada rice & ayamase)" aria-label="Ask about Ofada Rice"><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></article>
+      <article class="tile reveal"><img src="assets/rice-beef.jpg" loading="lazy" width="828" height="708" alt="Plain rice with beef sauce"><h4>Simply Good</h4><p>Plain rice with tomato stew and your choice of protein.</p><b class="price">GH₵72</b><a class="go" href="#" data-ask="Simply Good (plain rice & stew)" aria-label="Ask about Plain Rice and Beef Sauce"><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></article>
+      <article class="tile reveal"><img src="assets/yam-egusi.jpg" loading="lazy" width="828" height="663" alt="Pounded yam and egusi stew"><h4>Pounded Yam &amp; Egusi</h4><p>Pounded yam GH₵25 with egusi soup GH₵70.</p><b class="price">GH₵95</b><a class="go" href="#" data-ask="Pounded Yam & Egusi" aria-label="Ask about Pounded Yam and Egusi Stew"><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></article>
+      <article class="tile reveal"><img src="assets/jollof-plate.jpg" loading="lazy" width="828" height="827" alt="Jollof rice with chicken and plantain"><h4>Jollof Rice &amp; Chicken</h4><p>Or with peppered goat, beef or turkey.</p><b class="price">GH₵62</b><a class="go" href="#" data-ask="Jollof Rice & Chicken" aria-label="Ask about Jollof and Chicken"><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></article>
+      <article class="tile reveal"><img src="assets/swallow-soup.jpg" loading="lazy" width="828" height="502" alt="Swallow served with soup"><h4>Buka Style</h4><p>Amala, ewedu, gbegiri, stew, goat meat, beef, ponmo and tripe.</p><b class="price">GH₵75</b><a class="go" href="#" data-ask="Buka Style" aria-label="Ask about Swallow and Soup"><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></article>
+      <article class="tile tile--more reveal"><div><b>72 dishes on the full menu</b><p>Omo Naija combos, soups &amp; swallows, grills, pepper dishes, stews and Proudly Ghanaian classics.</p></div><a class="btn btn--sm" href="menu.html">See all 72</a></article>
     </div>
   </div>
 </section>
@@ -209,7 +212,6 @@
         <ul class="chips">
           <li>Outdoor seating</li><li>Great cocktails</li><li>Kids' menu</li><li>Delivery &amp; pickup</li>
         </ul>
-        <a class="btn" href="#reserve">Reserve a table</a>
       </div>
     </div>
   </div>

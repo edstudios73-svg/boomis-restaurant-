@@ -231,3 +231,10 @@ body.sheet-open .sheet{transform:none}
   *{animation:none!important;transition:none!important}
 }
 .tile .net{font-style:normal;letter-spacing:.02em;text-transform:none}
+
+/* live connection pill */
+.demo-pill--live{color:#7ee2a8;border-color:rgba(63,191,127,.45);background:rgba(63,191,127,.12)}
+.demo-pill--live::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#3fbf7f;margin-right:6px;vertical-align:1px;animation:pulse 1.8s infinite}
+.demo-pill--off{color:#ffb3aa;border-color:rgba(239,106,91,.45);background:rgba(239,106,91,.1)}
+@keyframes pulse{50%{opacity:.35}}
+.btn:disabled{opacity:.6;cursor:wait}

@@ -1,7 +1,8 @@
-/* BOOMiiS admin (demo).
- * Sign-in is checked in the browser and data lives in localStorage via store.js.
- * This is for demonstration only: when Supabase is connected, sign-in moves to
- * Supabase Auth and the data to database tables protected by row-level security.
+/* BOOMiiS admin (live).
+ * Staff sign in with Supabase Auth; orders, payments, bookings and menu changes are
+ * read and written through store.js. Access is enforced by row-level security in
+ * the database (supabase/setup.sql), so only accounts listed in public.staff can
+ * see or change anything.
  */
 (() => {
   'use strict';
@@ -9,9 +10,6 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const S = window.BoomiisStore;
 
-  const DEMO_USER = 'boomiis';
-  const DEMO_PASS_SHA256 = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'; // "admin"
-  const SESSION = 'boomiis-admin-session';
   const MOMO = { mtn: '024 216 5783', telecel: '050 638 7636' };
 
   // ---------- helpers ----------
@@ -65,90 +63,47 @@
     sheetBody.querySelector('[data-x=ok]').onclick = () => { closeSheet(); onOk(); };
   };
 
-  // ---------- demo data ----------
-  function seedDemo() {
-    const db = S.load();
-    if (db.seeded) return;
-    let x = 20261001;
-    const rnd = () => (x = (x * 1664525 + 1013904223) % 4294967296) / 4294967296;
-    const pick = a => a[Math.floor(rnd() * a.length)];
-    const NAMES = ['Ama Mensah', 'Kwame Asante', 'Efua Owusu', 'Kofi Boateng', 'Adwoa Darko', 'Yaw Ofori', 'Akosua Agyei', 'Tunde Bakare', 'Chidinma Okafor', 'Esi Quaye', 'Nii Armah', 'Abena Frimpong', 'Femi Adeyemi', 'Zainab Bello', 'Kojo Annan', 'Ngozi Eze'];
-    const phone = () => pick(['024', '054', '055', '059', '020', '050', '027']) + ' ' + Math.floor(100 + rnd() * 900) + ' ' + Math.floor(1000 + rnd() * 9000);
-    const ITEMS = [["Mission's Delight", 138], ['Buka Style', 126], ['Jollof Rice (Chicken)', 109], ['Egusi', 132], ['Pounded Yam', 35], ['Eba', 8], ['Many Nations GH', 98], ['Light Soup', 106], ['Banku', 10], ['Fried Plantain', 35], ['Spicy Chicken Wings', 109], ['Goat Meat Pepper Soup', 140], ['Palava Sauce', 120], ['Efo Riro', 144], ['Peppered Beef', 138], ['Fried Rice (Peppered goat)', 150]];
-    const ADDR = ['Shiashie, near GIMPA', 'American House, East Legon', 'Mensah Wood St, Adjiringanor', 'Lagos Avenue, East Legon', 'Trasacco Valley, gate 2', 'Airport Residential, 5th Rd'];
-    const NOTES = ['Extra pepper please', 'No onions', 'Call when outside', 'Pack the soup separately', ''];
-    const refChars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    const ref = () => 'BM-' + Array.from({ length: 4 }, () => pick(refChars.split(''))).join('');
-    const orders = [];
-    for (let d = 0; d < 7; d++) {
-      const n = d === 0 ? 6 : 2 + Math.floor(rnd() * 3);
-      for (let i = 0; i < n; i++) {
-        const t = new Date();
-        if (d === 0) t.setMinutes(t.getMinutes() - (i * 34 + 6));
-        else { t.setDate(t.getDate() - d); t.setHours(11 + Math.floor(rnd() * 10), Math.floor(rnd() * 60), 0, 0); }
-        const items = [];
-        const lines = 1 + Math.floor(rnd() * 3);
-        for (let l = 0; l < lines; l++) {
-          const [name, price] = pick(ITEMS);
-          const ex = items.find(it => it.name === name);
-          if (ex) ex.qty++; else items.push({ name, qty: 1 + (rnd() < 0.25 ? 1 : 0), price });
-        }
-        const total = items.reduce((s, it) => s + it.qty * it.price, 0);
-        let status = 'completed', pay = 'verified';
-        if (d === 0) status = ['new', 'new', 'preparing', 'ready', 'out', 'completed'][i] || 'completed';
-        if (d === 2 && i === 0) { status = 'cancelled'; pay = 'rejected'; }
-        if (status === 'new') pay = 'pending';
-        const mode = status === 'out' ? 'Delivery' : (rnd() < 0.42 ? 'Delivery' : 'Pickup');
-        const mtn = rnd() < 0.72;
-        const name = pick(NAMES);
-        orders.push({
-          id: 'demo-o-' + d + '-' + i, demo: true, ref: ref(), createdAt: t.toISOString(), status, mode,
-          customer: { name, phone: phone() }, address: mode === 'Delivery' ? pick(ADDR) : '', note: pick(NOTES), items, total,
-          payment: {
-            method: 'momo', network: mtn ? 'MTN MoMo' : 'Telecel Cash', to: mtn ? MOMO.mtn : MOMO.telecel,
-            txn: String(Math.floor(10000000000 + rnd() * 89999999999)), amount: total, status: pay,
-            ...(pay === 'verified' ? { verifiedAt: new Date(t.getTime() + 6 * 60000).toISOString() } : {}),
-            ...(pay === 'rejected' ? { reason: 'No matching MoMo payment received' } : {})
-          }
-        });
-      }
-    }
-    const R = [[0, '1:00 pm', 'seated', 4, ''], [0, '7:00 pm', 'requested', 2, ''], [0, '8:00 pm', 'confirmed', 6, 'Birthday dinner, bringing a cake'],
-      [1, '2:00 pm', 'confirmed', 8, 'Family lunch, need a high chair'], [1, '6:00 pm', 'requested', 3, ''], [3, '7:00 pm', 'requested', 2, 'Outdoor if possible'],
-      [-1, '7:00 pm', 'seated', 2, ''], [-2, '8:00 pm', 'noshow', 4, '']];
-    const reservations = R.map(([dd, time, status, guests, note], i) => {
-      const c = new Date(); c.setHours(c.getHours() - (i + 2) * 3);
-      return { id: 'demo-r-' + i, demo: true, createdAt: c.toISOString(), name: pick(NAMES), phone: phone(), guests, date: shiftKey(dd), time, seating: pick(['Indoor', 'Outdoor', 'No preference']), note, status };
-    });
-    db.orders = db.orders.concat(orders).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    db.reservations = db.reservations.concat(reservations);
-    db.seeded = true;
-    S.save(db);
-  }
-
   // ---------- auth ----------
-  const sha256 = async t => {
-    if (!(window.crypto && crypto.subtle)) return null;
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(t));
-    return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+  const friendly = e => {
+    const m = String(e && e.message || e || '');
+    if (/Invalid login credentials/i.test(m)) return 'Wrong username or password.';
+    if (/Email not confirmed/i.test(m)) return 'This account isn’t confirmed yet. Confirm it in Supabase → Authentication → Users.';
+    if (/Failed to fetch|NetworkError|network/i.test(m)) return 'No connection. Check the internet and try again.';
+    if (/relation .* does not exist|Could not find the table|is_staff/i.test(m)) return 'The database isn’t set up yet. Run supabase/setup.sql in the Supabase SQL Editor.';
+    if (/permission denied|row-level security/i.test(m)) return 'This account doesn’t have permission to do that.';
+    return m.replace(/^[^:]+:\s*/, '') || 'Something went wrong. Please try again.';
   };
-  const signedIn = () => { try { return sessionStorage.getItem(SESSION) === '1'; } catch (e) { return false; } };
+  const loginErr = msg => {
+    const el = $('#loginErr'); el.textContent = msg; el.hidden = false;
+    const card = $('#loginForm'); card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
+  };
   $('#loginForm').addEventListener('submit', async e => {
     e.preventDefault();
-    const f = e.target.elements;
-    const user = f.user.value.trim().toLowerCase(), pass = f.pass.value;
-    const hash = await sha256(pass);
-    const ok = user === DEMO_USER && (hash ? hash === DEMO_PASS_SHA256 : pass === 'admin');
-    if (!ok) {
-      $('#loginErr').hidden = false;
-      const card = $('#loginForm'); card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
-      f.pass.value = ''; f.pass.focus();
-      return;
+    const f = e.target.elements, btn = e.target.querySelector('button[type=submit]');
+    $('#loginErr').hidden = true;
+    if (!f.user.value.trim() || !f.pass.value) { loginErr('Enter your username and password.'); return; }
+    btn.disabled = true; btn.textContent = 'Signing in…';
+    try {
+      await S.signIn(f.user.value, f.pass.value);
+      if (!(await S.isStaff())) {
+        await S.signOut();
+        loginErr('Signed in, but this account isn’t on the staff list yet. Run step 2 of supabase/setup.sql.');
+        return;
+      }
+      f.pass.value = '';
+      await start();
+    } catch (err) {
+      loginErr(friendly(err)); f.pass.value = ''; f.pass.focus();
+    } finally {
+      btn.disabled = false; btn.textContent = 'Sign in';
     }
-    try { sessionStorage.setItem(SESSION, '1'); } catch (err) {}
-    start();
   });
-  const signOut = () => { try { sessionStorage.removeItem(SESSION); } catch (e) {} location.hash = ''; location.reload(); };
+  const signOut = async () => { try { await S.signOut(); } catch (e) {} location.hash = ''; location.reload(); };
+
+  // run a save; tell staff if it fails (the screen keeps the database's real state)
+  const save = (promise, okMsg) => Promise.resolve(promise)
+    .then(r => { if (okMsg) toast(okMsg); return r; })
+    .catch(err => { toast('⚠ ' + friendly(err)); console.error(err); });
 
   // ---------- state ----------
   const state = { tab: 'overview', orderFilter: 'active', payFilter: 'pending', bookFilter: 'upcoming', menuCat: 'all', q: '', mq: '' };
@@ -220,15 +175,15 @@
     const o = db().orders.find(x => x.id === id);
     if (!o) return;
     const now = new Date().toISOString();
-    if (kind === 'verify') { S.update('orders', id, { status: 'preparing', payment: { status: 'verified', verifiedAt: now } }); toast(`Payment verified · #${o.ref} is now preparing`); }
+    if (kind === 'verify') { save(S.update('orders', id, { status: 'preparing', payment: { status: 'verified', verifiedAt: now } }), `Payment verified · #${o.ref} is now preparing`); }
     if (kind === 'reject') confirmSheet(`Reject payment for #${o.ref}?`, `No MoMo payment of ${cedi(o.total)} with transaction ID ${o.payment.txn} was found. The order will be cancelled.`, 'Reject & cancel', () => {
-      S.update('orders', id, { status: 'cancelled', payment: { status: 'rejected', reason: 'No matching MoMo payment received' } }); toast(`#${o.ref} cancelled`);
+      save(S.update('orders', id, { status: 'cancelled', payment: { status: 'rejected', reason: 'No matching MoMo payment received' } }), `#${o.ref} cancelled`);
     }, true);
-    if (kind === 'ready') { S.update('orders', id, { status: 'ready' }); toast(`#${o.ref} is ready`); }
-    if (kind === 'out') { S.update('orders', id, { status: 'out' }); toast(`#${o.ref} is out for delivery`); }
-    if (kind === 'done') { S.update('orders', id, { status: 'completed' }); toast(`#${o.ref} completed`); }
+    if (kind === 'ready') { save(S.update('orders', id, { status: 'ready' }), `#${o.ref} is ready`); }
+    if (kind === 'out') { save(S.update('orders', id, { status: 'out' }), `#${o.ref} is out for delivery`); }
+    if (kind === 'done') { save(S.update('orders', id, { status: 'completed' }), `#${o.ref} completed`); }
     if (kind === 'cancel') confirmSheet(`Cancel order #${o.ref}?`, 'Remember to refund the customer’s MoMo payment if they have paid.', 'Cancel order', () => {
-      S.update('orders', id, { status: 'cancelled' }); toast(`#${o.ref} cancelled`);
+      save(S.update('orders', id, { status: 'cancelled' }), `#${o.ref} cancelled`);
     }, true);
   }
   function bookAct(kind, id) {
@@ -236,7 +191,7 @@
     if (!r) return;
     const map = { confirm: ['confirmed', 'Booking confirmed'], decline: ['cancelled', 'Booking declined'], seat: ['seated', 'Guests seated'], noshow: ['noshow', 'Marked as no-show'] };
     const [status, msg] = map[kind];
-    const run = () => { S.update('reservations', id, { status }); toast(`${msg} · ${r.name}`); };
+    const run = () => { save(S.update('reservations', id, { status }), `${msg} · ${r.name}`); };
     if (kind === 'decline') confirmSheet(`Decline ${r.name}’s booking?`, 'Let them know on WhatsApp so they can choose another time.', 'Decline', run, true); else run();
   }
   document.addEventListener('click', e => {
@@ -456,7 +411,7 @@
       <button class="fab" id="addDish" type="button"><svg><use href="#i-plus"/></svg>Add dish</button>`;
     $('#mq').addEventListener('input', e => { state.mq = e.target.value.trim().toLowerCase(); fillMenu(); });
     $('#addDish').onclick = () => editDish(null);
-    $('#resetMenu').onclick = () => confirmSheet('Undo all menu changes?', 'Prices, sold-out flags and added or removed dishes go back to the printed menu.', 'Undo changes', () => { S.resetMenu(); toast('Menu reset'); }, true);
+    $('#resetMenu').onclick = () => confirmSheet('Undo all menu changes?', 'Prices, sold-out flags and added or removed dishes go back to the printed menu.', 'Undo changes', () => save(S.resetMenu(), 'Menu reset to the printed menu'), true);
     try { await loadMenuBase(); fillMenu(); }
     catch (e) { $('#mlist').innerHTML = '<div class="empty"><b>Couldn’t load the menu</b>Check your connection and refresh.</div>'; }
   }
@@ -479,8 +434,8 @@
     $('#mlist').innerHTML = html || '<div class="empty"><b>No dishes match</b>Try another search.</div>';
     $$('#mlist [data-avail]').forEach(sw => sw.onclick = () => {
       const on = sw.getAttribute('aria-checked') !== 'true';
-      S.setMenuItem(sw.dataset.avail, { available: on });
-      toast(on ? 'Back on the menu' : 'Marked sold out');
+      sw.setAttribute('aria-checked', on);
+      save(S.setMenuItem(sw.dataset.avail, { available: on }), on ? 'Back on the menu' : 'Marked sold out');
     });
     $$('#mlist [data-edit]').forEach(b => b.onclick = () => editDish(b.dataset.edit));
   }
@@ -504,7 +459,7 @@
       </form>`);
     const sw = $('#availSw'); if (sw) sw.onclick = () => sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true');
     const del = $('#delDish');
-    if (del) del.onclick = () => confirmSheet(`Remove ${it.name}?`, it.isNew ? 'This dish will be deleted.' : 'It disappears from the menu page. You can restore it here any time.', 'Remove', () => { S.removeMenuItem(it.id); toast('Removed from the menu'); }, true);
+    if (del) del.onclick = () => confirmSheet(`Remove ${it.name}?`, it.isNew ? 'This dish will be deleted.' : 'It disappears from the menu page. You can restore it here any time.', 'Remove', () => save(S.removeMenuItem(it.id), 'Removed from the menu'), true);
     $('#dishForm').addEventListener('submit', e => {
       e.preventDefault();
       const f = e.target.elements;
@@ -517,15 +472,14 @@
         const price = f.price.value === '' ? NaN : +f.price.value;
         f.price.classList.toggle('err', !(price >= 0));
         if (!(price >= 0)) { f.price.focus(); return; }
-        S.addMenuItem({ cat: f.cat.value, name, desc, price, available });
-        closeSheet(); toast(name + ' added to the menu'); return;
+        closeSheet(); save(S.addMenuItem({ cat: f.cat.value, name, desc, price, available }), name + ' added to the menu'); return;
       }
       let price = it.options ? null : (f.price.value === '' ? null : +f.price.value);
       if (price !== null && !(price >= 0)) { f.price.classList.add('err'); f.price.focus(); return; }
       const prices = it.options ? it.options.map((o, i) => +f['opt' + i].value) : null;
       if (prices && prices.some(p => !(p >= 0))) { toast('Check the prices'); return; }
       if (it.isNew) {
-        S.setMenuItem(it.id, { name, desc, price: price === null ? it.price : price, available });
+        closeSheet(); save(S.setMenuItem(it.id, { name, desc, price: price === null ? it.price : price, available }), 'Saved · live on the menu'); return;
       } else {
         // store only what differs from the printed menu, so untouched dishes stay untagged
         const b = it.base;
@@ -537,26 +491,42 @@
           available: available ? undefined : false,
           deleted: undefined
         };
-        S.setMenuItem(it.id, patch);
+        closeSheet(); save(S.setMenuItem(it.id, patch), 'Saved · live on the menu');
       }
-      closeSheet(); toast('Saved · live on the menu');
     });
   }
 
   // ---------- account sheet ----------
+  let me = null;
   $('#moreBtn').addEventListener('click', () => {
-    openSheet(`<h2>Signed in as boomiis</h2><p class="sub">Demo mode: data is stored on this device only.</p>
+    openSheet(`<h2>Signed in</h2><p class="sub">${esc(me && me.email || '')} · Live data from Supabase</p>
       <div class="menu-list">
+        <button type="button" id="reload"><svg><use href="#i-cash"/></svg>Refresh data</button>
         <a href="/" target="_blank" rel="noopener"><svg><use href="#i-ext"/></svg>View website</a>
         <a href="/menu" target="_blank" rel="noopener"><svg><use href="#i-menu"/></svg>View menu page</a>
-        <button type="button" id="resetDemo"><svg><use href="#i-cash"/></svg>Reset demo data</button>
         <button type="button" class="danger" id="signOut"><svg><use href="#i-ext"/></svg>Sign out</button>
       </div>`);
     $('#signOut').onclick = signOut;
-    $('#resetDemo').onclick = () => confirmSheet('Reset demo data?', 'All demo and test orders, bookings and menu changes on this device are cleared and fresh demo data is loaded.', 'Reset', () => {
-      known = null; S.resetAll(); seedDemo(); known = new Set(db().orders.map(o => o.id)); refresh(); toast('Demo data reset');
-    }, true);
+    $('#reload').onclick = () => { closeSheet(); save(S.loadAll(), 'Data refreshed'); };
   });
+
+  // ---------- new-order chime ----------
+  let audio = null;
+  const chime = () => {
+    try {
+      audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+      [0, 0.16].forEach((t, i) => {
+        const o = audio.createOscillator(), g = audio.createGain();
+        o.type = 'sine'; o.frequency.value = i ? 1046 : 784;
+        g.gain.setValueAtTime(0.0001, audio.currentTime + t);
+        g.gain.exponentialRampToValueAtTime(0.25, audio.currentTime + t + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime + t + 0.35);
+        o.connect(g).connect(audio.destination); o.start(audio.currentTime + t); o.stop(audio.currentTime + t + 0.4);
+      });
+    } catch (e) {}
+  };
+  // browsers only allow sound after a tap, so unlock it on the first interaction
+  addEventListener('pointerdown', () => { try { audio = audio || new (window.AudioContext || window.webkitAudioContext)(); audio.resume(); } catch (e) {} }, { once: true });
 
   // ---------- routing & live refresh ----------
   const RENDER = { overview: renderOverview, orders: renderOrders, payments: renderPayments, bookings: renderBookings, menu: renderMenu };
@@ -581,21 +551,44 @@
     if (fresh.length) {
       const o = fresh[0];
       toast(`New order #${o.ref} · ${cedi(o.total)}`);
+      chime();
       if (navigator.vibrate) navigator.vibrate([60, 40, 60]);
       const card = $(`[data-oid="${o.id}"]`); if (card) card.classList.add('oc--flash');
     }
   }
 
-  function start() {
+  const setLive = status => {
+    const pill = $('#livePill');
+    const ok = status === 'SUBSCRIBED';
+    pill.textContent = ok ? 'Live' : status === 'CHANNEL_ERROR' || status === 'TIMED_OUT' || status === 'CLOSED' ? 'Offline' : 'Connecting';
+    pill.classList.toggle('demo-pill--live', ok);
+    pill.classList.toggle('demo-pill--off', !ok && pill.textContent === 'Offline');
+  };
+
+  let started = false;
+  async function start() {
+    if (started) return;
+    started = true;
     $('#login').hidden = true;
     $('#app').hidden = false;
-    seedDemo();
+    view('overview').innerHTML = '<div class="empty"><b>Loading live data…</b>Orders, payments and bookings from Supabase.</div>';
+    try { me = await S.currentUser(); await S.loadAll(); }
+    catch (err) { view('overview').innerHTML = `<div class="empty"><b>Couldn’t load data</b>${esc(friendly(err))}</div>`; toast('⚠ ' + friendly(err)); }
     known = new Set(db().orders.map(o => o.id));
     addEventListener('hashchange', show);
     S.onChange(refresh);
+    S.subscribe(setLive);
+    // catch up after the phone sleeps or the connection drops
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) S.loadAll().catch(() => {}); });
     setInterval(() => { if (state.tab === 'orders') fillOrders(); }, 60000); // keep "x min ago" fresh
     show();
   }
 
-  if (signedIn()) start(); else $('#loginForm').elements.user.focus();
+  (async () => {
+    try {
+      if (await S.currentUser() && await S.isStaff()) { await start(); return; }
+    } catch (e) { console.error(e); }
+    $('#login').hidden = false;
+    $('#loginForm').elements.user.focus();
+  })();
 })();

@@ -96,7 +96,7 @@
       BoomiisStore.addReservation({
         name: f.name.value.trim(), phone: f.phone.value.trim(), guests: g,
         date: f.date.value, time: f.time.value, seating: f.seat.value, note: f.note.value.trim()
-      });
+      }).catch(err => console.error(err)); // WhatsApp still carries the request if saving fails
     }
     window.open(`https://wa.me/${WA}?text=` + encodeURIComponent(msg), '_blank', 'noopener');
   });

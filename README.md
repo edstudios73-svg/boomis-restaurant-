@@ -12,21 +12,18 @@ Static site, no build step for hosting:
 - `menu-data.json`: generated copy of the menu used by the admin
 - `robots.txt`, `sitemap.xml`, `llms.txt`, `site.webmanifest`, `404.html`
 
-## Admin (demo mode)
+## Admin and database (Supabase, live)
 
-Sign in at `/admin` with username `boomiis` and password `admin`.
+- `/admin` signs staff in with Supabase Auth. Typing `boomiis` as the username signs in as the email set in
+  `supabase-config.js` (`adminAliases`); any staff email also works.
+- `store.js` reads and writes Supabase: customers' orders and table requests are inserted from the website,
+  staff changes to the menu are stored in `menu_changes` and applied on the menu page.
+- Security lives in the database (`supabase/setup.sql`): the public key can only place orders, request
+  tables and read menu changes. Only users listed in `public.staff` can read or change orders and bookings.
+- `supabase-config.js` holds only the project URL and the **publishable** key. Never put the secret or
+  service_role key in any website file.
 
-Demo mode keeps orders, bookings and menu changes in the browser (localStorage), so the website and
-the admin share data only on the same device, and the sign-in check runs in the browser. This is for
-showing the workflow, not for real use. Connecting Supabase replaces the inside of `store.js` with
-database calls and moves sign-in to Supabase Auth with row-level security.
-
-## Updating the menu
-
-Prices and dishes live in `scripts/build_menu.py`. Edit them there, then regenerate the page:
-
-    python3 scripts/build_menu.py
-
-This rewrites `menu.html` (including its schema.org Menu data) from `scripts/menu.template.html`.
-
-Designed by [Baiden Creatives](https://baiden-creatives.vercel.app).
+### Setting up a new Supabase project
+1. SQL Editor → paste and run `supabase/setup.sql`.
+2. Authentication → Users → Add user (email + strong password, auto-confirm).
+3. Run the "STEP 2" insert at the bottom of `setup.sql` with that email.

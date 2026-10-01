@@ -29,16 +29,16 @@
 </svg>
 
 <!-- ========== LOGIN ========== -->
-<main class="login" id="login">
+<main class="login" id="login" hidden>
   <form class="login__card" id="loginForm" novalidate>
     <img src="assets/logo.png" alt="BOOMiiS Restaurant" width="72" height="72">
     <h1>BOOM<i>ii</i>S <span>Admin</span></h1>
     <p class="muted">Orders, payments, bookings and the menu, in one place.</p>
-    <label>Username<input name="user" autocomplete="username" autocapitalize="none" spellcheck="false" required></label>
+    <label>Username or email<input name="user" autocomplete="username" autocapitalize="none" spellcheck="false" required></label>
     <label>Password<input name="pass" type="password" autocomplete="current-password" required></label>
-    <p class="login__err" id="loginErr" role="alert" hidden>Wrong username or password.</p>
+    <p class="login__err" id="loginErr" role="alert" hidden></p>
     <button class="btn btn--block" type="submit">Sign in</button>
-    <span class="demo-pill">Demo mode · data stays on this device</span>
+    <span class="demo-pill">🔒 Secure staff sign-in</span>
   </form>
 </main>
 
@@ -46,7 +46,7 @@
 <div class="app" id="app" hidden>
   <header class="bar">
     <a class="bar__brand" href="#overview"><img src="assets/logo.png" alt="" width="34" height="34"><span>BOOM<i>ii</i>S<small>Admin</small></span></a>
-    <span class="demo-pill demo-pill--sm">Demo</span>
+    <span class="demo-pill demo-pill--sm" id="livePill" role="status">Connecting</span>
     <button class="bar__more" id="moreBtn" type="button" aria-label="Account and settings" aria-haspopup="true">B</button>
   </header>
 
@@ -76,6 +76,8 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="tip" id="tip" role="tooltip" hidden></div>
 
+<script src="vendor/supabase-2.117.2.js"></script>
+<script src="supabase-config.js"></script>
 <script src="store.js"></script>
 <script src="admin.js"></script>
 </body>

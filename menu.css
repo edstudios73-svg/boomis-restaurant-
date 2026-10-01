@@ -185,3 +185,4 @@ body.basket-open .sheet{transform:none}
 .dish.soldout .price{text-decoration:line-through}
 .dish .sold{flex:none;font-size:.66rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#111;background:var(--sand);padding:3px 8px;border-radius:999px}
 .add:disabled,.opt:disabled{opacity:.35;cursor:not-allowed}
+.dish.gone{display:none!important}

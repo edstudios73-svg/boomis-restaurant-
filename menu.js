@@ -19,6 +19,8 @@
   $('#yr').textContent = new Date().getFullYear();
 
   // ---------- menu changes made in /admin (prices, sold out, new or removed dishes) ----------
+  // Applying is idempotent: every dish is reset to the printed menu first, so changes can be re-applied
+  // when the live copy arrives from the database.
   const soldOut = li => {
     li.classList.add('soldout');
     li.querySelectorAll('.add, .opt').forEach(b => { b.disabled = true; b.setAttribute('aria-label', 'Sold out'); });
@@ -31,12 +33,15 @@
     if (!p) { p = document.createElement('p'); li.querySelector('.dish__row').after(p); }
     p.textContent = text;
   };
-  if (window.BoomiisStore) {
-    const m = BoomiisStore.menuOverrides();
-    Object.entries(m.items).forEach(([id, o]) => {
+  const printed = new Map();
+  $$('.dish[data-id]').forEach(li => printed.set(li.dataset.id, li.cloneNode(true)));
+  const applyMenu = m => {
+    $$('.dish[data-added]').forEach(li => li.remove());
+    printed.forEach((tpl, id) => { const cur = $(`.dish[data-id="${id}"]`); if (cur) cur.replaceWith(tpl.cloneNode(true)); });
+    Object.entries(m.items || {}).forEach(([id, o]) => {
       const li = $(`.dish[data-id="${id}"]`);
       if (!li) return;
-      if (o.deleted) { li.remove(); return; }
+      if (o.deleted) { li.classList.add('gone'); return; }
       if (o.name) {
         li.querySelector('h3').textContent = o.name;
         const add = li.querySelector('.add'); if (add) add.dataset.name = o.name;
@@ -62,11 +67,11 @@
       li.dataset.search = (li.querySelector('h3').textContent + ' ' + (li.querySelector('.dish__main > p') || { textContent: '' }).textContent).toLowerCase();
       if (o.available === false) soldOut(li);
     });
-    m.added.forEach(a => {
+    (m.added || []).forEach(a => {
       const ul = $(`#${a.cat} .dishes`);
       if (!ul || a.deleted) return;
       const li = document.createElement('li');
-      li.className = 'dish'; li.dataset.id = a.id; li.dataset.search = (a.name + ' ' + (a.desc || '')).toLowerCase();
+      li.className = 'dish'; li.dataset.id = a.id; li.dataset.added = '1'; li.dataset.search = (a.name + ' ' + (a.desc || '')).toLowerCase();
       li.innerHTML = '<div class="dish__main"><div class="dish__row"><h3></h3><span class="dots"></span><span class="price"></span></div></div>'
         + '<button type="button" class="add"><svg aria-hidden="true"><use href="#i-plus"/></svg></button>';
       li.querySelector('h3').textContent = a.name;
@@ -78,10 +83,10 @@
       if (a.available === false) soldOut(li);
     });
     $$('.cat').forEach(c => {
-      const n = $$('.dish', c).length, eb = $('.cat__banner .eyebrow', c);
+      const n = $$('.dish:not(.gone)', c).length, eb = $('.cat__banner .eyebrow', c);
       if (eb) eb.textContent = n + (n === 1 ? ' dish' : ' dishes');
     });
-  }
+  };
 
   // ---------- mobile menu ----------
   const burger = $('#burger');
@@ -130,7 +135,7 @@
     let any = false;
     cats.forEach(c => {
       let shown = 0;
-      $$('.dish', c).forEach(d => {
+      $$('.dish:not(.gone)', c).forEach(d => {
         const hit = !q || d.dataset.search.includes(q) || c.querySelector('h2').textContent.toLowerCase().includes(q);
         d.hidden = !hit; if (hit) shown++;
       });
@@ -151,9 +156,7 @@
 
   const bar = $('#orderbar'), obCount = $('#obCount'), obTotal = $('#obTotal');
   const lines = $('#lines'), sheetTotal = $('#sheetTotal');
-  const buttons = $$('.add, .opt');
-
-  const paintButtons = () => buttons.forEach(b => {
+  const paintButtons = () => $$('button.add, button.opt').forEach(b => {
     const o = find(b.dataset.name);
     b.classList.toggle('in', !!o);
     let badge = b.querySelector('.qty');
@@ -191,6 +194,7 @@
   };
 
   const change = (name, d, price) => {
+    if (sentRef === ref) { ref = newRef(); try { localStorage.setItem(REFKEY, ref); } catch (e) {} }
     let o = find(name);
     if (!o && d > 0) { o = { name, price, qty: 0 }; order.push(o); }
     if (!o) return;
@@ -202,11 +206,13 @@
   const toast = $('#toast'); let tt;
   const say = msg => { toast.textContent = msg; toast.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('on'), 1600); };
 
-  buttons.forEach(b => b.addEventListener('click', () => {
+  document.addEventListener('click', e => {
+    const b = e.target.closest('button.add, button.opt');
+    if (!b || b.disabled || !b.closest('.dish')) return;
     change(b.dataset.name, 1, +b.dataset.price);
     say('Added ' + b.dataset.name);
     if (navigator.vibrate) navigator.vibrate(12);
-  }));
+  });
 
   // sheet
   const sheet = $('#basket');
@@ -281,6 +287,7 @@
   const REFKEY = 'boomiis-ref-v1';
   const newRef = () => 'BM-' + Math.random().toString(36).slice(2, 6).toUpperCase();
   let ref; try { ref = localStorage.getItem(REFKEY); } catch (e) {}
+  let sentRef = null; try { sentRef = localStorage.getItem(REFKEY + '-sent'); } catch (e) {}
   if (!ref) { ref = newRef(); try { localStorage.setItem(REFKEY, ref); } catch (e) {} }
 
   const paintPay = () => {
@@ -336,6 +343,7 @@
     }
     if (mode === 'Delivery') msg += '\nDelivery fee: I will pay the rider on delivery';
     msg += '\n\nThank you!';
+    sentRef = ref; try { localStorage.setItem(REFKEY + '-sent', ref); } catch (e) {}
     if (window.BoomiisStore) {
       BoomiisStore.addOrder({
         ref, mode, note: f.note.value.trim(),
@@ -346,11 +354,16 @@
         payment: method === 'bank' && PAY.bank
           ? { method: 'bank', network: PAY.bank.bank, to: PAY.bank.account, txn: f.btxn.value.trim(), amount: total() }
           : { method: 'momo', network: acct.net.name, to: acct.pretty, txn: f.txn.value.trim(), amount: total() }
-      });
+      }).catch(err => console.error(err)); // WhatsApp still carries the order if saving fails
     }
     window.open(`https://wa.me/${WA}?text=` + encodeURIComponent(msg), '_blank', 'noopener');
   });
 
+  const refreshMenu = m => { applyMenu(m); filter($('#q').value); paint(); };
+  if (window.BoomiisStore) {
+    refreshMenu(BoomiisStore.menuOverrides());
+    BoomiisStore.loadMenu().then(refreshMenu).catch(err => console.error(err));
+  }
   paint();
   paintPay();
   if (location.hash) { const t = $(location.hash); if (t) setTimeout(() => t.scrollIntoView({ block: 'start' }), 60); }

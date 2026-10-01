@@ -137,3 +137,29 @@ body.basket-open .sheet{transform:none}
   .mhero>img{animation:none;transform:none}
   .orderbar,.sheet{transition:none}
 }
+
+/* ---------- payment ---------- */
+.pay{border:0;display:grid;gap:12px;min-width:0}
+.pay legend{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:8px;padding:0}
+.seg--pay{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:1fr}
+.seg--pay label[hidden]{display:none}
+.paybox{position:relative;display:grid;gap:12px;padding:18px;border-radius:20px;background:linear-gradient(160deg,rgba(163,48,74,.22),rgba(10,26,19,.6) 60%);border:1px solid rgba(163,48,74,.45)}
+.paybox[hidden],.paynote[hidden],.dial[hidden]{display:none}
+.paybox__top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.paybox__lbl{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.paybox__amt{font-size:2.1rem;font-weight:800;letter-spacing:-.03em;line-height:1;color:#fff}
+.net{display:inline-flex;align-items:center;padding:5px 11px;border-radius:999px;font-size:.74rem;font-weight:800;letter-spacing:.02em;background:rgba(255,255,255,.12);color:#fff}
+.net--mtn{background:#ffcc00;color:#111}
+.net--telecel{background:#e3001b;color:#fff}
+.net--at{background:#0057b8;color:#fff}
+.net--bank{background:var(--sand);color:#111}
+.paybox__dl{display:grid;gap:8px;margin:0}
+.paybox__dl div{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.25)}
+.paybox__dl dt{font-size:.74rem;color:var(--muted);font-weight:600}
+.paybox__dl dd{display:flex;align-items:center;gap:10px;font-weight:800;font-size:.98rem;letter-spacing:.02em;margin:0;text-align:right}
+.copy{border:1px solid rgba(233,214,180,.4);background:transparent;color:var(--sand);font:700 .72rem var(--font);padding:5px 10px;border-radius:999px;cursor:pointer;transition:background .2s}
+.copy:hover{background:rgba(233,214,180,.12)}
+.dial{justify-self:start;text-decoration:none}
+.steps{margin:0;padding-left:18px;display:grid;gap:4px;color:rgba(255,255,255,.82);font-size:.84rem;line-height:1.45}
+.steps b{color:var(--sand)}
+.paynote{font-size:.84rem;color:var(--muted);line-height:1.5;padding:12px 14px;border-radius:14px;border:1px dashed rgba(255,255,255,.18)}

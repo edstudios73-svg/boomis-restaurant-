@@ -4,6 +4,12 @@
   const body = document.body;
   const WA = '233506387636';
   const KEY = 'boomiis-order-v1';
+
+  // ---------- payment details: edit here when the final MoMo number / bank account is confirmed ----------
+  const PAY = {
+    momo: { number: '0506387636', name: 'BOOMiiS Restaurant' },
+    bank: null // e.g. { bank: 'GCB Bank', name: 'BOOMiiS Restaurant', account: '1234567890', branch: 'East Legon' }
+  };
   const cedi = n => 'GH₵' + n.toLocaleString('en-GH');
 
   $('#yr').textContent = new Date().getFullYear();
@@ -111,6 +117,7 @@
     bar.classList.toggle('show', n > 0);
     if (pop) { obCount.classList.remove('pop'); void obCount.offsetWidth; obCount.classList.add('pop'); }
     paintButtons(); paintSheet();
+    paintPay();
     if (!n && body.classList.contains('basket-open')) openSheet(false);
   };
 
@@ -144,7 +151,7 @@
   $('#closeSheet').addEventListener('click', () => openSheet(false));
   $('#sheetBg').addEventListener('click', () => openSheet(false));
   addEventListener('keydown', e => { if (e.key === 'Escape') { openSheet(false); setMenu(false); } });
-  $('#clear').addEventListener('click', () => { order = []; save(); paint(); });
+  $('#clear').addEventListener('click', () => { order = []; save(); ref = newRef(); try { localStorage.setItem(REFKEY, ref); } catch (e) {} paint(); });
 
   // swipe down to close
   let y0 = null;
@@ -153,7 +160,67 @@
 
   // delivery address toggle
   const form = $('#orderForm'), addr = $('.addr', form);
-  $$('input[name=mode]', form).forEach(r => r.addEventListener('change', () => { addr.hidden = form.elements.mode.value !== 'Delivery'; }));
+  $$('input[name=mode]', form).forEach(r => r.addEventListener('change', () => { addr.hidden = form.elements.mode.value !== 'Delivery'; paintPay(); }));
+
+  // ---------- payment ----------
+  const NETS = [
+    { name: 'MTN MoMo', cls: 'mtn', code: '*170#', path: 'Transfer Money, then MoMo User', prefixes: ['024', '025', '053', '054', '055', '059'] },
+    { name: 'Telecel Cash', cls: 'telecel', code: '*110#', path: 'Send Money', prefixes: ['020', '050'] },
+    { name: 'AT Money', cls: 'at', code: '*110#', path: 'Send Money', prefixes: ['026', '027', '056', '057'] }
+  ];
+  const momoNum = PAY.momo.number.replace(/\D/g, '').replace(/^233/, '0');
+  const net = NETS.find(n => n.prefixes.includes(momoNum.slice(0, 3))) || { name: 'Mobile Money', cls: '', code: 'your MoMo menu', path: 'Send Money', prefixes: [] };
+  const pretty = momoNum.replace(/^(\d{3})(\d{3})(\d{4})$/, '$1 $2 $3');
+  $('#momoNet').textContent = net.name;
+  $('#momoNet').classList.add('net--' + (net.cls || 'other'));
+  $('#momoNum').textContent = pretty;
+  $('#momoName').textContent = PAY.momo.name;
+  $('#momoCode').textContent = net.code;
+  $('#momoPath').textContent = net.path;
+  if (/android/i.test(navigator.userAgent) && net.code.startsWith('*')) {
+    const dial = $('#momoDial');
+    dial.href = 'tel:' + encodeURIComponent(net.code);
+    dial.textContent = 'Open ' + net.name + ' (' + net.code + ')';
+    dial.hidden = false;
+  }
+  if (PAY.bank) {
+    $('[data-bank]').hidden = false;
+    const rows = [['Bank', PAY.bank.bank], ['Account name', PAY.bank.name], ['Account no.', PAY.bank.account], ['Branch', PAY.bank.branch]].filter(r => r[1]);
+    $('#bankDl').innerHTML = rows.map(([k], i) => `<div><dt>${k}</dt><dd><span data-bank-v="${i}"></span>${k === 'Account no.' ? `<button type="button" class="copy" data-copy="[data-bank-v='${i}']">Copy</button>` : ''}</dd></div>`).join('');
+    rows.forEach(([, v], i) => { $(`[data-bank-v='${i}']`).textContent = v; });
+  }
+
+  const REFKEY = 'boomiis-ref-v1';
+  const newRef = () => 'BM-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+  let ref; try { ref = localStorage.getItem(REFKEY); } catch (e) {}
+  if (!ref) { ref = newRef(); try { localStorage.setItem(REFKEY, ref); } catch (e) {} }
+
+  const paintPay = () => {
+    const method = form.elements.pay.value;
+    $('#payMomo').hidden = method !== 'momo';
+    $('#payBank').hidden = method !== 'bank';
+    $('#payLater').hidden = method !== 'later';
+    $('#payFee').hidden = method === 'later' || form.elements.mode.value !== 'Delivery';
+    $$('[data-pay-amt]').forEach(el => { el.textContent = cedi(total()); });
+    $$('[data-pay-ref]').forEach(el => { el.textContent = ref; });
+  };
+  $$('input[name=pay]', form).forEach(r => r.addEventListener('change', paintPay));
+
+  const copyText = async text => {
+    try { await navigator.clipboard.writeText(text); }
+    catch (e) {
+      const ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (err) {} ta.remove();
+    }
+  };
+  form.addEventListener('click', e => {
+    const b = e.target.closest('.copy'); if (!b) return;
+    const src = $(b.dataset.copy); if (!src) return;
+    copyText(src.textContent.replace(/\s/g, '')).then(() => {
+      say('Copied ' + src.textContent);
+      b.textContent = 'Copied'; setTimeout(() => { b.textContent = 'Copy'; }, 1400);
+    });
+  });
 
   form.addEventListener('submit', e => {
     e.preventDefault();
@@ -167,10 +234,21 @@
     let msg = `Hello BOOMiiS! I'd like to place an order (${mode}).\n\n${list}\n\nTotal: ${cedi(total())}\nName: ${f.name.value.trim()}`;
     if (mode === 'Delivery' && f.addr.value.trim()) msg += `\nAddress: ${f.addr.value.trim()}`;
     if (f.note.value.trim()) msg += `\nNote: ${f.note.value.trim()}`;
+    const method = f.pay.value;
+    if (method === 'momo') {
+      msg += `\n\nPayment: ${net.name} to ${pretty}\nAmount: ${cedi(total())}\nReference: ${ref}`;
+      msg += f.txn.value.trim() ? `\nTransaction ID: ${f.txn.value.trim()}` : '\nTransaction ID: I will send my MoMo confirmation here';
+    } else if (method === 'bank' && PAY.bank) {
+      msg += `\n\nPayment: Bank transfer to ${PAY.bank.bank}\nAmount: ${cedi(total())}\nReference: ${ref}`;
+      if (f.btxn.value.trim()) msg += `\nTransfer ref / sender: ${f.btxn.value.trim()}`;
+    } else {
+      msg += `\n\nPayment: I'll pay later (reference ${ref})`;
+    }
     msg += '\n\nThank you!';
     window.open(`https://wa.me/${WA}?text=` + encodeURIComponent(msg), '_blank', 'noopener');
   });
 
   paint();
+  paintPay();
   if (location.hash) { const t = $(location.hash); if (t) setTimeout(() => t.scrollIntoView({ block: 'start' }), 60); }
 })();

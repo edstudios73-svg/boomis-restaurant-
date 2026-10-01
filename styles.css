@@ -112,7 +112,7 @@ body.menu-open .menu-overlay a.big:nth-child(5){transition-delay:.24s}
 .promo__big{text-align:right;position:relative;z-index:2}
 .promo__big b{display:block;font-size:2.2rem;font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--green)}
 .promo__big b span{font-size:1.4rem;color:var(--maroon)}
-.promo__big small{display:block;margin-top:4px}
+.promo__big small{display:block;margin:2px 0}
 .promo__plate{position:absolute;right:-34px;bottom:-34px;width:112px;height:112px;object-fit:cover;border-radius:50%;opacity:.16;pointer-events:none}
 
 /* ---------- features ---------- */

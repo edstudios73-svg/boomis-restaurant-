@@ -57,6 +57,7 @@ body.menu-page{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
 .add svg{width:18px;height:18px}
 .add:hover{background:rgba(163,48,74,.12)}
 .add:active{transform:scale(.9)}
+.add.ask{text-decoration:none;font-weight:800;font-size:1rem}
 .add.in{background:var(--maroon);border-color:var(--maroon);color:#fff}
 .add .qty,.opt .qty{position:absolute;top:-7px;right:-7px;min-width:20px;height:20px;border-radius:10px;background:#fff;color:#111;font:800 .7rem/20px var(--font);text-align:center;padding:0 5px}
 .opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}

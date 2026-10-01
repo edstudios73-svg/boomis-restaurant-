@@ -1,9 +1,11 @@
 """Builds menu.html from the MENU data below.
 
 Edit a price or add a dish here, then run:  python3 scripts/build_menu.py
-Prices are in Ghana cedis and were transcribed from the printed BOOMiiS menu.
+Prices are in Ghana cedis, from the current BOOMiiS food menu.
+A price of None shows "Ask for price" with a WhatsApp link instead of an add button.
 """
 import json
+from urllib.parse import quote
 from html import escape
 from pathlib import Path
 
@@ -17,75 +19,91 @@ MENU = [
         "blurb": "Our signature Nigerian plates, generous and complete.",
         "img": "ofada.jpg",
         "items": [
-            ("Mission's Delight", "Ofada rice and ayamase sauce", 80, "ofada.jpg"),
-            ("Buka Style", "Amala, ewedu, gbegiri, stew, goat meat, beef, ponmo and inu eran (tripe)", 75),
-            ("Yam Porridge", "Mashed yam cooked in palm oil with fats and vegetables", 55),
-            ("Ewa Agonyin", "Mashed beans with chilli pepper sauce and fried fish", 62),
-            ("Famous 'B'", "Beans porridge, plantain and fried beef", 52),
-            ("Mixit", "Rice and beans with assorted stew (ponmo, goat, beef and fish)", 57),
-            ("Spaghetti Surprise", "Jollof spaghetti with meat chunks and vegetables, served with cold zobo", 58),
-            ("Many Nations Naija", "Nigerian jollof rice, fried rice, beef, plantain and chicken", 62),
-            ("PH Style", "2 boles (roasted plantain) with fish and palm oil pepper sauce",
-             [("Salmon", 55), ("Redfish", 70), ("Croaker", 95)]),
+            ("Mission's Delight", "Ofada rice with ayamase sauce", 138, "ofada.jpg"),
+            ("Buka Style", "Amala, ewedu, gbegiri and stew", 126),
+            ("Many Nations Naija", "Jollof and fried rice, beef, plantain and chicken", 109),
+            ("Ewa Agonyin", "Mashed beans with chilli pepper sauce and fried fish", 98),
+            ("Spaghetti Surprise", "Jollof spaghetti with meat chunks and vegetables", 98),
+            ("Mixit", "Rice and beans with assorted stew", 92),
+            ("Yam Porridge", "Mashed yam cooked in palm oil with vegetables", 86),
+            ("Famous B", "Beans porridge, plantain and fried beef", 86),
         ],
     },
     {
         "id": "rice", "title": "Rice Meals", "short": "Rice",
-        "blurb": "Jollof, fried rice and plain rice, done properly.",
+        "blurb": "Jollof, fried rice and plain rice, Ghanaian or Nigerian style.",
         "img": "jollof-chicken.jpg",
         "items": [
-            ("All Weather", "Assorted fried rice with chopped carrots, bell pepper, sweet corn, green peas, gizzard and choice of protein", 70),
-            ("All Seasons", "Assorted jollof rice with chunks of beef and chicken, vegetables and salad", 65),
-            ("All Springs", "Plain rice, spring onions and carrots with prawn 'n' sauce", 85),
-            ("Many Nations GH", "Jollof, fried rice, plantain, fried beef, chicken and coleslaw", 50, "jollof-chicken.jpg"),
-            ("Simply Good", "Plain rice with tomato stew. Options: chicken, beef, goat meat or fish", 72, "rice-beef.jpg"),
-            ("Jollof Rice", "Smoky jollof with your choice of protein",
-             [("Chicken", 62), ("Peppered beef", 65), ("Peppered goat", 70), ("Peppered turkey", 75)], "jollof-plate.jpg"),
+            ("Jollof Rice", "Ghanaian or Nigerian style, with your choice of protein",
+             [("Chicken", 109), ("Peppered fish", 104), ("Peppered beef", 138), ("Peppered goat", 150), ("Peppered turkey", 150)], "jollof-plate.jpg"),
+            ("Fried Rice", "Ghanaian or Nigerian style, with your choice of protein",
+             [("Chicken", 109), ("Peppered fish", 104), ("Peppered beef", 138), ("Peppered goat", 150), ("Peppered turkey", 150)]),
+            ("All Weather", "Assorted fried rice with veggies and chicken", 105),
+            ("All Seasons", "Assorted jollof rice with chunks of beef, veggies and chicken", 105),
+            ("Many Nations GH", "Jollof, fried rice, plantain, beef, chicken and coleslaw", 98, "jollof-chicken.jpg"),
+            ("Simply Good", "Plain rice (Ghanaian or Nigerian) with assorted tomato stew", 138, "rice-beef.jpg"),
         ],
     },
     {
-        "id": "soups", "title": "Soupy", "short": "Soups",
-        "blurb": "Rich Nigerian soups. Pair with a swallow from Food Balls.",
+        "id": "ghana", "title": "Proudly Ghanaian", "short": "Ghanaian",
+        "blurb": "Accra favourites, made with the same care.",
+        "img": None,
+        "items": [
+            ("Palava Sauce", "Beef or goat, wele, salmon and egg", 120),
+            ("Groundnut Soup", "Chicken drumstick, beef or goat and tuna", 117),
+            ("Palmnut Soup", "Beef, goat and tuna", 117),
+            ("Okro Stew", "Salmon, crab, wele and tilapia", 110),
+            ("Fish Light Soup", "Tilapia, red fish or salmon", 109),
+            ("Light Soup", "Chicken drumstick, goat or beef and fried red fish", 106),
+            ("Waakye & Stew", "Beef, sausage, wele, red fish and egg", None),
+        ],
+    },
+    {
+        "id": "soups", "title": "Soups", "short": "Soups",
+        "blurb": "Rich Nigerian soups. Pair with a swallow.",
         "img": "eba-egusi.jpg",
         "items": [
-            ("Egusi Soup", "", 70, "eba-egusi.jpg"),
-            ("Assorted Okra", "", 68),
-            ("Edikaikong", "", 80),
-            ("Oha Soup", "", 80),
-            ("Ogbono", "", 75),
-            ("Afang Soup", "", 75),
-            ("Efo Riro", "Vegetable soup", 78, "yam-soup.jpg"),
-            ("Assorted Pepper Soup", "", 75),
-            ("Goat Meat Pepper Soup", "", 80),
-            ("Catfish Pepper Soup", "", 90),
-            ("Plain Ewedu", "", 15),
-            ("Gbegiri", "Beans stew", 15),
-            ("Plain Okro", "", 15),
+            ("Egusi", "", 132, "eba-egusi.jpg"),
+            ("Assorted Okro", "", 132),
+            ("Efo Riro", "Vegetable soup", 144, "yam-soup.jpg"),
+            ("Edikaikong", "", 150),
+            ("Oha", "", 150),
+            ("Afang", "", 150),
+            ("Ogbono", "", 120),
+            ("Assorted Pepper Soup", "", 120),
+            ("Goat Meat Pepper Soup", "", 140),
+            ("Plain Ewedu", "", 23),
+            ("Gbegiri", "", 23),
+            ("Plain Okro", "", 23),
         ],
     },
     {
-        "id": "swallow", "title": "Omo Naija Food Balls", "short": "Swallows",
+        "id": "swallow", "title": "Swallows", "short": "Swallows",
         "blurb": "Choose your swallow to go with any soup.",
         "img": "yam-egusi.jpg",
         "items": [
-            ("Pounded Yam", "", 25, "yam-soup.jpg"),
-            ("Poundo Yam", "", 17),
-            ("Semo", "", 15),
-            ("Amala", "", 15),
-            ("Fufu", "", 10),
-            ("Eba", "", 6),
+            ("Pounded Yam", "", 35, "yam-soup.jpg"),
+            ("Fufu (Ghanaian)", "", 35),
+            ("Fufu (Nigerian)", "", 30),
+            ("Poundo Yam", "", 30),
+            ("Omo Tuo", "Rice balls", 30),
+            ("Semo", "", 25),
+            ("Amala", "", 25),
+            ("Konkonte", "", 20),
+            ("Banku", "", 10),
+            ("Eba", "", 8),
         ],
     },
     {
         "id": "stew", "title": "Stew", "short": "Stew",
-        "blurb": "Proteins slow-cooked in our tomato stew. Pick your portion.",
+        "blurb": "Four pieces slow-cooked in our tomato stew.",
         "img": "jollof-plate.jpg",
         "items": [
-            ("Chicken in Stew", "", [("4 pieces", 58), ("6 pieces", 75), ("8 pieces", 88)]),
-            ("Beef in Stew", "", [("4 pieces", 70), ("6 pieces", 85), ("8 pieces", 96)]),
-            ("Goat Meat in Stew", "", [("4 pieces", 75), ("6 pieces", 97), ("8 pieces", 120)]),
-            ("Turkey in Stew", "", [("4 pieces", 78), ("6 pieces", 105), ("8 pieces", 130)]),
-            ("Fish in Stew", "", [("4 pieces", 55), ("6 pieces", 70), ("8 pieces", 85)]),
+            ("Chicken in Stew", "4 pieces", 126),
+            ("Fish in Stew", "4 pieces", 126),
+            ("Beef in Stew", "4 pieces", 155),
+            ("Goat in Stew", "4 pieces", 160),
+            ("Turkey in Stew", "4 pieces", 160),
         ],
     },
     {
@@ -93,67 +111,44 @@ MENU = [
         "blurb": "For those who like it hot.",
         "img": "rice-beef.jpg",
         "items": [
-            ("Hottie", "Beef cubes in hot pepper sauce", 60, "rice-beef.jpg"),
-            ("Chilli", "Grilled goat meat in chilli sauce", 64),
-            ("Spicy Wings", "Chicken wings with hot barbecue sauce", 55),
-            ("Fishful", "Fried fish dipped in green pepper sauce. Options: redfish, tilapia or salmon", 80),
-            ("Gizzy", "Fried gizzard in green pepper sauce", 40),
-            ("Dodo Gizzard", "", 35),
-        ],
-    },
-    {
-        "id": "grills", "title": "Grills & Roasts", "short": "Grills",
-        "blurb": "Kebabs, suya and roasts off the grill.",
-        "img": None,
-        "items": [
-            ("Suya Special", "", 50),
-            ("Turkey Kebab", "", 45),
-            ("Goat Meat Kebab", "", 35),
-            ("Chicken Wings Kebab", "", 30),
-            ("Sausage Kebab", "", 20),
-            ("Grilled Tilapia", "", 70),
-            ("Grilled Catfish", "", 120),
-            ("Roasted Fish Mayo", "", 80),
-            ("Chicken Steak", "", 120),
-            ("Beef Steak", "", 150),
-            ("Roasted Turkey", "With cranberry sauce", 125),
-        ],
-    },
-    {
-        "id": "ghana", "title": "Proudly Ghanaian", "short": "Ghanaian",
-        "blurb": "Accra favourites, made with the same care.",
-        "img": "swallow-soup.jpg",
-        "items": [
-            ("Banku & Tilapia", "", 55),
-            ("Banku & Seafood Okro", "", 60),
-            ("Banku & Light Soup", "", 45),
-            ("Banku & Groundnut Soup", "", 45),
-            ("Fufu & Light Soup", "", 55),
-            ("Fufu & Fisherman Soup", "", 65),
-            ("Boiled Yam & Palava Sauce", "", 50),
-            ("Boiled Plantain & Palava Sauce", "", 65),
-            ("Omo Tuo & Groundnut Soup", "Rice balls", 50),
+            ("Hottie Turkey", "", 150),
+            ("Chilli Goat Meat", "", 150),
+            ("Peppered Beef", "", 138, "rice-beef.jpg"),
+            ("Spicy Chicken Wings", "", 109),
+            ("Gizzy", "Peppered gizzard", 75),
+            ("Dodo Gizzard", "", 69),
         ],
     },
     {
         "id": "sides", "title": "Side Meals", "short": "Sides",
-        "blurb": "Add a little extra.",
+        "blurb": "Add a little extra to your plate.",
         "img": None,
         "items": [
-            ("Fried Potato Chips", "", 25),
-            ("Fried Yam Chips", "", 20),
-            ("Fried Plantain", "", 20),
-            ("Plain Rice", "", 30),
-            ("Plain Beans", "", 20),
-            ("Dodo Gizzard", "", 35),
+            ("Plain Rice (Nigerian)", "", 45),
+            ("Plain Rice (Ghanaian)", "", 40),
+            ("Fried Yam", "", 35),
+            ("Fried Plantain", "", 35),
+            ("Boiled Yam", "", 35),
+            ("Boiled Unripe Plantain", "", 35),
+            ("Plain Beans", "", 30),
         ],
     },
     {
-        "id": "special", "title": "Special Order", "short": "Special",
-        "blurb": "Ask us in advance.",
+        "id": "extras", "title": "Extras", "short": "Extras",
+        "blurb": "Extra protein for any dish.",
         "img": None,
         "items": [
-            ("Bestie (Moin Moin)", "Steamed bean pudding", 40),
+            ("Turkey", "", 50),
+            ("Goat", "", 45),
+            ("Beef", "", 40),
+            ("Tilapia", "", 40),
+            ("Chicken", "", 35),
+            ("Red Fish", "", 35),
+            ("Salmon", "", 30),
+            ("Ponmo / Wele", "", 20),
+            ("Intestines", "", 20),
+            ("Sausage", "", 5),
+            ("Egg", "", 5),
         ],
     },
 ]
@@ -190,12 +185,17 @@ def render_item(item):
             out.append(f'<p>{escape(desc)}</p>')
         out.append('<div class="opts">' + "".join(add_btn(name, p, lbl) for lbl, p in price) + '</div>')
     else:
-        out.append(f'<span class="dots"></span><span class="price">{cedi(price)}</span>')
+        label = cedi(price) if price is not None else "Ask for price"
+        out.append(f'<span class="dots"></span><span class="price">{label}</span>')
         out.append('</div>')
         if desc:
             out.append(f'<p>{escape(desc)}</p>')
     out.append('</div>')
-    if not isinstance(price, list):
+    if price is None:
+        ask = quote(f"Hello BOOMiiS, how much is the {name} today?")
+        out.append(f'<a class="add ask" href="https://wa.me/233506387636?text={ask}" target="_blank" rel="noopener" '
+                   f'aria-label="Ask the price of {escape(name, quote=True)} on WhatsApp">?</a>')
+    elif not isinstance(price, list):
         out.append(add_btn(name, price))
     out.append('</li>')
     return "".join(out)
@@ -222,6 +222,8 @@ def render():
     def offers(price):
         if isinstance(price, list):
             return [{"@type": "Offer", "name": lbl, "price": str(p), "priceCurrency": "GHS"} for lbl, p in price]
+        if price is None:
+            return {"@type": "Offer", "priceCurrency": "GHS"}
         return {"@type": "Offer", "price": str(price), "priceCurrency": "GHS"}
 
     schema = {"@context": "https://schema.org", "@graph": [

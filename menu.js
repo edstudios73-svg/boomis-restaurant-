@@ -222,12 +222,12 @@
     const method = form.elements.pay.value;
     $('#payMomo').hidden = method !== 'momo';
     $('#payBank').hidden = method !== 'bank';
-    $('#payLater').hidden = method !== 'later';
-    $('#payFee').hidden = method === 'later' || form.elements.mode.value !== 'Delivery';
+    $('#payFee').hidden = form.elements.mode.value !== 'Delivery';
     $$('[data-pay-amt]').forEach(el => { el.textContent = cedi(total()); });
     $$('[data-pay-ref]').forEach(el => { el.textContent = ref; });
   };
   $$('input[name=pay]', form).forEach(r => r.addEventListener('change', paintPay));
+  form.addEventListener('input', e => { if (e.target.value.trim()) e.target.classList.remove('err'); });
 
   const copyText = async text => {
     try { await navigator.clipboard.writeText(text); }
@@ -248,25 +248,27 @@
   form.addEventListener('submit', e => {
     e.preventDefault();
     const f = form.elements;
-    const bad = !f.name.value.trim();
-    f.name.classList.toggle('err', bad);
-    if (bad) { f.name.focus(); return; }
     if (!order.length) return;
-    const mode = f.mode.value;
+    const mode = f.mode.value, method = f.pay.value;
+    const proof = method === 'bank' ? f.btxn : f.txn;
+    const required = [f.name, ...(mode === 'Delivery' ? [f.addr] : []), proof];
+    required.forEach(i => i.classList.toggle('err', !i.value.trim()));
+    const missing = required.find(i => !i.value.trim());
+    if (missing) {
+      missing.focus();
+      say(missing === proof ? 'Pay first, then enter your ' + (method === 'bank' ? 'transfer reference' : 'MoMo transaction ID') : missing === f.addr ? 'Add your delivery address' : 'Add your name');
+      return;
+    }
     const list = order.map(o => `• ${o.qty} × ${o.name}  ${cedi(o.price * o.qty)}`).join('\n');
-    let msg = `Hello BOOMiiS! I'd like to place an order (${mode}).\n\n${list}\n\nTotal: ${cedi(total())}\nName: ${f.name.value.trim()}`;
+    let msg = `Hello BOOMiiS! Here is my paid online order (${mode}).\n\n${list}\n\nTotal: ${cedi(total())}\nName: ${f.name.value.trim()}`;
     if (mode === 'Delivery' && f.addr.value.trim()) msg += `\nAddress: ${f.addr.value.trim()}`;
     if (f.note.value.trim()) msg += `\nNote: ${f.note.value.trim()}`;
-    const method = f.pay.value;
-    if (method === 'momo') {
-      msg += `\n\nPayment: ${acct.net.name} to ${acct.pretty}\nAmount: ${cedi(total())}\nReference: ${ref}`;
-      msg += f.txn.value.trim() ? `\nTransaction ID: ${f.txn.value.trim()}` : '\nTransaction ID: I will send my MoMo confirmation here';
-    } else if (method === 'bank' && PAY.bank) {
-      msg += `\n\nPayment: Bank transfer to ${PAY.bank.bank}\nAmount: ${cedi(total())}\nReference: ${ref}`;
-      if (f.btxn.value.trim()) msg += `\nTransfer ref / sender: ${f.btxn.value.trim()}`;
+    if (method === 'bank' && PAY.bank) {
+      msg += `\n\nPAID: Bank transfer to ${PAY.bank.bank}\nAmount: ${cedi(total())}\nReference: ${ref}\nTransfer ref / sender: ${f.btxn.value.trim()}`;
     } else {
-      msg += `\n\nPayment: I'll pay later (reference ${ref})`;
+      msg += `\n\nPAID: ${acct.net.name} to ${acct.pretty}\nAmount: ${cedi(total())}\nReference: ${ref}\nTransaction ID: ${f.txn.value.trim()}`;
     }
+    if (mode === 'Delivery') msg += '\nDelivery fee: I will pay the rider on delivery';
     msg += '\n\nThank you!';
     window.open(`https://wa.me/${WA}?text=` + encodeURIComponent(msg), '_blank', 'noopener');
   });

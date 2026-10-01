@@ -124,20 +124,20 @@
   <ul class="lines" id="lines"></ul>
   <div class="sheet__total"><span>Total</span><b id="sheetTotal">GH₵0</b></div>
   <form class="form sheet__form" id="orderForm" novalidate>
-    <div class="seg" role="radiogroup" aria-label="How would you like it?">
-      <label><input type="radio" name="mode" value="Dine in" checked><span>Dine in</span></label>
-      <label><input type="radio" name="mode" value="Pickup"><span>Pickup</span></label>
+    <div class="seg seg--two" role="radiogroup" aria-label="Pickup or delivery">
+      <label><input type="radio" name="mode" value="Pickup" checked><span>Pickup</span></label>
       <label><input type="radio" name="mode" value="Delivery"><span>Delivery</span></label>
     </div>
     <label>Your name<input name="name" autocomplete="name" placeholder="e.g. Ama Mensah" required></label>
     <label class="addr" hidden>Delivery address<input name="addr" autocomplete="street-address" placeholder="Area, street, landmark"></label>
+    <p class="paynote paynote--fee" id="payFee" hidden>Pay for your food now. The <b>delivery fee is paid to the rider</b> when your order arrives.</p>
     <label>Note<textarea name="note" rows="2" placeholder="Spice level, allergies, time…"></textarea></label>
     <fieldset class="pay">
       <legend>Payment</legend>
-      <div class="seg seg--pay" role="radiogroup" aria-label="Payment method">
+      <p class="paynote paynote--req">Online orders are <b>paid in advance</b>. We start cooking once your payment is confirmed.</p>
+      <div class="seg seg--pay" role="radiogroup" aria-label="Payment method" data-bank hidden>
         <label><input type="radio" name="pay" value="momo" checked><span>Mobile Money</span></label>
-        <label data-bank hidden><input type="radio" name="pay" value="bank"><span>Bank</span></label>
-        <label><input type="radio" name="pay" value="later"><span>Pay later</span></label>
+        <label><input type="radio" name="pay" value="bank"><span>Bank transfer</span></label>
       </div>
       <div class="paybox" id="payMomo">
         <div class="nets" id="momoPick" role="radiogroup" aria-label="Your Mobile Money network"></div>
@@ -154,18 +154,16 @@
           <li>Send the amount above and use the reference.</li>
           <li>Enter the transaction ID below, then send your order.</li>
         </ol>
-        <label>MoMo transaction ID<input name="txn" autocomplete="off" inputmode="numeric" placeholder="From your MoMo SMS"></label>
+        <label><span>MoMo transaction ID <em class="req">Required</em></span><input name="txn" autocomplete="off" inputmode="numeric" placeholder="From your MoMo confirmation SMS"></label>
       </div>
       <div class="paybox" id="payBank" hidden>
         <div class="paybox__top"><span class="net net--bank">Bank transfer</span><span class="paybox__lbl">Send exactly</span></div>
         <b class="paybox__amt" data-pay-amt></b>
         <dl class="paybox__dl" id="bankDl"></dl>
-        <label>Transfer reference or sender name<input name="btxn" autocomplete="off" placeholder="So we can match your payment"></label>
+        <label><span>Transfer reference or sender name <em class="req">Required</em></span><input name="btxn" autocomplete="off" placeholder="So we can match your payment"></label>
       </div>
-      <p class="paynote" id="payLater" hidden>Pay with cash, card or MoMo when you dine in or collect. For delivery, the team will confirm payment with you on WhatsApp.</p>
-      <p class="paynote" id="payFee" hidden>Delivery fee, if any, is confirmed on WhatsApp before you pay.</p>
     </fieldset>
-    <button class="btn btn--wa" type="submit"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.6-.1 1.1Z"/></svg>Send order on WhatsApp</button>
+    <button class="btn btn--wa" type="submit"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.6-.1 1.1Z"/></svg>Send paid order</button>
     <button class="clear" id="clear" type="button">Clear order</button>
   </form>
 </aside>

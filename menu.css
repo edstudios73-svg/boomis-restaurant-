@@ -104,7 +104,8 @@ body.basket-open .sheet{transform:none}
 .sheet__form .addr[hidden]{display:none}
 .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:#0a1a13;border:1px solid var(--line);border-radius:16px;padding:5px}
 .seg label{display:block;text-transform:none;letter-spacing:0}
-.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{position:relative}
+.seg input{position:absolute;inset:0;width:1px;height:1px;opacity:0;pointer-events:none}
 .seg span{display:block;text-align:center;padding:10px 4px;border-radius:12px;font-size:.84rem;font-weight:700;color:rgba(255,255,255,.75);cursor:pointer;transition:background .2s,color .2s}
 .seg input:checked+span{background:var(--maroon);color:#fff}
 .seg input:focus-visible+span{outline:2px solid var(--sand);outline-offset:2px}
@@ -163,3 +164,13 @@ body.basket-open .sheet{transform:none}
 .steps{margin:0;padding-left:18px;display:grid;gap:4px;color:rgba(255,255,255,.82);font-size:.84rem;line-height:1.45}
 .steps b{color:var(--sand)}
 .paynote{font-size:.84rem;color:var(--muted);line-height:1.5;padding:12px 14px;border-radius:14px;border:1px dashed rgba(255,255,255,.18)}
+.nets{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:8px}
+.nets[hidden],.net[hidden]{display:none}
+.nets .net{justify-content:center;padding:11px 8px;border:2px solid transparent;font-size:.84rem;cursor:pointer;opacity:.55;transition:opacity .2s,border-color .2s,transform .15s;font-family:var(--font)}
+.nets .net.on{opacity:1;border-color:#fff}
+.nets .net:active{transform:scale(.97)}
+.paybox__top:has(.net[hidden]) {justify-content:flex-end}
+.sheet{overflow-x:hidden}
+.sheet__form>*,.paybox>*{min-width:0}
+.paybox__dl dd{min-width:0;flex-wrap:wrap;justify-content:flex-end;word-break:break-word}
+.paybox__dl dt{flex:none}

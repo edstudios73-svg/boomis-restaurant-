@@ -7,7 +7,11 @@
 
   // ---------- payment details: edit here when the final MoMo number / bank account is confirmed ----------
   const PAY = {
-    momo: { number: '0506387636', name: 'BOOMiiS Restaurant' },
+    // first account is the default choice in the basket
+    momo: [
+      { number: '0242165783', name: 'BOOMiiS Restaurant' },
+      { number: '0506387636', name: 'BOOMiiS Restaurant' }
+    ],
     bank: null // e.g. { bank: 'GCB Bank', name: 'BOOMiiS Restaurant', account: '1234567890', branch: 'East Legon' }
   };
   const cedi = n => 'GH₵' + n.toLocaleString('en-GH');
@@ -168,21 +172,40 @@
     { name: 'Telecel Cash', cls: 'telecel', code: '*110#', path: 'Send Money', prefixes: ['020', '050'] },
     { name: 'AT Money', cls: 'at', code: '*110#', path: 'Send Money', prefixes: ['026', '027', '056', '057'] }
   ];
-  const momoNum = PAY.momo.number.replace(/\D/g, '').replace(/^233/, '0');
-  const net = NETS.find(n => n.prefixes.includes(momoNum.slice(0, 3))) || { name: 'Mobile Money', cls: '', code: 'your MoMo menu', path: 'Send Money', prefixes: [] };
-  const pretty = momoNum.replace(/^(\d{3})(\d{3})(\d{4})$/, '$1 $2 $3');
-  $('#momoNet').textContent = net.name;
-  $('#momoNet').classList.add('net--' + (net.cls || 'other'));
-  $('#momoNum').textContent = pretty;
-  $('#momoName').textContent = PAY.momo.name;
-  $('#momoCode').textContent = net.code;
-  $('#momoPath').textContent = net.path;
-  if (/android/i.test(navigator.userAgent) && net.code.startsWith('*')) {
+  const fallbackNet = { name: 'Mobile Money', cls: 'other', code: 'your MoMo menu', path: 'Send Money', prefixes: [] };
+  const accounts = PAY.momo.map(acc => {
+    const num = acc.number.replace(/\D/g, '').replace(/^233/, '0');
+    return { ...acc, num, pretty: num.replace(/^(\d{3})(\d{3})(\d{4})$/, '$1 $2 $3'),
+             net: NETS.find(n => n.prefixes.includes(num.slice(0, 3))) || fallbackNet };
+  });
+  let acct = accounts[0];
+  const isAndroid = /android/i.test(navigator.userAgent);
+  const pick = $('#momoPick');
+  if (accounts.length > 1) {
+    pick.innerHTML = accounts.map((a, i) => `<button type="button" class="net net--${a.net.cls}" role="radio" data-acct="${i}"></button>`).join('');
+    $$('[data-acct]', pick).forEach((btn, i) => {
+      btn.textContent = accounts[i].net.name;
+      btn.addEventListener('click', () => { acct = accounts[i]; paintAcct(); });
+    });
+  } else pick.hidden = true;
+  const paintAcct = () => {
+    const { net } = acct;
+    $$('[data-acct]', pick).forEach(btn => {
+      const on = accounts[+btn.dataset.acct] === acct;
+      btn.classList.toggle('on', on); btn.setAttribute('aria-checked', on);
+    });
+    const badge = $('#momoNet');
+    badge.textContent = net.name; badge.className = 'net net--' + net.cls;
+    badge.hidden = accounts.length > 1;
+    $('#momoNum').textContent = acct.pretty;
+    $('#momoName').textContent = acct.name;
+    $('#momoCode').textContent = net.code;
+    $('#momoPath').textContent = net.path;
     const dial = $('#momoDial');
-    dial.href = 'tel:' + encodeURIComponent(net.code);
-    dial.textContent = 'Open ' + net.name + ' (' + net.code + ')';
-    dial.hidden = false;
-  }
+    dial.hidden = !(isAndroid && net.code.startsWith('*'));
+    if (!dial.hidden) { dial.href = 'tel:' + encodeURIComponent(net.code); dial.textContent = 'Open ' + net.name + ' (' + net.code + ')'; }
+  };
+  paintAcct();
   if (PAY.bank) {
     $('[data-bank]').hidden = false;
     const rows = [['Bank', PAY.bank.bank], ['Account name', PAY.bank.name], ['Account no.', PAY.bank.account], ['Branch', PAY.bank.branch]].filter(r => r[1]);
@@ -236,7 +259,7 @@
     if (f.note.value.trim()) msg += `\nNote: ${f.note.value.trim()}`;
     const method = f.pay.value;
     if (method === 'momo') {
-      msg += `\n\nPayment: ${net.name} to ${pretty}\nAmount: ${cedi(total())}\nReference: ${ref}`;
+      msg += `\n\nPayment: ${acct.net.name} to ${acct.pretty}\nAmount: ${cedi(total())}\nReference: ${ref}`;
       msg += f.txn.value.trim() ? `\nTransaction ID: ${f.txn.value.trim()}` : '\nTransaction ID: I will send my MoMo confirmation here';
     } else if (method === 'bank' && PAY.bank) {
       msg += `\n\nPayment: Bank transfer to ${PAY.bank.bank}\nAmount: ${cedi(total())}\nReference: ${ref}`;

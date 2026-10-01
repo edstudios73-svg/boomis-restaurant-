@@ -1,168 +1,223 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GH">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>BOOMiiS Restaurant · Authentic Nigerian Cuisine in Accra</title>
-<meta name="description" content="BOOMiiS Restaurant, 47 Adjiringano Road, East Legon, Accra. Amala &amp; Abula, Egusi, Jollof, Ghanaian light soup, cocktails and outdoor seating.">
-<meta name="theme-color" content="#14080a">
-<meta property="og:title" content="BOOMiiS Restaurant · Accra">
-<meta property="og:description" content="Where Yoruba tradition meets the warmth of Accra. Reserve your table on WhatsApp.">
-<meta property="og:type" content="restaurant">
+<title>BOOMiiS Restaurant | Authentic Nigerian Cuisine in Accra</title>
+<meta name="description" content="BOOMiiS Restaurant, 47 Adjiringano Road, East Legon, Accra. Amala &amp; Abula, egusi, jollof, ofada rice, cocktails and outdoor seating. Reserve on WhatsApp.">
+<meta name="theme-color" content="#0b0b0b">
+<meta property="og:site_name" content="BOOMiiS Restaurant">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BOOMiiS Restaurant | Accra">
+<meta property="og:description" content="Taste Nigeria in the heart of Accra. Reserve your table on WhatsApp.">
+<meta property="og:image" content="assets/jollof-chicken.jpg">
 <link rel="icon" href="assets/logo.png">
+<link rel="apple-touch-icon" href="assets/logo.png">
+<link rel="preload" as="image" href="assets/jollof-chicken.jpg" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..700&family=Manrope:wght@300..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Restaurant","name":"BOOMiiS Restaurant","servesCuisine":["Nigerian","Yoruba","Ghanaian"],"priceRange":"GH₵50–100","telephone":["+233506387636","+233272900911"],"email":"boomiisgh@gmail.com","address":{"@type":"PostalAddress","streetAddress":"47 Adjiringano Road","addressLocality":"East Legon, Accra","addressCountry":"GH"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.3","reviewCount":"73"},"sameAs":["https://www.instagram.com/boomiisgh"]}
+{"@context":"https://schema.org","@type":"Restaurant","name":"BOOMiiS Restaurant","servesCuisine":["Nigerian","Yoruba","Ghanaian"],"priceRange":"GH₵50–100","telephone":["+233506387636","+233272900911"],"email":"boomiisgh@gmail.com","address":{"@type":"PostalAddress","streetAddress":"47 Adjiringano Road","addressLocality":"East Legon, Accra","addressCountry":"GH"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.3","reviewCount":"73"},"acceptsReservations":true,"sameAs":["https://www.instagram.com/boomiisgh"]}
 </script>
 </head>
 <body>
+<script>document.documentElement.classList.add('js')</script>
+<a class="skip" href="#best">Skip to content</a>
 
-<div class="curtain" id="curtain" aria-hidden="true">
-  <img src="assets/logo.png" alt="">
-  <span>BOOMiiS</span>
-</div>
-
-<div class="grain" aria-hidden="true"></div>
-<div class="progress" id="progress" aria-hidden="true"></div>
-
-<header class="nav" id="nav">
-  <a class="nav__brand" href="#top" aria-label="BOOMiiS home"><img src="assets/logo.png" alt="" width="34" height="34"><span>BOOMiiS</span></a>
-  <nav class="nav__links" aria-label="Primary">
-    <a href="#dishes">Dishes</a>
-    <a href="#space">The Space</a>
-    <a href="#reserve">Reserve</a>
-    <a href="#visit">Visit</a>
-  </nav>
-  <a class="btn btn--sm" href="#reserve">Reserve</a>
+<header class="top" id="header">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="BOOMiiS Restaurant"><img src="assets/logo.png" alt="" width="38" height="38"><span>BOOM<i>ii</i>S<small>Restaurant</small></span></a>
+    <nav aria-label="Primary">
+      <a href="#best">Dishes</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#reserve">Reserve</a>
+      <a href="#visit">Visit</a>
+    </nav>
+    <div class="head-actions">
+      <a class="btn btn--sm" href="#reserve">Reserve</a>
+      <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu-overlay"><span><i></i><i></i></span></button>
+    </div>
+  </div>
 </header>
 
-<!-- ============ HERO : scroll-driven story ============ -->
-<section class="hero" id="top">
-  <div class="hero__stage">
-    <canvas id="gl" aria-hidden="true"></canvas>
-    <div class="hero__shade" aria-hidden="true"></div>
-
-    <!-- Scene 1 -->
-    <div class="scene scene--1" data-scene="1">
-      <p class="eyebrow">East Legon · Accra</p>
-      <h1 class="wordmark" aria-label="BOOMiiS Restaurant">
-        <span class="wordmark__row" aria-hidden="true"></span>
-        <em>Restaurant</em>
-      </h1>
-      <p class="scene__sub">Authentic Nigerian cuisine,<br>served with Accra warmth.</p>
-    </div>
-
-    <!-- Scene 2 -->
-    <div class="scene scene--2" data-scene="2">
-      <p class="big"><span data-line="1">Amala<i>.</i></span><span data-line="2">Egusi<i>.</i></span><span data-line="3">Jollof<i>.</i></span></p>
-      <p class="scene__sub scene__sub--2">Cooked the way it is meant to be:<br>slow, generous and unmistakably Yoruba.</p>
-    </div>
-
-    <!-- Scene 3 -->
-    <div class="scene scene--3" data-scene="3">
-      <div class="seal">
-        <svg viewBox="0 0 200 200" aria-hidden="true"><defs><path id="circ" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
-          <text><textPath href="#circ" startOffset="0">47 ADJIRINGANO ROAD · EAST LEGON · ACCRA · NO 47 ·</textPath></text></svg>
-        <img src="assets/logo.png" alt="BOOMiiS emblem">
-      </div>
-      <h2 class="invite">Your table<br>is <em>ready.</em></h2>
-      <div class="cta">
-        <a class="btn" href="#reserve">Reserve a table</a>
-        <a class="btn btn--ghost" href="#dishes">See the dishes</a>
-      </div>
-    </div>
-
-    <div class="scroll-cue" id="cue" aria-hidden="true"><span>Scroll</span><i></i></div>
-    <div class="hero__rail" aria-hidden="true"><b></b><b></b><b></b></div>
-  </div>
-</section>
-
-<!-- ============ STATEMENT ============ -->
-<section class="statement" id="story">
-  <p class="statement__text" id="statement">At BOOMiiS every plate carries a story. Pounded yam, amala and abula, egusi, jollof and smoky chicken, prepared with patience and served to you in the heart of East Legon.</p>
-</section>
-
-<!-- ============ MARQUEE ============ -->
-<div class="marquee" aria-hidden="true">
-  <div class="marquee__track">
-    <span>Amala &amp; Abula</span><i>✦</i><span>Egusi</span><i>✦</i><span>Jollof Rice</span><i>✦</i><span>Fish Light Soup</span><i>✦</i><span>Tripe &amp; Wele</span><i>✦</i><span>Cocktails</span><i>✦</i><span>Pastries</span><i>✦</i>
-    <span>Amala &amp; Abula</span><i>✦</i><span>Egusi</span><i>✦</i><span>Jollof Rice</span><i>✦</i><span>Fish Light Soup</span><i>✦</i><span>Tripe &amp; Wele</span><i>✦</i><span>Cocktails</span><i>✦</i><span>Pastries</span><i>✦</i>
-  </div>
+<div class="menu-overlay" id="menu-overlay">
+  <a class="big" href="#best">Dishes</a>
+  <a class="big" href="#menu">Menu</a>
+  <a class="big" href="#gallery">Gallery</a>
+  <a class="big" href="#reserve">Reserve</a>
+  <a class="big" href="#visit">Find us</a>
+  <div class="meta"><span>47 Adjiringano Road, East Legon</span><a href="tel:+233506387636">050 638 7636</a></div>
 </div>
 
-<!-- ============ DISHES ============ -->
-<section class="dishes" id="dishes">
-  <div class="wrap">
-    <p class="eyebrow reveal">The Kitchen</p>
-    <h2 class="h2 reveal">Dishes people<br>come back for.</h2>
+<main id="top">
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="slides" aria-hidden="true">
+    <div class="slide active"><img src="assets/jollof-chicken.jpg" alt="" fetchpriority="high" style="object-position:40% 50%"></div>
+    <div class="slide"><img src="assets/yam-soup.jpg" alt="" loading="lazy" style="object-position:50% 60%"></div>
+    <div class="slide"><img src="assets/room.jpg" alt="" loading="lazy" style="object-position:50% 55%"></div>
+    <div class="slide"><img src="assets/yam-egusi.jpg" alt="" loading="lazy" style="object-position:60% 60%"></div>
   </div>
-  <div class="rail" id="rail" tabindex="0" aria-label="Signature dishes, swipe to explore">
-    <article class="card card--photo" style="--bg:url(assets/egusi.jpg)">
-      <span class="card__n">01</span>
-      <div class="card__body"><h3>Egusi</h3><p>Rich melon-seed soup with bitter leaf and assorted meats, made to be shared with pounded yam.</p></div>
-    </article>
-    <article class="card card--amala">
-      <span class="card__n">02</span>
-      <div class="card__art" aria-hidden="true"></div>
-      <div class="card__body"><h3>Amala &amp; Abula</h3><p>Yoruba tradition on a plate: silky amala with gbegiri, ewedu and stew.</p></div>
-    </article>
-    <article class="card card--jollof">
-      <span class="card__n">03</span>
-      <div class="card__art" aria-hidden="true"></div>
-      <div class="card__body"><h3>Jollof &amp; Chicken</h3><p>Smoky party-style jollof, plantain and golden chicken.</p></div>
-    </article>
-    <article class="card card--soup">
-      <span class="card__n">04</span>
-      <div class="card__art" aria-hidden="true"></div>
-      <div class="card__body"><h3>Ghanaian Fish Light Soup</h3><p>A peppery Ghanaian classic with fish, tripe, wele and chicken.</p></div>
-    </article>
-    <article class="card card--bar">
-      <span class="card__n">05</span>
-      <div class="card__art" aria-hidden="true"></div>
-      <div class="card__body"><h3>Cocktails</h3><p>Great cocktails to pair with the evening on our outdoor seating.</p></div>
-    </article>
-    <article class="card card--pastry">
-      <span class="card__n">06</span>
-      <div class="card__art" aria-hidden="true"></div>
-      <div class="card__body"><h3>Pastries &amp; Bakes</h3><p>Fresh pastries for a sweet start or a gentle finish.</p></div>
-    </article>
-    <div class="rail__end"></div>
+  <div class="pager" id="pager" aria-label="Hero photos"><button class="on" aria-label="Photo 1"></button><button aria-label="Photo 2"></button><button aria-label="Photo 3"></button><button aria-label="Photo 4"></button></div>
+  <div class="wrap hero-content">
+    <span class="kicker">East Legon · Accra</span>
+    <h1><span class="sr-only">BOOMiiS Restaurant, authentic Nigerian restaurant in Accra. </span>Taste Nigeria,<br>in the heart<br>of <em>Accra.</em></h1>
+    <p class="lead">Amala, egusi, jollof and more. Cooked slow, served warm, at 47 Adjiringano Road.</p>
+    <div class="rating-pill"><span>★</span><b>4.3</b><span>· 73 Google reviews</span></div>
+    <div class="hero-ctas">
+      <a class="btn" href="#reserve">Reserve a table
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn glass" href="#best">See the dishes</a>
+    </div>
   </div>
-  <p class="wrap hint">Swipe to explore <span aria-hidden="true">→</span></p>
 </section>
 
-<!-- ============ SPACE ============ -->
-<section class="space" id="space">
-  <div class="wrap space__grid">
-    <div class="space__img reveal">
-      <img src="assets/room.jpg" alt="The BOOMiiS dining room with dark wood tables and green living wall" loading="lazy" id="parallax">
+<!-- ========== OFFER CARD ========== -->
+<section class="promo-sec">
+  <div class="wrap">
+    <div class="promo reveal">
+      <div class="promo__copy">
+        <h3>Great food and lots of honest prices</h3>
+        <div class="avatars" aria-hidden="true">
+          <img src="assets/jollof-plate.jpg" alt=""><img src="assets/ofada.jpg" alt=""><img src="assets/eba-egusi.jpg" alt=""><img src="assets/rice-beef.jpg" alt="">
+        </div>
+        <small>Loved by guests across Accra</small>
+      </div>
+      <div class="promo__big"><b>GH₵50<span>–100</span></b><small>per person</small></div>
+      <img class="promo__plate" src="assets/jollof-plate.jpg" alt="Jollof rice with chicken and plantain">
     </div>
-    <div class="space__copy">
-      <p class="eyebrow reveal">The Space</p>
-      <h2 class="h2 reveal">Warm wood.<br>Living green.<br>Unhurried evenings.</h2>
-      <p class="lead reveal">Settle into our dining room or take a seat outside. Family lunches, celebrations and quiet dinners all feel at home here.</p>
-      <ul class="chips reveal">
-        <li>Outdoor seating</li><li>Great cocktails</li><li>Kids' menu</li><li>Delivery &amp; pickup</li>
-      </ul>
-      <div class="stats reveal">
-        <div><b data-count="4.3" data-dec="1">4.3</b><span>Google rating ★</span></div>
-        <div><b data-count="73">73</b><span>Guest reviews</span></div>
-        <div><b>GH₵50–100</b><span>Per person</span></div>
+  </div>
+</section>
+
+<!-- ========== OUR BEST SERVED ========== -->
+<section id="best">
+  <div class="wrap">
+    <h2 class="title reveal"><span>Our Best Served</span></h2>
+    <div class="feature reveal">
+      <img class="feature__img" src="assets/jollof-chicken.jpg" width="828" height="985" loading="lazy" alt="Jollof rice with chicken, plantain and coleslaw">
+      <div class="feature__body">
+        <h3>Jollof, Chicken &amp; Coleslaw</h3>
+        <p>Smoky party-style jollof with golden chicken, fried plantain and cool coleslaw.</p>
+        <div class="feature__row"><span class="tag">Dine in · Takeaway</span>
+          <a class="btn btn--sm" href="#reserve" data-ask="Jollof, Chicken & Coleslaw">Order now</a>
+          <a class="go" href="#" data-ask="Jollof, Chicken & Coleslaw" aria-label="Ask about Jollof on WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="feature feature--flip reveal">
+      <img class="feature__img" src="assets/yam-soup.jpg" width="828" height="985" loading="lazy" alt="Pounded yam with vegetable soup and assorted meats">
+      <div class="feature__body">
+        <h3>Pounded Yam &amp; Vegetable Soup</h3>
+        <p>Smooth pounded yam with rich vegetable soup and assorted meats, the Sunday classic.</p>
+        <div class="feature__row"><span class="tag">Dine in · Takeaway</span>
+          <a class="btn btn--sm" href="#reserve">Order now</a>
+          <a class="go" href="#" data-ask="Pounded Yam & Vegetable Soup" aria-label="Ask about Pounded Yam on WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="feature reveal">
+      <img class="feature__img" src="assets/eba-egusi.jpg" width="828" height="505" loading="lazy" alt="Eba with egusi soup">
+      <div class="feature__body">
+        <h3>Eba &amp; Egusi</h3>
+        <p>Hearty egusi with bitter leaf, served with soft eba you can swallow with joy.</p>
+        <div class="feature__row"><span class="tag">Dine in · Takeaway</span>
+          <a class="btn btn--sm" href="#reserve">Order now</a>
+          <a class="go" href="#" data-ask="Eba & Egusi" aria-label="Ask about Eba and Egusi on WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ RESERVE ============ -->
-<section class="reserve" id="reserve">
+<!-- ========== MENU GRID ========== -->
+<section id="menu" class="alt">
+  <div class="wrap">
+    <h2 class="title reveal"><span>From the Kitchen</span></h2>
+    <p class="muted sub reveal">Tap the arrow on any dish to ask about it on WhatsApp.</p>
+    <div class="grid">
+      <article class="tile reveal"><img src="assets/ofada.jpg" loading="lazy" width="828" height="370" alt="Ofada rice with vegetable soup"><h4>Ofada Rice &amp; Vegetable Soup</h4><p>Local ofada rice with rich ayamase-style sauce.</p><a class="go" href="#" data-ask="Ofada Rice & Vegetable Soup" aria-label="Ask about Ofada Rice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
+      <article class="tile reveal"><img src="assets/rice-beef.jpg" loading="lazy" width="828" height="708" alt="Plain rice with beef sauce"><h4>Plain Rice &amp; Beef Sauce</h4><p>Fluffy white rice with peppery beef sauce and plantain.</p><a class="go" href="#" data-ask="Plain Rice & Beef Sauce" aria-label="Ask about Plain Rice and Beef Sauce"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
+      <article class="tile reveal"><img src="assets/yam-egusi.jpg" loading="lazy" width="828" height="663" alt="Pounded yam and egusi stew"><h4>Pounded Yam &amp; Egusi Stew</h4><p>Wrapped in leaf, served beside a bowl of egusi.</p><a class="go" href="#" data-ask="Pounded Yam & Egusi Stew" aria-label="Ask about Pounded Yam and Egusi Stew"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
+      <article class="tile reveal"><img src="assets/jollof-plate.jpg" loading="lazy" width="828" height="827" alt="Jollof rice with chicken and plantain"><h4>Jollof &amp; Chicken</h4><p>Firewood-style jollof, plantain and glazed chicken.</p><a class="go" href="#" data-ask="Jollof & Chicken" aria-label="Ask about Jollof and Chicken"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
+      <article class="tile reveal"><img src="assets/swallow-soup.jpg" loading="lazy" width="828" height="502" alt="Swallow served with soup"><h4>Swallow &amp; Soup</h4><p>Your choice of swallow with soup of the day.</p><a class="go" href="#" data-ask="Swallow & Soup" aria-label="Ask about Swallow and Soup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></a></article>
+      <article class="tile tile--more reveal"><div><b>And more</b><p>Amala &amp; Abula, Ghanaian fish light soup, tripe &amp; wele, pastries and cocktails.</p></div><a class="btn btn--sm" href="#reserve">Reserve</a></article>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHAT THEY SAY ========== -->
+<section>
+  <div class="wrap">
+    <h2 class="title reveal"><span>What They Say</span></h2>
+    <div class="say reveal">
+      <div class="say__score">
+        <b data-count="4.3" data-dec="1">4.3</b>
+        <div class="stars" aria-label="4.3 out of 5">★★★★<span>★</span></div>
+        <small><span data-count="73">73</span> reviews on Google</small>
+      </div>
+      <div class="say__bars" aria-hidden="true">
+        <div><i style="--h:14%"></i><span>1</span></div>
+        <div><i style="--h:9%"></i><span>2</span></div>
+        <div><i style="--h:14%"></i><span>3</span></div>
+        <div><i style="--h:12%"></i><span>4</span></div>
+        <div><i style="--h:100%"></i><span>5</span></div>
+      </div>
+    </div>
+    <div class="say__cta reveal">
+      <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Boomiis+Restaurant+47+Adjiringano+Rd+Accra">Read guest reviews on Google</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== THE SPACE ========== -->
+<section class="alt">
+  <div class="wrap">
+    <h2 class="title reveal"><span>The Space</span></h2>
+    <div class="space reveal">
+      <img src="assets/room.jpg" width="828" height="1104" loading="lazy" alt="BOOMiiS dining room with dark wood tables and green living wall">
+      <div class="space__body">
+        <p>Warm wood, living green walls and unhurried evenings. Settle in indoors or take a seat outside. Family lunches, celebrations and quiet dinners all feel at home here.</p>
+        <ul class="chips">
+          <li>Outdoor seating</li><li>Great cocktails</li><li>Kids' menu</li><li>Delivery &amp; pickup</li>
+        </ul>
+        <a class="btn" href="#reserve">Reserve a table</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== GALLERY ========== -->
+<section id="gallery">
+  <div class="wrap">
+    <div class="gallery-head reveal">
+      <h2 class="title"><span>Gallery</span></h2>
+      <div class="arrows">
+        <button type="button" id="prev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+        <button type="button" id="next" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+    <div class="rail" id="rail">
+      <figure class="shot"><img src="assets/room.jpg" loading="lazy" alt="Dining room"><span>The dining room</span></figure>
+      <figure class="shot"><img src="assets/jollof-chicken.jpg" loading="lazy" alt="Jollof with chicken and coleslaw"><span>Jollof &amp; chicken</span></figure>
+      <figure class="shot"><img src="assets/yam-soup.jpg" loading="lazy" alt="Pounded yam with soup"><span>Pounded yam</span></figure>
+      <figure class="shot"><img src="assets/eba-egusi.jpg" loading="lazy" alt="Eba and egusi"><span>Eba &amp; egusi</span></figure>
+      <figure class="shot"><img src="assets/ofada.jpg" loading="lazy" alt="Ofada rice and vegetable soup"><span>Ofada rice</span></figure>
+      <figure class="shot"><img src="assets/yam-egusi.jpg" loading="lazy" alt="Pounded yam and egusi stew"><span>Egusi stew</span></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ========== RESERVE ========== -->
+<section id="reserve" class="alt">
   <div class="wrap reserve__grid">
-    <div>
-      <p class="eyebrow reveal">Reserve</p>
-      <h2 class="h2 reveal">Save your<br>seat at the table.</h2>
-      <p class="lead reveal">Tell us when you are coming. Your request opens straight in WhatsApp so our team can confirm with you personally.</p>
+    <div class="reveal">
+      <h2 class="title"><span>Reserve</span></h2>
+      <p class="muted">Tell us when you are coming. Your request opens straight in WhatsApp so our team can confirm with you personally.</p>
     </div>
     <form class="form reveal" id="form" novalidate>
       <label>Your name<input name="name" autocomplete="name" placeholder="e.g. Ama Mensah" required></label>
@@ -186,44 +241,58 @@
   </div>
 </section>
 
-<!-- ============ VISIT ============ -->
+<!-- ========== VISIT ========== -->
 <section class="visit" id="visit">
   <div class="wrap">
-    <p class="eyebrow reveal">Visit</p>
-    <h2 class="h2 reveal">Find us on<br>Adjiringano Road.</h2>
-  </div>
-  <div class="wrap visit__grid">
-    <div class="visit__info reveal">
-      <div class="info"><span>Address</span><p>No. 47, Adjiringano Road,<br>East Legon, Accra</p></div>
-      <div class="info"><span>Open today until</span><p>10:00 pm</p></div>
-      <div class="info"><span>Call</span><p><a href="tel:+233506387636">050 638 7636</a><br><a href="tel:+233272900911">027 290 0911</a></p></div>
-      <div class="info"><span>Email</span><p><a href="mailto:boomiisgh@gmail.com">boomiisgh@gmail.com</a></p></div>
-      <div class="actions">
-        <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=Boomiis+Restaurant+47+Adjiringano+Rd+Accra">Get directions</a>
-        <a class="btn btn--ghost" target="_blank" rel="noopener" href="https://food.bolt.eu">Order on Bolt Food</a>
-        <a class="btn btn--ghost" target="_blank" rel="noopener" href="https://www.instagram.com/boomiisgh">@boomiisgh</a>
+    <div class="visit-box reveal">
+      <div class="visit-copy">
+        <h2 class="title"><span>Find Us</span></h2>
+        <span class="label">Address</span>
+        <p>No. 47, Adjiringano Road,<br>East Legon, Accra</p>
+        <span class="label">Open today until</span>
+        <p>10:00 pm</p>
+        <span class="label">Call or WhatsApp</span>
+        <p><a href="tel:+233506387636">050 638 7636</a><br><a href="tel:+233272900911">027 290 0911</a></p>
+        <div class="actions">
+          <a class="btn btn--sm" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=Boomiis+Restaurant+47+Adjiringano+Rd+Accra">Get directions</a>
+          <a class="btn btn--sm ghost" target="_blank" rel="noopener" href="https://food.bolt.eu">Order on Bolt Food</a>
+        </div>
       </div>
-    </div>
-    <div class="map reveal">
-      <iframe title="Map to BOOMiiS Restaurant" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-        src="https://www.google.com/maps?q=Boomiis+Restaurant+47+Adjiringano+Rd+Accra&output=embed"></iframe>
+      <div class="map">
+        <iframe title="Map to BOOMiiS Restaurant" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Boomiis+Restaurant+47+Adjiringano+Rd+Accra&amp;output=embed"></iframe>
+      </div>
     </div>
   </div>
 </section>
 
+</main>
+
 <footer class="foot">
-  <div class="foot__big" aria-hidden="true">BOOMiiS</div>
-  <div class="wrap foot__row">
-    <span>© <span id="yr">2026</span> BOOMiiS Restaurant · East Legon, Accra</span>
-    <a href="#top">Back to top ↑</a>
+  <div class="wrap foot__grid">
+    <div>
+      <a class="logo" href="#top"><img src="assets/logo.png" alt="" width="38" height="38"><span>BOOM<i>ii</i>S<small>Restaurant</small></span></a>
+      <p class="muted">Authentic Nigerian cuisine, served with Accra warmth.</p>
+    </div>
+    <div>
+      <h5>Quick links</h5>
+      <a href="#best">Dishes</a><a href="#menu">Menu</a><a href="#gallery">Gallery</a><a href="#reserve">Reserve</a>
+    </div>
+    <div>
+      <h5>Contact</h5>
+      <a href="tel:+233506387636">050 638 7636</a>
+      <a href="tel:+233272900911">027 290 0911</a>
+      <a href="mailto:boomiisgh@gmail.com">boomiisgh@gmail.com</a>
+      <a target="_blank" rel="noopener" href="https://www.instagram.com/boomiisgh">@boomiisgh</a>
+    </div>
   </div>
+  <div class="wrap foot__copy">© <span id="yr">2026</span> BOOMiiS Restaurant · 47 Adjiringano Road, East Legon, Accra</div>
 </footer>
 
-<!-- Mobile action dock -->
-<nav class="dock" id="dock" aria-label="Quick actions">
-  <a href="tel:+233506387636"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11 11 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11 11 0 0 0 .6 3.6 1 1 0 0 1-.25 1Z"/></svg>Call</a>
-  <a class="dock__main" href="#reserve">Reserve</a>
-  <a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=Boomiis+Restaurant+47+Adjiringano+Rd+Accra"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.500Z"/></svg>Map</a>
+<!-- Mobile action bar -->
+<nav class="dock" aria-label="Quick actions">
+  <a class="main" href="#reserve"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>Reserve</a>
+  <a href="tel:+233506387636"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>Call</a>
+  <a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=Boomiis+Restaurant+47+Adjiringano+Rd+Accra"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Directions</a>
 </nav>
 
 <script src="main.js"></script>

@@ -19,12 +19,12 @@
 <meta property="og:locale" content="en_GH">
 <meta property="og:url" content="https://boomiis-restaurant.vercel.app/menu">
 <meta property="og:title" content="The BOOMiiS Menu | Nigerian &amp; Ghanaian dishes in Accra">
-<meta property="og:description" content="72 dishes with prices. Build your order and send it on WhatsApp in one tap.">
+<meta property="og:description" content="72 dishes with prices. Build your order, pay with Mobile Money and place it in one tap.">
 <meta property="og:image" content="https://boomiis-restaurant.vercel.app/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:title" content="The BOOMiiS Menu | Nigerian &amp; Ghanaian dishes in Accra">
-<meta name="twitter:description" content="72 dishes with prices. Order on WhatsApp in one tap.">
+<meta name="twitter:description" content="72 dishes with prices. Pay with MoMo and order in one tap.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://boomiis-restaurant.vercel.app/og-image.jpg">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -78,7 +78,7 @@
     <div class="wrap mhero__in">
       <span class="kicker">The BOOMiiS Menu</span>
       <h1>Omo Naija.<br><em>Proudly Ghanaian.</em></h1>
-      <p>72 dishes, from ofada and buka-style amala to waakye, palava sauce and palmnut soup. Tap <b>+</b> to build your order, pay with Mobile Money and send it on WhatsApp.</p>
+      <p>72 dishes, from ofada and buka-style amala to waakye, palava sauce and palmnut soup. Tap <b>+</b> to build your order, pay with Mobile Money and place your order.</p>
       <label class="search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
         <input id="q" type="search" placeholder="Search jollof, egusi, suya…" autocomplete="off" aria-label="Search the menu">
@@ -164,10 +164,22 @@
         <label><span>Transfer reference or sender name <em class="req">Required</em></span><input name="btxn" autocomplete="off" placeholder="So we can match your payment"></label>
       </div>
     </fieldset>
-    <button class="btn btn--wa" type="submit"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.6-.1 1.1Z"/></svg>Send paid order</button>
+    <button class="btn btn--place" id="placeBtn" type="submit"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Place paid order</span></button>
+    <p class="paynote paynote--err" id="placeErr" role="alert" hidden></p>
     <button class="clear" id="clear" type="button">Clear order</button>
   </form>
 </aside>
+
+<div class="done-bg" id="doneBg" hidden></div>
+<div class="done" id="done" role="dialog" aria-modal="true" aria-labelledby="doneTitle" hidden>
+  <div class="done__tick" aria-hidden="true"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 27l7 7 15-15" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  <h2 id="doneTitle">Your order has been sent!</h2>
+  <p>Thank you. We’re checking your MoMo payment now and you’ll receive a message shortly to confirm your order.</p>
+  <dl class="done__dl"><div><dt>Order</dt><dd id="doneRef"></dd></div><div><dt>Total paid</dt><dd id="doneTotal"></dd></div><div><dt>Type</dt><dd id="doneMode"></dd></div></dl>
+  <p class="done__small" id="doneNote"></p>
+  <button class="btn btn--place" id="doneBtn" type="button">Done</button>
+  <a class="done__call" href="tel:+233506387636">Questions? Call 050 638 7636</a>
+</div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 

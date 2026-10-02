@@ -2,7 +2,6 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const body = document.body;
-  const WA = '233506387636';
   const KEY = 'boomiis-order-v1';
 
   // ---------- payment details: edit here when the final MoMo number / bank account is confirmed ----------
@@ -317,6 +316,60 @@
     });
   });
 
+  // ---------- place order (saved straight to the admin) ----------
+  const placeBtn = $('#placeBtn'), placeErr = $('#placeErr');
+  const done = $('#done'), doneBg = $('#doneBg');
+  let placing = false;
+  const orderError = err => {
+    const m = String(err && err.message || '');
+    if (/Too many orders/i.test(m)) return 'You’ve placed several orders in the last few minutes. Please wait a little or call us on 050 638 7636.';
+    if (/total does not match|Invalid order item/i.test(m)) return 'Your basket looks out of date. Please refresh the page and try again.';
+    if (/Failed to fetch|NetworkError|network|Load failed/i.test(m) || !navigator.onLine) return 'No internet connection. Check your data or Wi-Fi and tap “Place paid order” again.';
+    return 'We couldn’t send your order. Please try again, or call us on 050 638 7636.';
+  };
+  const showDone = o => {
+    $('#doneRef').textContent = '#' + o.ref;
+    $('#doneTotal').textContent = cedi(o.total);
+    $('#doneMode').textContent = o.mode;
+    $('#doneNote').textContent = o.mode === 'Delivery'
+      ? 'Your food will be delivered once payment is confirmed. Please pay the rider the delivery fee on arrival.'
+      : 'We’ll let you know when your food is ready for pickup at 47 Adjiringano Road.';
+    openSheet(false);
+    done.hidden = doneBg.hidden = false;
+    setTimeout(() => $('#doneBtn').focus(), 50);
+    if (navigator.vibrate) navigator.vibrate([30, 40, 30]);
+  };
+  const closeDone = () => { done.hidden = doneBg.hidden = true; };
+  $('#doneBtn').addEventListener('click', closeDone);
+  doneBg.addEventListener('click', closeDone);
+  addEventListener('keydown', e => { if (e.key === 'Escape' && !done.hidden) closeDone(); });
+  const placeOrder = async o => {
+    if (placing) return;
+    placing = true; placeErr.hidden = true;
+    placeBtn.disabled = true;
+    const label = placeBtn.innerHTML;
+    placeBtn.innerHTML = '<span class="spin" aria-hidden="true"></span><span>Sending your order…</span>';
+    try {
+      if (!window.BoomiisStore) throw new Error('Store unavailable');
+      await BoomiisStore.addOrder(o);
+      // success: empty the basket and start a fresh reference for the next order
+      order = []; save();
+      ref = newRef(); sentRef = null;
+      try { localStorage.setItem(REFKEY, ref); localStorage.removeItem(REFKEY + '-sent'); } catch (e) {}
+      form.elements.txn.value = ''; form.elements.note.value = '';
+      if (form.elements.btxn) form.elements.btxn.value = '';
+      paint();
+      showDone(o);
+    } catch (err) {
+      console.error(err);
+      placeErr.textContent = orderError(err);
+      placeErr.hidden = false;
+      placeErr.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    } finally {
+      placing = false; placeBtn.disabled = false; placeBtn.innerHTML = label;
+    }
+  };
+
   form.addEventListener('submit', e => {
     e.preventDefault();
     const f = form.elements;
@@ -332,31 +385,16 @@
         : missing === f.addr ? 'Add your delivery address' : missing === f.phone ? 'Add your phone number' : 'Add your name');
       return;
     }
-    const list = order.map(o => `• ${o.qty} × ${o.name}  ${cedi(o.price * o.qty)}`).join('\n');
-    let msg = `Hello BOOMiiS! Here is my paid online order (${mode}).\n\n${list}\n\nTotal: ${cedi(total())}\nName: ${f.name.value.trim()}\nPhone: ${f.phone.value.trim()}`;
-    if (mode === 'Delivery' && f.addr.value.trim()) msg += `\nAddress: ${f.addr.value.trim()}`;
-    if (f.note.value.trim()) msg += `\nNote: ${f.note.value.trim()}`;
-    if (method === 'bank' && PAY.bank) {
-      msg += `\n\nPAID: Bank transfer to ${PAY.bank.bank}\nAmount: ${cedi(total())}\nReference: ${ref}\nTransfer ref / sender: ${f.btxn.value.trim()}`;
-    } else {
-      msg += `\n\nPAID: ${acct.net.name} to ${acct.pretty}\nAmount: ${cedi(total())}\nReference: ${ref}\nTransaction ID: ${f.txn.value.trim()}`;
-    }
-    if (mode === 'Delivery') msg += '\nDelivery fee: I will pay the rider on delivery';
-    msg += '\n\nThank you!';
-    sentRef = ref; try { localStorage.setItem(REFKEY + '-sent', ref); } catch (e) {}
-    if (window.BoomiisStore) {
-      BoomiisStore.addOrder({
-        ref, mode, note: f.note.value.trim(),
-        customer: { name: f.name.value.trim(), phone: f.phone.value.trim() },
-        address: mode === 'Delivery' ? f.addr.value.trim() : '',
-        items: order.map(o => ({ name: o.name, qty: o.qty, price: o.price })),
-        total: total(),
-        payment: method === 'bank' && PAY.bank
-          ? { method: 'bank', network: PAY.bank.bank, to: PAY.bank.account, txn: f.btxn.value.trim(), amount: total() }
-          : { method: 'momo', network: acct.net.name, to: acct.pretty, txn: f.txn.value.trim(), amount: total() }
-      }).catch(err => console.error(err)); // WhatsApp still carries the order if saving fails
-    }
-    window.open(`https://wa.me/${WA}?text=` + encodeURIComponent(msg), '_blank', 'noopener');
+    placeOrder({
+      ref, mode, note: f.note.value.trim(),
+      customer: { name: f.name.value.trim(), phone: f.phone.value.trim() },
+      address: mode === 'Delivery' ? f.addr.value.trim() : '',
+      items: order.map(o => ({ name: o.name, qty: o.qty, price: o.price })),
+      total: total(),
+      payment: method === 'bank' && PAY.bank
+        ? { method: 'bank', network: PAY.bank.bank, to: PAY.bank.account, txn: f.btxn.value.trim(), amount: total() }
+        : { method: 'momo', network: acct.net.name, to: acct.pretty, txn: f.txn.value.trim(), amount: total() }
+    });
   });
 
   const refreshMenu = m => { applyMenu(m); filter($('#q').value); paint(); };

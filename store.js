@@ -72,7 +72,7 @@
     async addOrder(o) {
       const row = {
         ref: o.ref, mode: o.mode, customer_name: o.customer.name, customer_phone: o.customer.phone,
-        address: o.address || '', note: o.note || '', items: o.items, total: o.total,
+        address: o.address || '', note: o.note || '', items: o.items, total: Math.round(o.total * 100) / 100,
         pay_method: o.payment.method, pay_network: o.payment.network || '', pay_to: o.payment.to || '', pay_txn: o.payment.txn
       };
       const { error } = await sb.from('orders').insert(row);

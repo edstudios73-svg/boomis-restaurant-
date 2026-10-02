@@ -1,7 +1,7 @@
 -- =====================================================================
 -- BOOMiiS Restaurant · Supabase setup
 -- Paste this whole file into Supabase → SQL Editor → New query → Run.
--- Safe to run more than once.
+-- Safe to run more than once, including on a project where an earlier version was already run.
 -- =====================================================================
 
 create extension if not exists pgcrypto;
@@ -67,6 +67,51 @@ drop trigger if exists orders_touch on public.orders;
 create trigger orders_touch before update on public.orders
   for each row execute function public.touch_updated_at();
 
+-- order checks: total must match the items, sensible quantities, and no flooding from one phone
+create or replace function public.check_new_order()
+returns trigger
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  item  jsonb;
+  qty   numeric;
+  price numeric;
+  sum_  numeric := 0;
+  recent int;
+begin
+  for item in select * from jsonb_array_elements(new.items) loop
+    begin
+      qty   := (item->>'qty')::numeric;
+      price := (item->>'price')::numeric;
+    exception when others then
+      raise exception 'Invalid order item' using errcode = '22023';
+    end;
+    if qty is null or price is null or qty < 1 or qty > 50 or qty <> trunc(qty) or price < 0 or price > 5000
+       or coalesce(char_length(item->>'name'), 0) not between 1 and 120 then
+      raise exception 'Invalid order item' using errcode = '22023';
+    end if;
+    sum_ := sum_ + qty * price;
+  end loop;
+  if round(sum_, 2) <> round(new.total, 2) then
+    raise exception 'Order total does not match the items' using errcode = '22023';
+  end if;
+
+  select count(*) into recent
+  from public.orders
+  where customer_phone = new.customer_phone and created_at > now() - interval '10 minutes';
+  if recent >= 5 then
+    raise exception 'Too many orders from this number. Please wait a few minutes or call us.' using errcode = 'P0001';
+  end if;
+  return new;
+end;
+$$;
+revoke all on function public.check_new_order() from public;
+drop trigger if exists orders_check_new on public.orders;
+create trigger orders_check_new before insert on public.orders
+  for each row execute function public.check_new_order();
+
 -- ---------- reservations ----------
 create table if not exists public.reservations (
   id         uuid primary key default gen_random_uuid(),
@@ -86,6 +131,25 @@ create index if not exists reservations_date_idx on public.reservations (date);
 drop trigger if exists reservations_touch on public.reservations;
 create trigger reservations_touch before update on public.reservations
   for each row execute function public.touch_updated_at();
+
+create or replace function public.check_new_reservation()
+returns trigger
+language plpgsql
+security definer
+set search_path = ''
+as $$
+begin
+  if (select count(*) from public.reservations
+      where phone = new.phone and created_at > now() - interval '10 minutes') >= 3 then
+    raise exception 'Too many booking requests from this number. Please call us.' using errcode = 'P0001';
+  end if;
+  return new;
+end;
+$$;
+revoke all on function public.check_new_reservation() from public;
+drop trigger if exists reservations_check_new on public.reservations;
+create trigger reservations_check_new before insert on public.reservations
+  for each row execute function public.check_new_reservation();
 
 -- ---------- menu changes (prices, sold out, added/removed dishes) ----------
 -- The printed menu lives in the website; this table only stores staff changes on top of it.
@@ -124,7 +188,8 @@ create policy "staff update orders" on public.orders
 -- reservations: anyone can REQUEST a table; only staff can read or change bookings
 drop policy if exists "public requests tables" on public.reservations;
 create policy "public requests tables" on public.reservations
-  for insert to anon, authenticated with check (status = 'requested');
+  for insert to anon, authenticated
+  with check (status = 'requested' and date >= current_date - 1 and date <= current_date + 180);
 drop policy if exists "staff read reservations" on public.reservations;
 create policy "staff read reservations" on public.reservations
   for select to authenticated using ((select public.is_staff()));
@@ -137,8 +202,15 @@ drop policy if exists "everyone reads menu changes" on public.menu_changes;
 create policy "everyone reads menu changes" on public.menu_changes
   for select to anon, authenticated using (true);
 drop policy if exists "staff write menu changes" on public.menu_changes;
-create policy "staff write menu changes" on public.menu_changes
-  for all to authenticated using ((select public.is_staff())) with check ((select public.is_staff()));
+drop policy if exists "staff add menu changes" on public.menu_changes;
+drop policy if exists "staff edit menu changes" on public.menu_changes;
+drop policy if exists "staff delete menu changes" on public.menu_changes;
+create policy "staff add menu changes" on public.menu_changes
+  for insert to authenticated with check ((select public.is_staff()));
+create policy "staff edit menu changes" on public.menu_changes
+  for update to authenticated using ((select public.is_staff())) with check ((select public.is_staff()));
+create policy "staff delete menu changes" on public.menu_changes
+  for delete to authenticated using ((select public.is_staff()));
 
 -- ---------- table privileges for the website's public key ----------
 revoke all on public.staff, public.orders, public.reservations, public.menu_changes from anon, authenticated;
@@ -164,11 +236,8 @@ begin
   end loop;
 end $$;
 
--- =====================================================================
--- STEP 2 (after creating the admin user in Authentication → Users):
--- make that user staff. Change the email if you used a different one, then run:
---
---   insert into public.staff (user_id, name)
---   select id, 'BOOMiiS Admin' from auth.users where email = 'boomiisgh@gmail.com'
---   on conflict (user_id) do nothing;
--- =====================================================================
+-- ---------- make the admin account staff ----------
+-- Adds nothing if the user doesn't exist yet; run again after creating it in Authentication → Users.
+insert into public.staff (user_id, name)
+select id, 'BOOMiiS Admin' from auth.users where email = 'boomiisgh@gmail.com'
+on conflict (user_id) do nothing;

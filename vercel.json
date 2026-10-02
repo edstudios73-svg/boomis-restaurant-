@@ -59,7 +59,7 @@
       ]
     },
     {
-      "source": "/(admin|track)",
+      "source": "/(admin|track|table)",
       "headers": [
         {
           "key": "X-Robots-Tag",

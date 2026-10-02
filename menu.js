@@ -334,9 +334,12 @@
     $('#doneNote').textContent = o.mode === 'Delivery'
       ? 'Your food will be delivered once payment is confirmed. Please pay the rider the delivery fee on arrival.'
       : 'We’ll let you know when your food is ready for pickup at 47 Adjiringano Road.';
+    $('#doneTrack').href = '/track?o=' + encodeURIComponent(o.ref);
+    $('#doneWa').href = 'https://wa.me/233506387636?text=' + encodeURIComponent(`Hello BOOMiiS, I just placed order #${o.ref} (${cedi(o.total)}, ${o.mode}). Payment ref: ${o.payment.txn}.`);
+    try { localStorage.setItem('boomiis-last-order', JSON.stringify({ ref: o.ref, phone: o.customer.phone })); } catch (e) {}
     openSheet(false);
     done.hidden = doneBg.hidden = false;
-    setTimeout(() => $('#doneBtn').focus(), 50);
+    setTimeout(() => $('#doneTrack').focus(), 50);
     if (navigator.vibrate) navigator.vibrate([30, 40, 30]);
   };
   const closeDone = () => { done.hidden = doneBg.hidden = true; };

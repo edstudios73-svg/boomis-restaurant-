@@ -8,7 +8,9 @@ Static site, no build step for hosting:
 - `index.html`, `styles.css`, `main.js`: home page (hero slideshow, dishes, FAQ, reservations, map)
 - `menu.html`, `menu.css`, `menu.js`: full menu with search and WhatsApp ordering
 - `admin.html`, `admin.css`, `admin.js`: staff dashboard at `/admin` (orders, MoMo payment checks, bookings, menu editor)
+- `track.html`, `track.css`, `track.js`: customer order tracking at `/track` (order number + phone)
 - `store.js`: the shared data layer used by the site and the admin
+- `supabase/whatsapp-auto.sql`, `supabase/functions/order-whatsapp/`: optional automatic WhatsApp messages (see `HANDOVER.md`)
 - `menu-data.json`: generated copy of the menu used by the admin
 - `robots.txt`, `sitemap.xml`, `llms.txt`, `site.webmanifest`, `404.html`
 

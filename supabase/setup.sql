@@ -236,6 +236,36 @@ begin
   end loop;
 end $$;
 
+-- ---------- order tracking for customers (/track) ----------
+-- A customer sees ONE order, and only by giving its order number AND the phone it was placed with.
+-- Phones are compared on their last 9 digits, so 024…, +233 24… and 233 24… all match.
+create or replace function public.track_order(p_ref text, p_phone text)
+returns table (
+  ref text, status text, pay_status text, mode text, first_name text,
+  items jsonb, total numeric, created_at timestamptz, updated_at timestamptz
+)
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select o.ref, o.status, o.pay_status, o.mode,
+         split_part(o.customer_name, ' ', 1),
+         (select coalesce(jsonb_agg(jsonb_build_object('name', i->>'name', 'qty', i->'qty')), '[]'::jsonb)
+            from jsonb_array_elements(o.items) i),
+         o.total, o.created_at, o.updated_at
+  from public.orders o
+  where upper(o.ref) = upper(btrim(coalesce(p_ref, '')))
+    and char_length(regexp_replace(coalesce(p_phone, ''), '\D', '', 'g')) >= 9
+    and right(regexp_replace(o.customer_phone, '\D', '', 'g'), 9)
+        = right(regexp_replace(coalesce(p_phone, ''), '\D', '', 'g'), 9)
+    and o.created_at > now() - interval '30 days'
+  order by o.created_at desc
+  limit 1;
+$$;
+revoke all on function public.track_order(text, text) from public;
+grant execute on function public.track_order(text, text) to anon, authenticated;
+
 -- ---------- make the admin account staff ----------
 -- Adds nothing if the user doesn't exist yet; run again after creating it in Authentication → Users.
 insert into public.staff (user_id, name)

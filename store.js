@@ -79,6 +79,14 @@
       if (error && error.code !== '23505') throw fail(error, 'Could not save the order'); // 23505 = same basket sent again
       return true;
     },
+    // one order's progress, for the customer's /track page (order number + the phone it was placed with)
+    async trackOrder(ref, phone) {
+      const { data, error } = await sb.rpc('track_order', { p_ref: String(ref || '').replace(/^#/, ''), p_phone: String(phone || '') });
+      if (error) throw fail(error, 'Could not check the order');
+      const r = Array.isArray(data) ? data[0] : data;
+      return r ? { ref: r.ref, status: r.status, payStatus: r.pay_status, mode: r.mode, firstName: r.first_name,
+                   items: r.items || [], total: Number(r.total), createdAt: r.created_at, updatedAt: r.updated_at } : null;
+    },
     async addReservation(r) {
       const { error } = await sb.from('reservations').insert({
         name: r.name, phone: r.phone, guests: r.guests, date: r.date, time: r.time, seating: r.seating, note: r.note || ''

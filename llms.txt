@@ -11,6 +11,7 @@
 - Reservations: yes, via the website form or WhatsApp
 - Ordering: pickup or delivery from the online menu at /menu (paid in advance with MoMo, confirmed by the team); also on Bolt Food
 - Payment: online orders are paid in advance by Mobile Money (MTN MoMo 024 216 5783 or Telecel Cash 050 638 7636, account name Boomiis Limited); the delivery fee is paid to the rider on delivery
+- Order tracking: customers follow their order at https://boomiisgh.com/track with their order number and phone; the team also sends updates on WhatsApp
 - Features: outdoor seating, kids' menu, cocktails
 
 ## Signature dishes (prices in Ghana cedis)

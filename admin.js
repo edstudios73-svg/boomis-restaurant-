@@ -129,17 +129,48 @@
   const ORDER_LABEL = { new: 'New · check payment', preparing: 'Preparing', ready: 'Ready', out: 'On the way', completed: 'Completed', cancelled: 'Cancelled' };
   const PAY_LABEL = { pending: 'Awaiting check', verified: 'Verified', rejected: 'Rejected' };
   const BOOK_LABEL = { requested: 'Requested', confirmed: 'Confirmed', seated: 'Seated', cancelled: 'Declined', noshow: 'No-show' };
-  const orderMsg = o => {
-    const first = (o.customer.name || '').split(' ')[0];
+  // ---------- WhatsApp updates to customers ----------
+  const SITE = 'https://boomiisgh.com';
+  const trackUrl = o => `${SITE}/track?o=${encodeURIComponent(o.ref)}`;
+  const MSG_KINDS = [['new', 'Received'], ['preparing', 'Payment confirmed'], ['ready', 'Ready'], ['out', 'On the way'], ['completed', 'Thank you'], ['cancelled', 'Payment issue'], ['custom', 'Custom']];
+  const orderMsg = (o, kind = o.status) => {
+    const first = (o.customer.name || '').trim().split(/\s+/)[0] || 'there';
+    const track = `\n\nTrack your order: ${trackUrl(o)}`;
     return {
-      new: `Hello ${first}, we've received your BOOMiiS order #${o.ref}. We're confirming your MoMo payment now.`,
-      preparing: `Hello ${first}, your payment for order #${o.ref} is confirmed. We're preparing your food now.`,
-      ready: o.mode === 'Delivery' ? `Hello ${first}, your order #${o.ref} is ready and the rider will leave shortly.` : `Hello ${first}, your order #${o.ref} is ready for pickup at 47 Adjiringano Road.`,
-      out: `Hello ${first}, your order #${o.ref} is on the way. Please have the delivery fee ready for the rider.`,
-      completed: `Thank you for ordering from BOOMiiS, ${first}! We hope you enjoyed it.`,
-      cancelled: `Hello ${first}, we couldn't confirm the MoMo payment for order #${o.ref}, so it has been cancelled. Please reply if you think this is a mistake.`
-    }[o.status];
+      new: `Hello ${first}, thank you for ordering from BOOMiiS! 🍲\n\nWe've received your order #${o.ref} (${cedi(o.total)}, ${o.mode}) and we're confirming your MoMo payment now. Your order is being processed.${track}`,
+      preparing: `Hello ${first}, your payment for order #${o.ref} is confirmed ✅\n\nOur kitchen is preparing your food now.${track}`,
+      ready: o.mode === 'Delivery'
+        ? `Hello ${first}, your order #${o.ref} is packed and ready. Our rider will leave with it shortly 🛵${track}`
+        : `Hello ${first}, your order #${o.ref} is ready for pickup! 🎉\n\nCome to 47 Adjiringano Road, East Legon and show your order number.${track}`,
+      out: `Hello ${first}, your order #${o.ref} is on the way 🛵\n\nPlease have the delivery fee ready for the rider.${track}`,
+      completed: `Thank you for ordering from BOOMiiS, ${first}! We hope you enjoyed your meal 🙏\n\nOrder again anytime: ${SITE}/menu`,
+      cancelled: `Hello ${first}, we couldn't confirm a MoMo payment for order #${o.ref} (${cedi(o.total)}), so it has been cancelled.\n\nIf you have paid, please reply with your MoMo transaction ID and we'll sort it out right away.`,
+      custom: `Hello ${first}, this is BOOMiiS Restaurant about your order #${o.ref}. `
+    }[kind] || '';
   };
+  // a sheet with ready-made messages; tapping "Send on WhatsApp" opens the chat with the text filled in
+  function messageSheet(o, intro) {
+    const first = (o.customer.name || '').trim().split(/\s+/)[0] || 'customer';
+    const kinds = MSG_KINDS.filter(([k]) => k !== 'out' || o.mode === 'Delivery');
+    const startKind = kinds.some(([k]) => k === o.status) ? o.status : 'custom';
+    openSheet(`<h2>${esc(intro ? intro.title : 'Message ' + first)}</h2>
+      <p class="sub">${intro ? esc(intro.text) + ' ' : ''}Pick a message, edit it if you like, then send it to ${esc(first)} on WhatsApp (${esc(o.customer.phone)}).</p>
+      <div class="chips msg-kinds" role="radiogroup" aria-label="Message">${kinds.map(([k, l]) => `<button type="button" class="chip${k === startKind ? ' on' : ''}" role="radio" aria-checked="${k === startKind}" data-kind="${k}">${esc(l)}</button>`).join('')}</div>
+      <label class="msg-box"><span class="sr-only">Message</span><textarea id="waText" rows="7"></textarea></label>
+      <div class="oc__act"><button class="btn btn--ghost" type="button" data-x="no">${intro ? 'Skip' : 'Close'}</button><a class="btn btn--wa" id="waGo" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Send on WhatsApp</a></div>
+      <a class="msg-call" href="tel:${esc(intl(o.customer.phone).replace(/^233/, '0'))}"><svg><use href="#i-phone"/></svg>Or call ${esc(o.customer.phone)}</a>`);
+    const ta = $('#waText'), go = $('#waGo');
+    const sync = () => { go.href = wa(o.customer.phone, ta.value.trim()); };
+    const pick = k => {
+      $$('[data-kind]', sheetBody).forEach(c => { const on = c.dataset.kind === k; c.classList.toggle('on', on); c.setAttribute('aria-checked', on); });
+      ta.value = orderMsg(o, k); sync();
+    };
+    $$('[data-kind]', sheetBody).forEach(c => c.addEventListener('click', () => pick(c.dataset.kind)));
+    ta.addEventListener('input', sync);
+    go.addEventListener('click', () => setTimeout(closeSheet, 300));
+    sheetBody.querySelector('[data-x=no]').onclick = closeSheet;
+    pick(startKind);
+  }
   const contactBtns = (phone, msg) => phone ? `
     <a class="icon-btn" href="tel:${esc(intl(phone).replace(/^233/, '0'))}" aria-label="Call"><svg><use href="#i-phone"/></svg></a>
     <a class="icon-btn icon-btn--wa" href="${esc(wa(phone, msg))}" target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#i-wa"/></svg></a>` : '';
@@ -160,7 +191,7 @@
     const acts = orderActions(o);
     return `<article class="oc" data-oid="${esc(o.id)}">
       <div class="oc__top"><div><div class="oc__ref">#${esc(o.ref)}</div><div class="oc__time">${esc(ago(o.createdAt))}</div></div><span class="st st--${esc(o.status)}">${esc(ORDER_LABEL[o.status] || o.status)}</span></div>
-      <div class="oc__who"><div><b>${esc(o.customer && o.customer.name)}</b><small>${esc(o.customer && o.customer.phone)}</small></div>${contactBtns(o.customer && o.customer.phone, orderMsg(o))}</div>
+      <div class="oc__who"><div><b>${esc(o.customer && o.customer.name)}</b><small>${esc(o.customer && o.customer.phone)}</small></div>${o.customer && o.customer.phone ? `<a class="icon-btn" href="tel:${esc(intl(o.customer.phone).replace(/^233/, '0'))}" aria-label="Call ${esc(o.customer.name)}"><svg><use href="#i-phone"/></svg></a><button class="btn btn--wa btn--sm" type="button" data-msg="${esc(o.id)}"><svg><use href="#i-wa"/></svg>Message</button>` : ''}</div>
       <div class="oc__mode"><svg><use href="#${o.mode === 'Delivery' ? 'i-pin' : 'i-bag'}"/></svg><span><b>${esc(o.mode)}</b>${o.mode === 'Delivery' ? ' · ' + esc(o.address) + '<br><small class="muted">Rider collects the delivery fee</small>' : ' · 47 Adjiringano Road'}</span></div>
       <ul class="oc__items">${(o.items || []).map(it => `<li><span>${esc(it.qty)} × ${esc(it.name)}</span><span>${cedi(it.qty * it.price)}</span></li>`).join('')}</ul>
       ${o.note ? `<p class="oc__note">“${esc(o.note)}”</p>` : ''}
@@ -171,19 +202,23 @@
   }
 
   // ---------- actions ----------
+  // change an order's status, then offer to send the customer the matching WhatsApp update
+  const step = (o, patch, okMsg, title) => save(S.update('orders', o.id, patch).then(r => { if (!r) throw new Error('Order not updated'); return r; }))
+    .then(r => { if (r) messageSheet(r, { title, text: okMsg + '.' }); });
   function act(kind, id) {
     const o = db().orders.find(x => x.id === id);
     if (!o) return;
     const now = new Date().toISOString();
-    if (kind === 'verify') { save(S.update('orders', id, { status: 'preparing', payment: { status: 'verified', verifiedAt: now } }), `Payment verified · #${o.ref} is now preparing`); }
+    const first = (o.customer.name || '').trim().split(/\s+/)[0] || 'the customer';
+    if (kind === 'verify') step(o, { status: 'preparing', payment: { status: 'verified', verifiedAt: now } }, `Payment verified · #${o.ref} is now preparing`, `Tell ${first} it’s confirmed`);
     if (kind === 'reject') confirmSheet(`Reject payment for #${o.ref}?`, `No MoMo payment of ${cedi(o.total)} with transaction ID ${o.payment.txn} was found. The order will be cancelled.`, 'Reject & cancel', () => {
-      save(S.update('orders', id, { status: 'cancelled', payment: { status: 'rejected', reason: 'No matching MoMo payment received' } }), `#${o.ref} cancelled`);
+      step(o, { status: 'cancelled', payment: { status: 'rejected', reason: 'No matching MoMo payment received' } }, `#${o.ref} cancelled`, `Let ${first} know`);
     }, true);
-    if (kind === 'ready') { save(S.update('orders', id, { status: 'ready' }), `#${o.ref} is ready`); }
-    if (kind === 'out') { save(S.update('orders', id, { status: 'out' }), `#${o.ref} is out for delivery`); }
-    if (kind === 'done') { save(S.update('orders', id, { status: 'completed' }), `#${o.ref} completed`); }
+    if (kind === 'ready') step(o, { status: 'ready' }, `#${o.ref} is ready`, `Tell ${first} it’s ready`);
+    if (kind === 'out') step(o, { status: 'out' }, `#${o.ref} is out for delivery`, `Tell ${first} it’s on the way`);
+    if (kind === 'done') step(o, { status: 'completed' }, `#${o.ref} completed`, `Say thank you to ${first}`);
     if (kind === 'cancel') confirmSheet(`Cancel order #${o.ref}?`, 'Remember to refund the customer’s MoMo payment if they have paid.', 'Cancel order', () => {
-      save(S.update('orders', id, { status: 'cancelled' }), `#${o.ref} cancelled`);
+      step(o, { status: 'cancelled' }, `#${o.ref} cancelled`, `Let ${first} know`);
     }, true);
   }
   function bookAct(kind, id) {
@@ -196,6 +231,7 @@
   }
   document.addEventListener('click', e => {
     const b = e.target.closest('[data-act]'); if (b) { act(b.dataset.act, b.dataset.id); return; }
+    const m = e.target.closest('[data-msg]'); if (m) { const o = db().orders.find(x => x.id === m.dataset.msg); if (o) messageSheet(o); return; }
     const k = e.target.closest('[data-book]'); if (k) { bookAct(k.dataset.book, k.dataset.id); return; }
     const c = e.target.closest('[data-copy]'); if (c) {
       const text = c.dataset.copy;

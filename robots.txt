@@ -22,4 +22,4 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
-Sitemap: https://boomiis-restaurant.vercel.app/sitemap.xml
+Sitemap: https://boomiisgh.com/sitemap.xml

@@ -64,5 +64,18 @@
       ]
     }
   ],
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "boomiis-restaurant.vercel.app"
+        }
+      ],
+      "destination": "https://boomiisgh.com/:path*",
+      "permanent": true
+    }
+  ]
 }

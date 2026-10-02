@@ -1,7 +1,7 @@
 # BOOMiiS Restaurant
 
 Mobile-first website for BOOMiiS Restaurant, No. 47 Adjiringano Road, East Legon, Accra.
-Live: https://boomiis-restaurant.vercel.app
+Live: https://boomiisgh.com
 
 Static site, no build step for hosting:
 

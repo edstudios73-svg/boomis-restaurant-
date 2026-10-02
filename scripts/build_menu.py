@@ -222,7 +222,7 @@ def render():
         items = "".join(render_item(i, c["id"]) for i in c["items"])
         sections.append(f'<section class="cat" id="{c["id"]}">{banner}<ul class="dishes">{items}</ul></section>')
     total = sum(len(c["items"]) for c in MENU)
-    base = "https://boomiis-restaurant.vercel.app"
+    base = "https://boomiisgh.com"
 
     def offers(price):
         if isinstance(price, list):

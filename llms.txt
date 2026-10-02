@@ -24,5 +24,5 @@
 - Typical main dish: GH₵86–160
 
 ## Pages
-- [Home](https://boomiis-restaurant.vercel.app/): overview, photos, reservations, FAQ, map
-- [Full menu with prices](https://boomiis-restaurant.vercel.app/menu): all 72 dishes in 9 sections
+- [Home](https://boomiisgh.com/): overview, photos, reservations, FAQ, map
+- [Full menu with prices](https://boomiisgh.com/menu): all 72 dishes in 9 sections

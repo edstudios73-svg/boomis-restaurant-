@@ -88,6 +88,40 @@ body.menu-open .menu-overlay a.big:nth-child(5){transition-delay:.24s}
 .hero-ctas{display:grid;gap:12px}
 .hero .btn{width:100%}
 .hero .btn.glass{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:none}
+/* hero QR: compact tap card on phones, floating scan card on desktop */
+.hero-qr{display:flex;align-items:center;gap:14px;max-width:360px;margin-bottom:18px;padding:10px 16px 10px 10px;border-radius:20px;background:rgba(10,26,19,.55);border:1px solid rgba(233,214,180,.35);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 14px 34px rgba(0,0,0,.35);transition:transform .25s,border-color .25s}
+.hero-qr:hover{transform:translateY(-2px);border-color:var(--sand)}
+.hero-qr__code{position:relative;flex:none;width:64px;height:64px;padding:5px;border-radius:14px;background:#fff;overflow:hidden}
+.hero-qr__code>img:first-child{width:100%;height:100%;image-rendering:pixelated}
+.hero-qr__logo{position:absolute;left:50%;top:50%;width:24%;height:24%;transform:translate(-50%,-50%);border-radius:50%;background:#fff;box-shadow:0 0 0 2px #fff}
+.hero-qr__beam{position:absolute;left:6%;right:6%;top:8%;height:2px;border-radius:2px;opacity:.6;background:linear-gradient(90deg,transparent,var(--maroon),transparent);box-shadow:0 0 10px 1px rgba(163,48,74,.5);animation:qrbeam 2.6s ease-in-out infinite}
+@keyframes qrbeam{0%,100%{top:8%}50%{top:89%}}
+.hero-qr__txt{display:grid;line-height:1.15}
+.hero-qr__txt em{font-style:normal;font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--sand)}
+.hero-qr__txt b{font-size:1.05rem;font-weight:800;letter-spacing:-.01em;margin:3px 0}
+.hero-qr__txt b span{color:var(--sand)}
+.hero-qr__txt small{font-size:.76rem;color:rgba(255,255,255,.75);font-weight:600}
+.hero-qr__desk{display:none}
+@media(max-height:720px){.hero-qr{margin-bottom:12px;padding:8px 14px 8px 8px}.hero-qr__code{width:54px;height:54px;padding:4px}}
+@media(max-height:600px){.hero-qr{display:none}}
+@media(min-width:1200px){
+  .hero-qr{position:absolute;z-index:3;right:calc(56px - max(0px, (100vw - 1120px) / 2));bottom:64px;flex-direction:column;gap:16px;width:300px;max-width:none;margin:0;padding:22px 22px 20px;border-radius:30px;background:rgba(10,26,19,.62);text-align:center;animation:qrfloat 6s ease-in-out infinite}
+  .hero-qr:hover{transform:none;border-color:var(--sand)}
+  .hero-qr::before,.hero-qr::after{content:"";position:absolute;width:44px;height:44px;border:4px solid var(--maroon)}
+  .hero-qr::before{left:-8px;top:-8px;border-right:0;border-bottom:0;border-radius:16px 0 0 0}
+  .hero-qr::after{right:-8px;bottom:-8px;border-left:0;border-top:0;border-radius:0 0 16px 0}
+  .hero-qr__code{width:220px;height:220px;padding:14px;border-radius:20px;box-shadow:0 16px 40px rgba(0,0,0,.4)}
+  .hero-qr__txt{display:contents}
+  .hero-qr__txt em{order:-3;margin-bottom:-12px}
+  .hero-qr__txt b{order:-2}
+  .hero-qr__txt em{font-family:"Plus Jakarta Sans",sans-serif;font-size:.74rem}
+  .hero-qr__txt b{font-size:1.6rem;letter-spacing:-.03em;text-transform:uppercase}
+  .hero-qr__desk{display:block;order:3;font-size:.78rem;white-space:nowrap}
+  .hero-qr__mob{display:none}
+  @keyframes qrfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+}
+@media(min-width:1200px) and (max-height:760px){.hero-qr{bottom:40px;width:250px;padding:18px}.hero-qr__code{width:170px;height:170px;padding:11px}.hero-qr__txt b{font-size:1.3rem}}
+@media(prefers-reduced-motion:reduce){.hero-qr,.hero-qr__beam{animation:none}.hero-qr__beam{display:none}}
 .pager{position:absolute;z-index:3;right:8px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:2px}
 .pager button{width:22px;height:26px;background:none;border:0;cursor:pointer;position:relative;padding:0}
 .pager button::after{content:"";position:absolute;right:4px;top:4px;bottom:4px;width:2px;border-radius:2px;background:rgba(255,255,255,.35);transition:background .3s,transform .3s}

@@ -100,4 +100,20 @@
     }
     window.open(`https://wa.me/${WA}?text=` + encodeURIComponent(msg), '_blank', 'noopener');
   });
+
+  // live open / closed status (hours live in hours.js)
+  const H = window.BoomiisHours;
+  const paintStatus = () => {
+    if (!H) return;
+    const st = H.status(), pill = $('#heroStatus'), vis = $('#visitStatus');
+    const txt = st.open ? `Open now · orders till ${H.time(st.closesAt)}` : `Closed · pre-order for ${H.day(st.opensAt)}`;
+    if (pill) {
+      pill.hidden = false;
+      pill.className = 'status-pill ' + (st.open ? 'is-open' : 'is-closed');
+      pill.innerHTML = '<i></i>' + txt;
+    }
+    if (vis) { vis.className = st.open ? 'is-open' : 'is-closed'; vis.textContent = st.open ? '· Open now' : '· Closed now'; }
+  };
+  paintStatus();
+  setInterval(paintStatus, 30000);
 })();

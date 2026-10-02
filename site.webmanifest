@@ -1,21 +1,46 @@
 {
   "name": "BOOMiiS Restaurant",
   "short_name": "BOOMiiS",
-  "description": "Authentic Nigerian cuisine at 47 Adjiringano Road, East Legon, Accra. Reserve your table on WhatsApp.",
+  "description": "Nigerian and West African cuisine at 47 Adjiringano Road, East Legon, Accra. Order online, pre-order after hours, or reserve a table.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#0a1a13",
   "theme_color": "#0a1a13",
-  "categories": ["food", "lifestyle"],
+  "categories": [
+    "food",
+    "lifestyle"
+  ],
   "icons": [
-    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ],
   "shortcuts": [
-    { "name": "Reserve a table", "url": "/#reserve" },
-    { "name": "See the menu", "url": "/#menu" },
-    { "name": "Directions", "url": "/#visit" }
+    {
+      "name": "Reserve a table",
+      "url": "/#reserve"
+    },
+    {
+      "name": "See the menu",
+      "url": "/#menu"
+    },
+    {
+      "name": "Directions",
+      "url": "/#visit"
+    }
   ]
 }

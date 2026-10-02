@@ -132,3 +132,13 @@ delete from public.reservations where regexp_replace(phone, '\D', '', 'g')      
 ```
 
 Designed by Baiden Creatives · https://baiden-creatives.vercel.app
+
+## Opening hours and pre-orders
+
+- Online orders run **10:00 am–10:00 pm Monday to Friday** and **10:00 am–11:00 pm Saturday and Sunday** (Accra time).
+- After closing, the site shows "We've closed for tonight" and customers can **pre-order** a time slot in the next 3 opening days.
+- Pre-orders appear in the admin with a moon badge showing the time they're needed. Verify the payment as usual, then cook for that time.
+- **To change the hours, edit two places:**
+  1. The numbers at the top of `hours.js`.
+  2. `boomiis_open_at` in `supabase/setup.sql`. Then re-run it in the SQL Editor.
+- Also update the hours text on the home page (Find Us + FAQ) and in the closed popup in `scripts/menu.template.html`. Then run `python3 scripts/build_menu.py`.

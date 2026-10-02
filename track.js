@@ -55,7 +55,8 @@
     stepsEl.innerHTML = list.map((s, i) => `<li class="${i < at ? 'done' : i === at ? 'now' : ''}"><div>${esc(s[1])}<small>${esc(s[2])}</small></div></li>`).join('');
 
     $('#cItems').innerHTML = (o.items || []).map(i => `<li><b>${esc(i.qty)}×</b><span>${esc(i.name)}</span></li>`).join('');
-    $('#cMode').textContent = o.mode + ' · placed ' + ago(o.createdAt);
+    const pre = o.scheduledFor && window.BoomiisHours ? window.BoomiisHours.full(new Date(o.scheduledFor)) : '';
+    $('#cMode').textContent = pre ? `${o.mode} pre-order · ready for ${pre}` : o.mode + ' · placed ' + ago(o.createdAt);
     $('#cTotal').textContent = cedi(o.total);
     $('#cUpd').textContent = (o.status === 'completed' || o.status === 'cancelled' ? 'Last updated ' : 'Live · updated ') + ago(o.updatedAt);
     $('#cWa').href = `https://wa.me/${WA}?text=` + encodeURIComponent(`Hello BOOMiiS, I'm checking on my order #${o.ref}.`);

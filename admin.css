@@ -248,3 +248,8 @@ body.sheet-open .sheet{transform:none}
 .sheet .oc__act{margin-top:14px}
 .msg-call{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;font-size:.84rem;font-weight:700;color:var(--sand)}
 .msg-call svg{width:16px;height:16px}
+
+/* pre-orders placed while closed */
+.oc__pre{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 12px;border-radius:12px;border:1px solid rgba(233,214,180,.45);background:linear-gradient(135deg,rgba(26,20,48,.95),rgba(17,41,31,.9));font-size:.82rem;color:var(--muted)}
+.oc__pre svg{width:18px;height:18px;color:var(--sand);flex:none}
+.oc__pre b{color:var(--sand);font-size:.9rem}

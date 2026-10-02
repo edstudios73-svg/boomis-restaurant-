@@ -61,11 +61,26 @@ create table if not exists public.orders (
   verified_at    timestamptz,
   constraint orders_ref_txn_unique unique (ref, pay_txn)   -- re-sending the same paid basket doesn't duplicate it
 );
+alter table public.orders add column if not exists scheduled_for timestamptz;   -- set for pre-orders placed while closed
 create index if not exists orders_created_at_idx on public.orders (created_at desc);
 create index if not exists orders_status_idx on public.orders (status);
 drop trigger if exists orders_touch on public.orders;
 create trigger orders_touch before update on public.orders
   for each row execute function public.touch_updated_at();
+
+-- ---------- opening hours (keep in step with hours.js) ----------
+-- Online orders: 10:00 am to 10:00 pm Mon–Fri, 10:00 am to 11:00 pm Sat–Sun (Accra time).
+create or replace function public.boomiis_open_at(ts timestamptz)
+returns boolean
+language sql
+stable
+set search_path = ''
+as $$
+  select (ts at time zone 'Africa/Accra')::time >= time '10:00'
+     and (ts at time zone 'Africa/Accra')::time <
+         case when extract(isodow from (ts at time zone 'Africa/Accra')) in (6, 7) then time '23:00' else time '22:00' end;
+$$;
+grant execute on function public.boomiis_open_at(timestamptz) to anon, authenticated;
 
 -- order checks: total must match the items, sensible quantities, and no flooding from one phone
 create or replace function public.check_new_order()
@@ -96,6 +111,17 @@ begin
   end loop;
   if round(sum_, 2) <> round(new.total, 2) then
     raise exception 'Order total does not match the items' using errcode = '22023';
+  end if;
+
+  -- after closing time only pre-orders are accepted (5 min grace for clock differences)
+  if new.scheduled_for is null then
+    if not public.boomiis_open_at(now()) and not public.boomiis_open_at(now() - interval '5 minutes') then
+      raise exception 'BOOMiiS is closed right now. Please pre-order for when we open.' using errcode = 'P0001';
+    end if;
+  elsif new.scheduled_for < now() + interval '10 minutes'
+     or new.scheduled_for > now() + interval '7 days'
+     or not public.boomiis_open_at(new.scheduled_for) then
+    raise exception 'Please choose a pre-order time within our opening hours.' using errcode = 'P0001';
   end if;
 
   select count(*) into recent
@@ -239,10 +265,11 @@ end $$;
 -- ---------- order tracking for customers (/track) ----------
 -- A customer sees ONE order, and only by giving its order number AND the phone it was placed with.
 -- Phones are compared on their last 9 digits, so 024…, +233 24… and 233 24… all match.
+drop function if exists public.track_order(text, text);
 create or replace function public.track_order(p_ref text, p_phone text)
 returns table (
   ref text, status text, pay_status text, mode text, first_name text,
-  items jsonb, total numeric, created_at timestamptz, updated_at timestamptz
+  items jsonb, total numeric, created_at timestamptz, updated_at timestamptz, scheduled_for timestamptz
 )
 language sql
 stable
@@ -253,7 +280,7 @@ as $$
          split_part(o.customer_name, ' ', 1),
          (select coalesce(jsonb_agg(jsonb_build_object('name', i->>'name', 'qty', i->'qty')), '[]'::jsonb)
             from jsonb_array_elements(o.items) i),
-         o.total, o.created_at, o.updated_at
+         o.total, o.created_at, o.updated_at, o.scheduled_for
   from public.orders o
   where upper(o.ref) = upper(btrim(coalesce(p_ref, '')))
     and char_length(regexp_replace(coalesce(p_phone, ''), '\D', '', 'g')) >= 9

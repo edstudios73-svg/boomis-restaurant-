@@ -133,12 +133,19 @@
   const SITE = 'https://boomiisgh.com';
   const trackUrl = o => `${SITE}/track?o=${encodeURIComponent(o.ref)}`;
   const MSG_KINDS = [['new', 'Received'], ['preparing', 'Payment confirmed'], ['ready', 'Ready'], ['out', 'On the way'], ['completed', 'Thank you'], ['cancelled', 'Payment issue'], ['custom', 'Custom']];
+  const H = window.BoomiisHours;
+  const preWhen = o => { const d = new Date(o.scheduledFor); return isNaN(d) ? String(o.scheduledFor) : H ? H.full(d) : d.toLocaleString('en-GB'); };
+  const cleanNote = n => String(n || '').replace(/^PRE-ORDER for \S+( · )?/, '');
   const orderMsg = (o, kind = o.status) => {
     const first = (o.customer.name || '').trim().split(/\s+/)[0] || 'there';
     const track = `\n\nTrack your order: ${trackUrl(o)}`;
     return {
-      new: `Hello ${first}, thank you for ordering from BOOMiiS! 🍲\n\nWe've received your order #${o.ref} (${cedi(o.total)}, ${o.mode}) and we're confirming your MoMo payment now. Your order is being processed.${track}`,
-      preparing: `Hello ${first}, your payment for order #${o.ref} is confirmed ✅\n\nOur kitchen is preparing your food now.${track}`,
+      new: o.scheduledFor
+        ? `Hello ${first}, thank you for your BOOMiiS pre-order! 🌙\n\nWe've received order #${o.ref} (${cedi(o.total)}, ${o.mode}) for ${preWhen(o)}. We're confirming your MoMo payment and we'll have it fresh for you then.${track}`
+        : `Hello ${first}, thank you for ordering from BOOMiiS! 🍲\n\nWe've received your order #${o.ref} (${cedi(o.total)}, ${o.mode}) and we're confirming your MoMo payment now. Your order is being processed.${track}`,
+      preparing: o.scheduledFor
+        ? `Hello ${first}, your payment for pre-order #${o.ref} is confirmed ✅\n\nWe'll have it ready for ${preWhen(o)}.${track}`
+        : `Hello ${first}, your payment for order #${o.ref} is confirmed ✅\n\nOur kitchen is preparing your food now.${track}`,
       ready: o.mode === 'Delivery'
         ? `Hello ${first}, your order #${o.ref} is packed and ready. Our rider will leave with it shortly 🛵${track}`
         : `Hello ${first}, your order #${o.ref} is ready for pickup! 🎉\n\nCome to 47 Adjiringano Road, East Legon and show your order number.${track}`,
@@ -191,10 +198,11 @@
     const acts = orderActions(o);
     return `<article class="oc" data-oid="${esc(o.id)}">
       <div class="oc__top"><div><div class="oc__ref">#${esc(o.ref)}</div><div class="oc__time">${esc(ago(o.createdAt))}</div></div><span class="st st--${esc(o.status)}">${esc(ORDER_LABEL[o.status] || o.status)}</span></div>
+      ${o.scheduledFor ? `<div class="oc__pre"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M31 6a18 18 0 1 0 11 30A15 15 0 0 1 31 6z" fill="currentColor"/></svg><span>Pre-order · ready for</span><b>${esc(preWhen(o))}</b></div>` : ''}
       <div class="oc__who"><div><b>${esc(o.customer && o.customer.name)}</b><small>${esc(o.customer && o.customer.phone)}</small></div>${o.customer && o.customer.phone ? `<a class="icon-btn" href="tel:${esc(intl(o.customer.phone).replace(/^233/, '0'))}" aria-label="Call ${esc(o.customer.name)}"><svg><use href="#i-phone"/></svg></a><button class="btn btn--wa btn--sm" type="button" data-msg="${esc(o.id)}"><svg><use href="#i-wa"/></svg>Message</button>` : ''}</div>
       <div class="oc__mode"><svg><use href="#${o.mode === 'Delivery' ? 'i-pin' : 'i-bag'}"/></svg><span><b>${esc(o.mode)}</b>${o.mode === 'Delivery' ? ' · ' + esc(o.address) + '<br><small class="muted">Rider collects the delivery fee</small>' : ' · 47 Adjiringano Road'}</span></div>
       <ul class="oc__items">${(o.items || []).map(it => `<li><span>${esc(it.qty)} × ${esc(it.name)}</span><span>${cedi(it.qty * it.price)}</span></li>`).join('')}</ul>
-      ${o.note ? `<p class="oc__note">“${esc(o.note)}”</p>` : ''}
+      ${cleanNote(o.note) ? `<p class="oc__note">“${esc(cleanNote(o.note))}”</p>` : ''}
       <div class="oc__pay"><span class="net net--${netCls(p.network)}">${esc(p.network || 'MoMo')}</span><span class="txn" title="Transaction ID">${esc(p.txn || '—')}</span><span class="st st--${esc(p.status)}">${esc(PAY_LABEL[p.status] || p.status)}</span><span class="oc__total">${cedi(o.total)}</span></div>
       ${p.reason ? `<p class="oc__note">${esc(p.reason)}</p>` : ''}
       ${acts ? `<div class="oc__act">${acts}</div>` : ''}

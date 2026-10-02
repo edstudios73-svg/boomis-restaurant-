@@ -81,8 +81,21 @@ body.menu-open .menu-overlay a.big:nth-child(5){transition-delay:.24s}
 .kicker::before{content:"";width:22px;flex:none;height:2px;background:var(--maroon)}
 .hero h1{font-size:clamp(2.7rem,12.6vw,7rem);line-height:.98;letter-spacing:-.045em;margin-bottom:18px;text-shadow:0 2px 30px rgba(0,0,0,.4)}
 .hero h1 em{font-style:normal;color:var(--sand)}
-.hero p.lead{color:rgba(255,255,255,.84);max-width:440px;font-size:1rem;margin-bottom:22px}
+.hero p.lead{color:rgba(255,255,255,.84);max-width:520px;font-size:1rem;margin-bottom:22px}
 .rating-pill{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:999px;padding:8px 16px 8px 12px;font-size:.78rem;font-weight:500;margin-bottom:22px}
+.hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.hero-pills .rating-pill{margin-bottom:0}
+.status-pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:8px 14px;font-size:.78rem;font-weight:700;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);white-space:nowrap}
+.status-pill[hidden]{display:none}
+.status-pill i{width:8px;height:8px;border-radius:50%;flex:none}
+.status-pill.is-open{background:rgba(20,60,40,.55);border:1px solid rgba(63,191,127,.55);color:#a6efc6}
+.status-pill.is-open i{background:#3fbf7f;animation:statusPulse 2s infinite}
+.status-pill.is-closed{background:rgba(26,20,48,.6);border:1px solid rgba(233,214,180,.5);color:var(--sand)}
+.status-pill.is-closed i{background:var(--sand)}
+@keyframes statusPulse{0%{box-shadow:0 0 0 0 rgba(63,191,127,.6)}70%{box-shadow:0 0 0 8px rgba(63,191,127,0)}100%{box-shadow:0 0 0 0 rgba(63,191,127,0)}}
+#visitStatus{display:inline-block;margin-left:6px;font-weight:700}
+#visitStatus.is-open{color:#7ee0ad}
+#visitStatus.is-closed{color:var(--sand)}
 .rating-pill span:first-child{color:var(--sand)}
 .rating-pill b{font-weight:800}
 .hero-ctas{display:grid;gap:12px}
@@ -130,7 +143,7 @@ body.menu-open .menu-overlay a.big:nth-child(5){transition-delay:.24s}
   .hero-content{padding-top:96px;padding-bottom:calc(20px + env(safe-area-inset-bottom))}
   .hero h1{font-size:clamp(2.2rem,10.5vw,3.3rem);margin-bottom:12px}
   .hero p.lead{display:none}
-  .kicker{margin-bottom:12px}.rating-pill{margin-bottom:16px}
+  .kicker{margin-bottom:12px}.hero-pills{margin-bottom:16px}
   .hero-ctas{gap:10px}.hero .btn{min-height:48px;padding:13px 24px}
 }
 

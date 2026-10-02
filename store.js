@@ -26,10 +26,12 @@
   const toOrder = r => ({
     id: r.id, ref: r.ref, createdAt: r.created_at, updatedAt: r.updated_at, status: r.status, mode: r.mode,
     customer: { name: r.customer_name, phone: r.customer_phone }, address: r.address, note: r.note,
-    items: r.items || [], total: Number(r.total),
+    items: r.items || [], total: Number(r.total), scheduledFor: r.scheduled_for || preorderFromNote(r.note),
     payment: { method: r.pay_method, network: r.pay_network, to: r.pay_to, txn: r.pay_txn, amount: Number(r.total),
                status: r.pay_status, reason: r.pay_reason || undefined, verifiedAt: r.verified_at || undefined }
   });
+  // before the pre-order column existed, pre-orders were marked at the start of the note
+  const preorderFromNote = note => { const m = /^PRE-ORDER for (\S+)/.exec(note || ''); return m ? m[1] : undefined; };
   const toReservation = r => ({
     id: r.id, createdAt: r.created_at, updatedAt: r.updated_at, status: r.status, name: r.name, phone: r.phone,
     guests: r.guests, date: r.date, time: r.time, seating: r.seating, note: r.note
@@ -75,7 +77,14 @@
         address: o.address || '', note: o.note || '', items: o.items, total: Math.round(o.total * 100) / 100,
         pay_method: o.payment.method, pay_network: o.payment.network || '', pay_to: o.payment.to || '', pay_txn: o.payment.txn
       };
-      const { error } = await sb.from('orders').insert(row);
+      if (o.scheduledFor) row.scheduled_for = o.scheduledFor;
+      let { error } = await sb.from('orders').insert(row);
+      if (error && o.scheduledFor && (error.code === 'PGRST204' || error.code === '42703')) {
+        // database not updated yet: keep the pre-order time in the note instead
+        delete row.scheduled_for;
+        row.note = ('PRE-ORDER for ' + o.scheduledFor + (row.note ? ' · ' + row.note : '')).slice(0, 500);
+        ({ error } = await sb.from('orders').insert(row));
+      }
       if (error && error.code !== '23505') throw fail(error, 'Could not save the order'); // 23505 = same basket sent again
       return true;
     },
@@ -85,7 +94,8 @@
       if (error) throw fail(error, 'Could not check the order');
       const r = Array.isArray(data) ? data[0] : data;
       return r ? { ref: r.ref, status: r.status, payStatus: r.pay_status, mode: r.mode, firstName: r.first_name,
-                   items: r.items || [], total: Number(r.total), createdAt: r.created_at, updatedAt: r.updated_at } : null;
+                   items: r.items || [], total: Number(r.total), createdAt: r.created_at, updatedAt: r.updated_at,
+                   scheduledFor: r.scheduled_for || undefined } : null;
     },
     async addReservation(r) {
       const { error } = await sb.from('reservations').insert({

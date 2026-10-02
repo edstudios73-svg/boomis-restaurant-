@@ -210,6 +210,7 @@
     if (!b || b.disabled || !b.closest('.dish')) return;
     change(b.dataset.name, 1, +b.dataset.price);
     say('Added ' + b.dataset.name);
+    if (closed && !seenClosed) showClosed();
     if (navigator.vibrate) navigator.vibrate(12);
   });
 
@@ -318,24 +319,35 @@
 
   // ---------- place order (saved straight to the admin) ----------
   const placeBtn = $('#placeBtn'), placeErr = $('#placeErr');
+  const H = window.BoomiisHours;
+  let closed = false, seenClosed = false;
+  try { seenClosed = sessionStorage.getItem('boomiis-closed-seen') === '1'; } catch (e) {}
   const done = $('#done'), doneBg = $('#doneBg');
   let placing = false;
   const orderError = err => {
     const m = String(err && err.message || '');
+    if (/pre-order time/i.test(m)) return 'That pre-order time is no longer available. Please choose another time.';
     if (/Too many orders/i.test(m)) return 'You’ve placed several orders in the last few minutes. Please wait a little or call us on 050 638 7636.';
     if (/total does not match|Invalid order item/i.test(m)) return 'Your basket looks out of date. Please refresh the page and try again.';
     if (/Failed to fetch|NetworkError|network|Load failed/i.test(m) || !navigator.onLine) return 'No internet connection. Check your data or Wi-Fi and tap “Place paid order” again.';
     return 'We couldn’t send your order. Please try again, or call us on 050 638 7636.';
   };
   const showDone = o => {
+    const pre = !!o.scheduledFor;
+    $('#doneTitle').textContent = pre ? 'Your pre-order is in!' : 'Your order has been sent!';
+    $('#doneWhenRow').hidden = !pre;
+    if (pre && H) $('#doneWhen').textContent = H.full(new Date(o.scheduledFor));
     $('#doneRef').textContent = '#' + o.ref;
     $('#doneTotal').textContent = cedi(o.total);
     $('#doneMode').textContent = o.mode;
-    $('#doneNote').textContent = o.mode === 'Delivery'
+    $('#doneNote').textContent = pre
+      ? (o.mode === 'Delivery' ? 'We’ll cook it fresh for your chosen time and send it out. Please pay the rider the delivery fee on arrival.'
+                               : 'We’ll cook it fresh for your chosen time. Pick it up at 47 Adjiringano Road.')
+      : o.mode === 'Delivery'
       ? 'Your food will be delivered once payment is confirmed. Please pay the rider the delivery fee on arrival.'
       : 'We’ll let you know when your food is ready for pickup at 47 Adjiringano Road.';
     $('#doneTrack').href = '/track?o=' + encodeURIComponent(o.ref);
-    $('#doneWa').href = 'https://wa.me/233506387636?text=' + encodeURIComponent(`Hello BOOMiiS, I just placed order #${o.ref} (${cedi(o.total)}, ${o.mode}). Payment ref: ${o.payment.txn}.`);
+    $('#doneWa').href = 'https://wa.me/233506387636?text=' + encodeURIComponent(`Hello BOOMiiS, I just placed ${pre ? 'pre-order' : 'order'} #${o.ref} (${cedi(o.total)}, ${o.mode}${pre && H ? ', for ' + H.full(new Date(o.scheduledFor)) : ''}). Payment ref: ${o.payment.txn}.`);
     try { localStorage.setItem('boomiis-last-order', JSON.stringify({ ref: o.ref, phone: o.customer.phone })); } catch (e) {}
     openSheet(false);
     done.hidden = doneBg.hidden = false;
@@ -365,11 +377,13 @@
       showDone(o);
     } catch (err) {
       console.error(err);
+      if (/closed right now/i.test(String(err && err.message))) { paintHours(); showClosed(); return; }
       placeErr.textContent = orderError(err);
       placeErr.hidden = false;
       placeErr.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     } finally {
       placing = false; placeBtn.disabled = false; placeBtn.innerHTML = label;
+      paintHours();
     }
   };
 
@@ -377,6 +391,10 @@
     e.preventDefault();
     const f = form.elements;
     if (!order.length) return;
+    const wasOpen = !closed;
+    paintHours();
+    if (closed && wasOpen) { showClosed(); return; }     // closing time arrived while they were ordering
+    if (closed && !f.when.value) { f.when.focus(); say('Choose a time for your pre-order'); return; }
     const mode = f.mode.value, method = f.pay.value;
     const proof = method === 'bank' ? f.btxn : f.txn;
     const required = [f.name, f.phone, ...(mode === 'Delivery' ? [f.addr] : []), proof];
@@ -389,7 +407,7 @@
       return;
     }
     placeOrder({
-      ref, mode, note: f.note.value.trim(),
+      ref, mode, note: f.note.value.trim(), scheduledFor: closed ? f.when.value : undefined,
       customer: { name: f.name.value.trim(), phone: f.phone.value.trim() },
       address: mode === 'Delivery' ? f.addr.value.trim() : '',
       items: order.map(o => ({ name: o.name, qty: o.qty, price: o.price })),
@@ -399,6 +417,57 @@
         : { method: 'momo', network: acct.net.name, to: acct.pretty, txn: f.txn.value.trim(), amount: total() }
     });
   });
+
+  // ---------- opening hours & pre-orders (hours live in hours.js) ----------
+  function paintHours() {
+    if (!H) return;
+    const st = H.status(), now = new Date();
+    closed = !st.open;
+    document.body.classList.toggle('is-closed', closed);
+    const chip = $('#openChip');
+    chip.hidden = false;
+    chip.className = 'openchip ' + (closed ? 'is-closed' : 'is-open');
+    chip.innerHTML = closed
+      ? `<i></i>Closed · opens ${H.day(st.opensAt, now)} ${H.time(st.opensAt)}`
+      : `<i></i>Open now · online orders until ${H.time(st.closesAt)}`;
+    $('#closedBand').hidden = !closed;
+    $('#prePanel').hidden = !closed;
+    $('#obLabel').textContent = closed ? 'View your pre-order' : 'View your order';
+    const lbl = placeBtn.querySelector('span:last-child');
+    if (lbl && !placing) lbl.textContent = closed ? 'Place paid pre-order' : 'Place paid order';
+    if (!closed) return;
+    const first = H.slots(now)[0];
+    $('#closedBandTxt').textContent = `Pre-order now for ${H.day(st.opensAt, now)}, from ${first ? H.time(first) : H.time(st.opensAt)}.`;
+    $('#closedOpens').textContent = `${H.day(st.opensAt, now).replace(/^./, c => c.toUpperCase())} at ${H.time(st.opensAt)}`;
+    const sel = $('#preWhen'), keep = sel.value;
+    const groups = {};
+    H.slots(now).forEach(t => { const d = H.day(t, now); (groups[d] = groups[d] || []).push(t); });
+    sel.innerHTML = '<option value="">Choose a time</option>' + Object.entries(groups).map(([d, ts]) =>
+      `<optgroup label="${d[0].toUpperCase() + d.slice(1)}">${ts.map(t => `<option value="${t.toISOString()}">${H.when(t, now)}</option>`).join('')}</optgroup>`).join('');
+    if (keep && sel.querySelector(`option[value="${keep}"]`)) sel.value = keep;
+  }
+  const closedDlg = $('#closedDlg'), closedBg = $('#closedBg');
+  function showClosed() {
+    seenClosed = true; try { sessionStorage.setItem('boomiis-closed-seen', '1'); } catch (e) {}
+    paintHours();
+    closedDlg.hidden = closedBg.hidden = false;
+    setTimeout(() => $('#closedPre').focus(), 50);
+  }
+  const hideClosed = () => { closedDlg.hidden = closedBg.hidden = true; };
+  $('#closedLater').addEventListener('click', hideClosed);
+  closedBg.addEventListener('click', hideClosed);
+  addEventListener('keydown', e => { if (e.key === 'Escape' && !closedDlg.hidden) hideClosed(); });
+  const startPreorder = () => {
+    hideClosed();
+    if (count()) { openSheet(true); setTimeout(() => $('#preWhen').focus(), 350); }
+    else { $('#tabs').scrollIntoView({ behavior: 'smooth' }); say('Tap + on any dish to start your pre-order'); }
+  };
+  $('#closedPre').addEventListener('click', startPreorder);
+  $('#closedBandBtn').addEventListener('click', startPreorder);
+  // flip to "closed" the moment closing time arrives, even if the page stays open
+  setInterval(() => { const was = closed; paintHours(); if (closed && !was && (count() || body.classList.contains('basket-open'))) showClosed(); }, 20000);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') paintHours(); });
+  paintHours();
 
   const refreshMenu = m => { applyMenu(m); filter($('#q').value); paint(); };
   if (window.BoomiisStore) {

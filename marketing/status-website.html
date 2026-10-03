@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BOOMiiS · WhatsApp status: order on our website</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Anton&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+  /* WhatsApp / Instagram status: 1080 x 1920. Add ?promo for the 5% off version. */
+  :root{--cream:#fbf6ee;--m:#a3304a;--md:#7a1f33;--g:#0f2e20;--gd:#0a1a13;--sand:#e9d6b4;--gold:#f2b544;--gold2:#ffd27a}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1920px}
+  body{position:relative;overflow:hidden;background:var(--cream);color:var(--gd);font-family:"Plus Jakarta Sans",system-ui,sans-serif}
+  .abs{position:absolute}
+  .dots{inset:0;opacity:.35;background-image:radial-gradient(rgba(163,48,74,.18) 1.4px,transparent 1.6px);background-size:26px 26px;-webkit-mask-image:linear-gradient(90deg,#000 0,transparent 55%);mask-image:linear-gradient(90deg,#000 0,transparent 55%)}
+
+  /* brand */
+  .brand{left:70px;top:86px;display:flex;align-items:center;gap:18px}
+  .brand img{width:104px;height:104px;border-radius:50%;background:#fff;box-shadow:0 0 0 5px var(--m),0 14px 30px rgba(122,31,51,.25)}
+  .brand b{display:block;font-weight:800;font-size:56px;letter-spacing:-1.5px;line-height:1;color:var(--m)}
+  .brand b i{font-style:normal;color:var(--g)}
+  .brand small{display:block;font-size:17px;font-weight:800;letter-spacing:8px;margin-top:8px;color:var(--g)}
+
+  /* headline */
+  .head{left:70px;top:262px;width:560px}
+  .head p{font-size:44px;font-weight:700;line-height:1.18;letter-spacing:-.5px}
+  .head p em{font-style:normal;color:var(--m);font-weight:800}
+  .head h1{margin-top:14px;font-family:"Anton",sans-serif;font-weight:400;font-size:100px;line-height:.95;text-transform:uppercase;color:var(--g)}
+  .head h1 span{color:var(--m)}
+  .squig{left:66px;top:600px}
+
+  /* food stack */
+  .blk1{left:640px;top:110px;width:380px;height:620px;border-radius:30px;background:linear-gradient(160deg,var(--m),var(--md));transform:rotate(3deg);box-shadow:0 30px 60px rgba(122,31,51,.3)}
+  .blk2{left:690px;top:70px;width:330px;height:260px;border-radius:30px;background:var(--gold);transform:rotate(-5deg);z-index:-0}
+  .bowl{border-radius:50%;overflow:hidden;border:12px solid #fff;box-shadow:0 22px 44px rgba(0,0,0,.35)}
+  .bowl img{width:100%;height:100%;object-fit:cover}
+  .b1{left:668px;top:150px;width:320px;height:320px}
+  .b2{left:690px;top:470px;width:290px;height:290px}
+  .leaf{width:70px;height:70px}
+  .l1{left:960px;top:118px;transform:rotate(30deg)}
+  .l2{left:620px;top:440px;transform:rotate(-40deg)}
+
+  /* info card */
+  .card{left:56px;top:770px;width:560px;padding:44px 42px 40px;border-radius:34px;background:linear-gradient(160deg,#143826,var(--gd));color:#fff;box-shadow:0 30px 60px rgba(10,26,19,.35)}
+  .card h2{font-size:36px;font-weight:800;line-height:1.2;letter-spacing:-.5px}
+  .card h2 span{color:var(--sand)}
+  .card hr{border:0;height:5px;border-radius:5px;background:linear-gradient(90deg,var(--sand),rgba(233,214,180,.15));margin:24px 0}
+  .card ul{list-style:none;display:grid;gap:18px}
+  .card li{display:flex;gap:16px;align-items:center;font-size:27px;font-weight:700;line-height:1.25}
+  .card li i{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:var(--m);font-style:normal}
+  .card li i svg{width:24px;height:24px}
+  .card li small{display:block;font-size:20px;font-weight:600;color:rgba(255,255,255,.65);margin-top:2px}
+
+  /* QR */
+  .qrbox{left:664px;top:850px;width:360px;padding:26px 26px 22px;border-radius:32px;background:#fff;box-shadow:0 30px 60px rgba(10,26,19,.22);text-align:center;border:3px solid rgba(163,48,74,.18)}
+  .qrbox .code{position:relative;width:308px;height:308px;margin:0 auto}
+  .qrbox .code img.q{width:100%;height:100%;image-rendering:pixelated}
+  .qrbox .code .mid{position:absolute;left:50%;top:50%;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;background:#fff;padding:5px;box-shadow:0 0 0 5px #fff}
+  .qrbox .code .mid img{width:100%;height:100%;border-radius:50%}
+  .qrbox b{display:block;margin-top:14px;font-size:30px;font-weight:800;color:var(--m);letter-spacing:-.3px}
+  .qrbox small{display:block;font-size:19px;font-weight:700;color:#5a6b62}
+  .qrwrap::before,.qrwrap::after{content:"";position:absolute;width:64px;height:64px;border:8px solid var(--m)}
+  .qrwrap{left:664px;top:850px;width:360px;height:474px}
+  .qrwrap::before{left:-14px;top:-14px;border-right:0;border-bottom:0;border-radius:24px 0 0 0}
+  .qrwrap::after{right:-14px;bottom:-14px;border-left:0;border-top:0;border-radius:0 0 24px 0}
+
+  /* jollof hand-off photo */
+  .plate{left:640px;top:1390px;width:400px;height:300px;border-radius:30px;overflow:hidden;box-shadow:0 26px 50px rgba(0,0,0,.3);border:10px solid #fff;transform:rotate(-3deg)}
+  .plate img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+  .plate-bg{left:676px;top:1366px;width:360px;height:300px;border-radius:30px;background:var(--gold);transform:rotate(5deg)}
+
+  /* badge */
+  .badge{left:120px;top:1380px;width:370px;height:370px;display:grid;place-items:center;text-align:center}
+  .badge svg{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 20px 30px rgba(242,181,68,.45))}
+  .badge div{position:relative;font-weight:800;color:var(--gd);line-height:1.05}
+  .badge .t1{font-size:27px;letter-spacing:.5px}
+  .badge .t2{font-size:36px;color:var(--md)}
+  .badge .pct{font-family:"Anton",sans-serif;font-weight:400;font-size:104px;line-height:.9;color:var(--md)}
+  .badge .pct sup{font-size:56px;vertical-align:42px}
+  .badge .off{font-family:"Anton",sans-serif;font-weight:400;font-size:44px;line-height:1;color:var(--gd)}
+  .badge .fine{font-size:15px;margin-top:6px;font-weight:700;color:var(--gd)}
+  .promo-only{display:none}
+  body.promo .promo-only{display:block}
+  body.promo .std-only{display:none}
+
+  .site{left:440px;top:1500px;transform:rotate(-4deg);font-family:"Dancing Script",cursive;font-size:44px;color:var(--m)}
+  .arrow{left:448px;top:1556px}
+
+  /* bottom bar */
+  .bar{left:0;right:0;bottom:0;height:150px;background:linear-gradient(90deg,var(--md),var(--m) 55%,#b63a57);display:flex;align-items:center;justify-content:center;gap:34px;color:#fff;font-weight:800}
+  .bar .w{font-family:"Anton",sans-serif;font-weight:400;font-size:62px;letter-spacing:1px}
+  .bar .sep{width:3px;height:64px;background:rgba(255,255,255,.4)}
+  .bar .c{font-size:26px;line-height:1.3}
+  .bar .c small{display:block;font-size:17px;letter-spacing:3px;opacity:.85}
+  .addr{left:0;right:0;bottom:162px;text-align:center;font-size:21px;font-weight:700;color:#5a6b62;letter-spacing:.5px}
+</style>
+</head>
+<body>
+  <div class="abs dots"></div>
+
+  <div class="abs brand"><img src="../assets/logo.png" alt=""><div><b>BOOM<i>ii</i>S</b><small>RESTAURANT</small></div></div>
+
+  <div class="abs head">
+    <p>Craving <em>Nigerian &amp; West African</em> food?</p>
+    <h1>Order on our <span>website</span></h1>
+  </div>
+  <svg class="abs squig" width="520" height="40" viewBox="0 0 520 40" aria-hidden="true"><path d="M6 26c40-18 70 14 110 0s70-18 110 0 70 16 110 0 70-18 110 0 40 4 66-6" fill="none" stroke="#a3304a" stroke-width="7" stroke-linecap="round"/></svg>
+
+  <div class="abs blk2"></div>
+  <div class="abs blk1"></div>
+  <div class="abs bowl b1"><img src="../assets/eba-egusi.jpg" alt=""></div>
+  <div class="abs bowl b2"><img src="../assets/yam-soup.jpg" alt=""></div>
+  <svg class="abs leaf l1" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 56C8 26 26 8 58 6c-2 30-20 50-50 50z" fill="#3c8d3f"/><path d="M8 56L46 18" stroke="#2a6b2d" stroke-width="3"/></svg>
+  <svg class="abs leaf l2" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 56C8 26 26 8 58 6c-2 30-20 50-50 50z" fill="#4aa14d"/><path d="M8 56L46 18" stroke="#2a6b2d" stroke-width="3"/></svg>
+
+  <div class="abs card">
+    <h2>Skip the calls. Do it all on <span>boomiisgh.com</span></h2>
+    <hr>
+    <ul>
+      <li><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg></i><div>Order online<small>Pickup or delivery</small></div></li>
+      <li><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/></svg></i><div>Pay easily with MoMo<small>MTN MoMo or Telecel Cash</small></div></li>
+      <li><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></i><div>Reserve your table<small>Confirmed by our team</small></div></li>
+      <li><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></i><div>Track your order live<small>From kitchen to your door</small></div></li>
+    </ul>
+  </div>
+
+  <div class="abs qrwrap"></div>
+  <div class="abs qrbox">
+    <div class="code"><img class="q" src="qr-website.png" alt="QR code to boomiisgh.com"><div class="mid"><img src="../assets/logo.png" alt=""></div></div>
+    <b>Scan to order</b>
+    <small>or visit boomiisgh.com</small>
+  </div>
+
+  <div class="abs plate-bg"></div>
+  <div class="abs plate"><img src="../assets/jollof-chicken.jpg" alt=""></div>
+
+  <div class="abs badge">
+    <svg viewBox="0 0 200 200" aria-hidden="true"><defs><radialGradient id="gb" cx="40%" cy="35%"><stop offset="0" stop-color="#ffe29a"/><stop offset=".6" stop-color="#f6be4e"/><stop offset="1" stop-color="#e79a1f"/></radialGradient></defs><path fill="url(#gb)" d="M100 4l14 15 20-7 7 20 21 1-1 21 19 9-9 19 13 16-16 13 5 21-21 4-4 21-21-5-13 16-16-13-19 9-9-19-21-1 1-21-19-9 9-19-13-16 16-13-5-21 21-4 4-21 21 5 13-16 16 13z" transform="translate(0 0)"/><circle cx="100" cy="100" r="74" fill="none" stroke="#fff" stroke-width="2.5" stroke-dasharray="5 6"/></svg>
+    <div class="std-only"><div class="t1">PLACE YOUR</div><div class="t2">ORDER<br>TODAY!</div></div>
+    <div class="promo-only"><div class="t1">GET</div><div class="pct">5<sup>%</sup></div><div class="off">OFF</div><div class="fine">orders &amp; bookings<br>on the website</div></div>
+  </div>
+
+  <div class="abs addr">47 Adjiringano Road, East Legon, Accra · Open daily till 10 pm (11 pm weekends)</div>
+  <div class="abs bar"><span class="w">boomiisgh.com</span><span class="sep"></span><span class="c"><small>CALL / WHATSAPP</small>050 638 7636</span></div>
+  <script>if (/promo/.test(location.search)) document.body.classList.add('promo');</script>
+</body>
+</html>

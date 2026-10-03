@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://boomiisgh.com/</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <image:image><image:loc>https://boomiisgh.com/assets/interior.jpg</image:loc></image:image>
+    <image:image><image:loc>https://boomiisgh.com/assets/outdoor-bar.jpg</image:loc></image:image>
+    <image:image><image:loc>https://boomiisgh.com/assets/jollof-chicken.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://boomiisgh.com/menu</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://boomiisgh.com/assets/ofada.jpg</image:loc></image:image>
+    <image:image><image:loc>https://boomiisgh.com/assets/eba-egusi.jpg</image:loc></image:image>
+  </url>
+</urlset>

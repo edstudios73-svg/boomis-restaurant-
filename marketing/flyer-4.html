@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BOOMiiS food menu flyer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Archivo+Black&display=swap" rel="stylesheet">
+<style>
+  /* 1080 x 1350 (Instagram portrait). Render at 2x for print. Prices from the current BOOMiiS menu. */
+  :root{--g:#0f2e20;--g3:#0b2318;--m:#a3304a;--red:#c8344f;--sand:#e9d6b4;--gold:#f2c96d;--cream:#f6ebd7}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1350px}
+  body{position:relative;overflow:hidden;font-family:"Plus Jakarta Sans",system-ui,sans-serif;background:radial-gradient(70% 50% at 50% 0,#1a4a33,transparent 70%),radial-gradient(60% 40% at 50% 100%,#163d2b,transparent 70%),var(--g3);color:var(--g)}
+  .doodles{position:absolute;inset:0;width:100%;height:100%}
+
+  /* header */
+  .head{position:absolute;left:0;right:0;top:38px;display:flex;align-items:center;justify-content:center;gap:34px}
+  .logo{display:grid;justify-items:center;gap:6px}
+  .logo img{width:96px;height:96px;border-radius:50%;border:4px solid var(--gold);background:#fff;box-shadow:0 10px 24px rgba(0,0,0,.4)}
+  .logo b{font-size:30px;font-weight:800;letter-spacing:-1px;color:#fff;line-height:1}
+  .logo b i{font-style:normal;color:var(--gold)}
+  .logo svg{margin-top:-2px}
+  .title h1{font-family:"Archivo Black",sans-serif;font-weight:400;font-size:92px;line-height:.95;color:var(--gold);letter-spacing:-1px;text-shadow:0 6px 20px rgba(0,0,0,.35)}
+  .title p{color:#fff;font-weight:700;font-size:21px;letter-spacing:5px;margin-top:10px}
+
+  /* rows */
+  .row{position:absolute;left:96px;width:888px;height:180px;border-radius:36px;background:var(--cream);box-shadow:0 14px 30px rgba(0,0,0,.35)}
+  .ph{position:absolute;top:50%;width:238px;height:238px;margin-top:-119px;border-radius:50%;background:#141414;padding:11px;box-shadow:0 16px 30px rgba(0,0,0,.45)}
+  .ph img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+  .row--l .ph{left:-56px}
+  .row--r .ph{right:-56px}
+  .txt{position:absolute;top:18px;bottom:16px}
+  .row--l .txt{left:216px;right:36px}
+  .row--r .txt{left:40px;right:216px}
+  .txt h2{font-family:"Archivo Black",sans-serif;font-weight:400;font-size:44px;line-height:1;color:var(--red);letter-spacing:-.5px;margin-bottom:12px}
+  .items{list-style:none;display:grid;grid-template-columns:1fr 1fr;grid-auto-flow:column;grid-template-rows:repeat(3,auto);gap:5px 34px}
+  .items--4{grid-template-rows:repeat(4,auto);gap:2px 34px}
+  .items--4 li{font-size:16px}
+  .items li{display:flex;align-items:baseline;gap:8px;font-size:17px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;color:var(--g)}
+  .items li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--m);flex:none;transform:translateY(-2px)}
+  .items li span{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .items li b{font-weight:800;color:var(--m);white-space:nowrap}
+
+  /* footer */
+  .foot{position:absolute;left:70px;right:70px;top:1222px;display:grid;gap:16px;color:#fff}
+  .fr{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .fi{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:700;white-space:nowrap}
+  .fi svg{width:30px;height:30px;flex:none}
+  .badge{font-size:16px;font-weight:800;padding:7px 14px;border-radius:999px}
+  .mtn{background:#ffcc00;color:#111}.tel{background:#e3001b;color:#fff}
+</style>
+</head>
+<body>
+<svg class="doodles" viewBox="0 0 1080 1350" aria-hidden="true"><g fill="none" stroke="#e9d6b4" stroke-opacity=".22" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <!-- bowl with steam, top right -->
+  <g transform="translate(952 88) scale(.8)"><path d="M10 60h130c0 40-30 64-65 64S10 100 10 60z"/><path d="M4 60h142"/><path d="M50 40c-10-12 10-18 0-32M75 40c-10-12 10-18 0-32M100 40c-10-12 10-18 0-32"/></g>
+  <!-- chilli, left -->
+  <g transform="translate(-10 330) rotate(20)"><path d="M20 20c30 2 64 24 80 58 3 8-3 12-10 9C60 76 34 54 18 34c-5-6-3-13 2-14z"/><path d="M18 22c-6-10-3-18 6-22"/></g>
+  <!-- fork & knife, right -->
+  <g transform="translate(1010 520) rotate(12)"><path d="M10 0v60M0 0v26c0 8 20 8 20 0V0M10 60v110"/><path d="M50 0c18 10 18 70 0 80v90"/></g>
+  <!-- cloche, left bottom -->
+  <g transform="translate(10 900)"><path d="M10 80a55 50 0 0 1 110 0z"/><path d="M0 80h130"/><circle cx="65" cy="24" r="6"/></g>
+  <!-- leaf, right bottom -->
+  <g transform="translate(990 960) rotate(-30)"><path d="M0 40C24 0 80 0 96 28 72 60 26 66 0 40z"/><path d="M6 40c30-6 56-8 86-10"/></g>
+  <!-- drumstick, left top -->
+  <g transform="translate(20 70) rotate(-25)"><path d="M40 20c26-16 60 2 60 30s-30 44-56 34L22 110c-6 6-16-4-10-10l22-22C24 58 22 32 40 20z"/></g>
+  <!-- plate, right mid -->
+  <g transform="translate(1000 760)"><circle cx="40" cy="40" r="40"/><circle cx="40" cy="40" r="26"/></g>
+</g></svg>
+  <header class="head">
+    <div class="logo"><img src="../assets/logo.png" alt=""><b>BOOM<i>ii</i>S</b><svg width="120" height="12" viewBox="0 0 120 12" aria-hidden="true"><path d="M3 9C40 2 80 2 117 7" stroke="#c8344f" stroke-width="5" fill="none" stroke-linecap="round"/></svg></div>
+    <div class="title"><h1>FOOD MENU</h1><p>TASTE IT. LOVE IT. COME BACK.</p></div>
+  </header>
+  <section class="row row--l" style="top:232px">
+    <div class="ph"><img src="../assets/jollof-chicken.jpg" alt="" style="object-position:40% 45%"></div>
+    <div class="txt"><h2>RICE MEALS</h2><ul class="items"><li><span>Jollof Rice · Chicken</span><b>GH₵109</b></li><li><span>Fried Rice · Chicken</span><b>GH₵109</b></li><li><span>Many Nations GH</span><b>GH₵98</b></li><li><span>All Weather</span><b>GH₵105</b></li><li><span>All Seasons</span><b>GH₵105</b></li><li><span>Simply Good</span><b>GH₵138</b></li></ul></div>
+  </section>
+  <section class="row row--r" style="top:428px">
+    <div class="ph"><img src="../assets/ofada.jpg" alt="" style="object-position:50% 50%"></div>
+    <div class="txt"><h2>NAIJA COMBOS</h2><ul class="items"><li><span>Mission’s Delight</span><b>GH₵138</b></li><li><span>Buka Style</span><b>GH₵126</b></li><li><span>Many Nations Naija</span><b>GH₵109</b></li><li><span>Ewa Agonyin</span><b>GH₵98</b></li><li><span>Spaghetti Surprise</span><b>GH₵98</b></li><li><span>Yam Porridge</span><b>GH₵86</b></li></ul></div>
+  </section>
+  <section class="row row--l" style="top:624px">
+    <div class="ph"><img src="../assets/eba-egusi.jpg" alt="" style="object-position:30% 50%"></div>
+    <div class="txt"><h2>SOUPS &amp; SWALLOWS</h2><ul class="items items--4"><li><span>Egusi</span><b>GH₵132</b></li><li><span>Efo Riro</span><b>GH₵144</b></li><li><span>Ogbono</span><b>GH₵120</b></li><li><span>Goat Pepper Soup</span><b>GH₵140</b></li><li><span>Pounded Yam</span><b>GH₵35</b></li><li><span>Amala / Semo</span><b>GH₵25</b></li><li><span>Banku</span><b>GH₵10</b></li><li><span>Eba</span><b>GH₵8</b></li></ul></div>
+  </section>
+  <section class="row row--r" style="top:820px">
+    <div class="ph"><img src="../assets/yam-soup.jpg" alt="" style="object-position:50% 60%"></div>
+    <div class="txt"><h2>PROUDLY GHANAIAN</h2><ul class="items"><li><span>Light Soup</span><b>GH₵106</b></li><li><span>Fish Light Soup</span><b>GH₵109</b></li><li><span>Groundnut Soup</span><b>GH₵117</b></li><li><span>Palmnut Soup</span><b>GH₵117</b></li><li><span>Okro Stew</span><b>GH₵110</b></li><li><span>Palava Sauce</span><b>GH₵120</b></li></ul></div>
+  </section>
+  <section class="row row--l" style="top:1016px">
+    <div class="ph"><img src="../assets/rice-beef.jpg" alt="" style="object-position:35% 45%"></div>
+    <div class="txt"><h2>PEPPER DEM GANG</h2><ul class="items"><li><span>Hottie Turkey</span><b>GH₵150</b></li><li><span>Chilli Goat Meat</span><b>GH₵150</b></li><li><span>Peppered Beef</span><b>GH₵138</b></li><li><span>Spicy Chicken Wings</span><b>GH₵109</b></li><li><span>Gizzy</span><b>GH₵75</b></li><li><span>Dodo Gizzard</span><b>GH₵69</b></li></ul></div>
+  </section>
+
+  <footer class="foot">
+    <div class="fr">
+      <span class="fi"><svg viewBox="0 0 24 24"><path fill="#25d366" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.6-.1 1.1Z"/></svg>0506387636</span>
+      <span class="fi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="none" stroke="#f2c96d" stroke-width="1.8"/><path transform="translate(5.5 5.5) scale(.54)" fill="#f2c96d" d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11 11 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11 11 0 0 0 .6 3.6 1 1 0 0 1-.25 1Z"/></svg>0242165783</span>
+      <span class="fi"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="#f2c96d" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="#f2c96d" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="#f2c96d"/></svg>@boomiisgh</span>
+    </div>
+    <div class="fr">
+      <span class="fi"><svg viewBox="0 0 24 24"><path fill="#f2c96d" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.6A2.6 2.6 0 1 1 12 6.4a2.6 2.6 0 0 1 0 5.2Z"/></svg>47 Adjiringano Rd, East Legon</span>
+      <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="#f2c96d" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M9 17h6l2-6h-4l-2 6M13 11l-1-4h-3M17 11l1.5 3"/></svg>Pickup &amp; Delivery</span>
+      <span class="fi"><span class="badge mtn">MTN MoMo</span><span class="badge tel">Telecel Cash</span></span>
+    </div>
+  </footer>
+</body>
+</html>

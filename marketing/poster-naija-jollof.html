@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BOOMiiS · Naija Jollof &amp; Fried Rice poster</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Anton&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+  /* 1080 x 1350 (Instagram / WhatsApp portrait). Render at 2x+ for print. */
+  :root{--gold:#f7b52c;--gold2:#ffd36a;--m:#a3304a;--md:#6f1a2d;--ink:#1a0d08}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1350px}
+  body{position:relative;overflow:hidden;background:radial-gradient(70% 55% at 20% 30%,var(--gold2),var(--gold) 70%);color:var(--ink);font-family:"Plus Jakarta Sans",system-ui,sans-serif}
+  .abs{position:absolute}
+  .red{left:560px;top:-180px;width:1100px;height:1700px;border-radius:50%;background:radial-gradient(60% 50% at 35% 45%,#c13a57,var(--m) 45%,var(--md));box-shadow:-30px 0 80px rgba(111,26,45,.35)}
+  .rings{left:610px;top:-120px;width:1000px;height:1580px;border-radius:50%;border:2px dashed rgba(255,211,106,.35)}
+  .grain{inset:0;opacity:.18;background-image:radial-gradient(rgba(26,13,8,.35) 1px,transparent 1.2px);background-size:5px 5px;mix-blend-mode:multiply;pointer-events:none}
+
+  .brand{left:60px;top:54px;display:flex;align-items:center;gap:14px}
+  .brand img{width:78px;height:78px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px var(--ink)}
+  .brand b{display:block;font-weight:800;font-size:38px;letter-spacing:-1px;line-height:1}
+  .brand b i{font-style:normal;color:var(--md)}
+  .brand small{display:block;font-size:13px;font-weight:800;letter-spacing:6px;margin-top:5px}
+
+  .h1{left:54px;top:170px;font-family:"Anton",sans-serif;font-size:150px;line-height:.86;text-transform:uppercase;letter-spacing:-1px}
+  .h1 .naija{display:block;font-size:110px;color:var(--md);letter-spacing:2px}
+  .script{left:66px;top:398px;font-family:"Dancing Script",cursive;font-size:108px;color:#fff;transform:rotate(-5deg);text-shadow:0 6px 0 rgba(111,26,45,.55),0 12px 26px rgba(0,0,0,.25);white-space:nowrap}
+  .tag{left:62px;top:556px;width:470px;font-size:25px;font-weight:700;line-height:1.35}
+
+  .list{left:62px;top:684px;width:460px}
+  .list h3{font-size:28px;font-weight:800;color:#fff;letter-spacing:1px;text-transform:uppercase;text-shadow:0 2px 0 rgba(111,26,45,.6);margin-bottom:12px}
+  .list li{list-style:none;display:flex;align-items:center;gap:14px;font-size:27px;font-weight:800;padding:5px 0}
+  .list li::before{content:"";width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px var(--ink);flex:none}
+  .list li span{flex:1;border-bottom:3px dotted rgba(26,13,8,.35);margin:0 4px 6px}
+  .list li b{font-family:"Anton",sans-serif;font-weight:400;font-size:30px;letter-spacing:.5px}
+  .list p{margin-top:8px;font-size:18px;font-weight:700;opacity:.8}
+
+  .cta{left:62px;top:1100px;display:flex;align-items:center;gap:18px}
+  .btn{display:inline-block;padding:20px 40px;border-radius:18px;background:var(--ink);color:#fff;font-weight:800;font-size:32px;letter-spacing:1px;box-shadow:0 14px 30px rgba(26,13,8,.35)}
+  .web{left:64px;top:1214px;font-weight:800;font-size:34px;letter-spacing:-.5px}
+  .web small{display:block;font-size:17px;font-weight:700;letter-spacing:.5px;opacity:.8;margin-top:4px}
+
+  /* plates */
+  .plate{border-radius:50%;overflow:hidden;border:14px solid var(--ink);box-shadow:0 0 0 8px var(--gold),0 30px 60px rgba(0,0,0,.45)}
+  .plate img{width:100%;height:100%;object-fit:cover}
+  .p1{left:600px;top:70px;width:420px;height:420px}
+  .p1 img{object-position:50% 50%}
+  .p2{left:560px;top:540px;width:470px;height:470px}
+  .p2 img{object-position:50% 45%}
+  .lbl{padding:10px 20px;border-radius:999px;background:#fff;font-weight:800;font-size:22px;box-shadow:0 10px 24px rgba(0,0,0,.3);white-space:nowrap}
+  .lbl1{left:612px;top:438px;transform:rotate(-4deg)}
+  .lbl2{left:820px;top:960px;transform:rotate(3deg)}
+  .lbl i{font-style:normal;color:var(--m)}
+
+  /* price burst */
+  .burst{left:880px;top:420px;width:190px;height:190px;display:grid;place-items:center;text-align:center;transform:rotate(10deg)}
+  .burst svg{position:absolute;inset:0;filter:drop-shadow(0 14px 22px rgba(0,0,0,.4))}
+  .burst div{position:relative;color:var(--ink);font-weight:800;line-height:1}
+  .burst small{display:block;font-size:18px;letter-spacing:1px}
+  .burst b{display:block;font-family:"Anton",sans-serif;font-weight:400;font-size:42px}
+  .burst em{display:block;font-style:normal;font-size:15px}
+
+  /* combo card */
+  .combo{left:600px;top:1052px;width:430px;padding:18px 22px;border-radius:22px;background:rgba(26,13,8,.9);color:#fff;display:flex;gap:16px;align-items:center;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+  .combo .qr{flex:none;width:118px;height:118px;padding:7px;border-radius:14px;background:#fff}
+  .combo .qr img{width:100%;height:100%;image-rendering:pixelated}
+  .combo b{display:block;font-size:20px;color:var(--gold2);white-space:nowrap}
+  .combo p{font-size:16px;font-weight:600;line-height:1.35;opacity:.9;margin-top:4px}
+  .combo p strong{color:#fff;font-weight:800}
+
+  .foot{left:0;right:0;bottom:0;height:62px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;gap:22px;font-size:19px;font-weight:700;letter-spacing:.3px}
+  .foot i{font-style:normal;color:var(--gold)}
+</style>
+</head>
+<body>
+  <div class="abs red"></div>
+  <div class="abs rings"></div>
+
+  <div class="abs brand"><img src="../assets/logo.png" alt=""><div><b>BOOM<i>ii</i>S</b><small>RESTAURANT</small></div></div>
+
+  <div class="abs h1"><span class="naija">Naija</span>Jollof</div>
+  <div class="abs script">&amp; Fried Rice</div>
+  <div class="abs tag">Smoky, party-style and cooked the proper Naija way. Pick your protein, we’ll do the rest.</div>
+
+  <div class="abs list">
+    <h3>Pick your protein</h3>
+    <ul>
+      <li>Chicken<span></span><b>GH₵109</b></li>
+      <li>Peppered fish<span></span><b>GH₵104</b></li>
+      <li>Peppered beef<span></span><b>GH₵138</b></li>
+      <li>Peppered goat<span></span><b>GH₵150</b></li>
+      <li>Peppered turkey<span></span><b>GH₵150</b></li>
+    </ul>
+    <p>Same price for jollof or fried rice · Naija or GH style</p>
+  </div>
+
+  <div class="abs cta"><span class="btn">ORDER NOW</span></div>
+  <div class="abs web">boomiisgh.com<small>Pickup &amp; delivery · Pay with MoMo</small></div>
+
+  <div class="abs plate p1"><img src="../assets/jollof-plate.jpg" alt=""></div>
+  <div class="abs lbl lbl1">Jollof <i>+</i> Chicken</div>
+  <div class="abs plate p2"><img src="../assets/jollof-chicken.jpg" alt=""></div>
+  <div class="abs lbl lbl2">Party jollof <i>✦</i></div>
+
+  <div class="abs burst">
+    <svg viewBox="0 0 200 200" aria-hidden="true"><path fill="#fff" d="M100 4l14 15 20-7 7 20 21 1-1 21 19 9-9 19 13 16-16 13 5 21-21 4-4 21-21-5-13 16-16-13-19 9-9-19-21-1 1-21-19-9 9-19-13-16 16-13-5-21 21-4 4-21 21 5 13-16 16 13z"/></svg>
+    <div><small>FROM</small><b>GH₵104</b><em>per plate</em></div>
+  </div>
+
+  <div class="abs combo">
+    <div class="qr"><img src="qr-menu-rice.png" alt="QR code to the BOOMiiS rice menu"></div>
+    <div><b>Can’t choose? Have both!</b><p><strong>Many Nations Naija</strong>: jollof &amp; fried rice, beef, plantain and chicken, <strong>GH₵109</strong>. Scan to order.</p></div>
+  </div>
+
+  <div class="abs foot">47 Adjiringano Rd, East Legon <i>✦</i> Call / WhatsApp 050 638 7636 <i>✦</i> Open till 10 pm · 11 pm weekends</div>
+  <div class="abs grain"></div>
+</body>
+</html>

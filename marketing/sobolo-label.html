@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BOOMiiS · Sobolo bottle label</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Anton&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+  /* Flat label artwork 600 x 1100 (wrapped onto the bottle photo by the build script) */
+  :root{--m:#a3304a;--md:#5c0f22;--g:#1f5a3d;--sand:#e9d6b4;--gold:#f2b544}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:600px;height:1100px}
+  body{position:relative;overflow:hidden;font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:#fff;
+    background:radial-gradient(60% 40% at 50% 52%,#e8476a 0,#b8213f 38%,#7d1027 70%,#4a0816 100%)}
+  .abs{position:absolute}
+  .rays{inset:0;opacity:.18;background:repeating-conic-gradient(from 0deg at 50% 52%,#fff 0 4deg,transparent 4deg 14deg);-webkit-mask-image:radial-gradient(circle at 50% 52%,#000 0,transparent 60%);mask-image:radial-gradient(circle at 50% 52%,#000 0,transparent 60%)}
+  .dots{inset:0;opacity:.12;background-image:radial-gradient(#fff 1.4px,transparent 1.6px);background-size:18px 18px}
+  .side{top:250px;font-family:"Anton",sans-serif;font-size:120px;line-height:.9;color:rgba(255,255,255,.07);writing-mode:vertical-rl}
+  .side.l{left:-22px;transform:rotate(180deg)} .side.r{right:-22px}
+
+  .brand{left:0;right:0;top:46px;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .brand .logo{width:92px;height:92px;border-radius:50%;background:#fff;box-shadow:0 0 0 5px var(--sand),0 10px 24px rgba(0,0,0,.35);display:grid;place-items:center;overflow:hidden}
+  .brand .logo img{width:100%;height:100%}
+  .brand b{font-weight:800;font-size:44px;letter-spacing:-1px;line-height:1;text-shadow:0 3px 10px rgba(0,0,0,.35)}
+  .brand b i{font-style:normal;color:var(--gold)}
+  .brand small{font-size:13px;font-weight:800;letter-spacing:7px;opacity:.85;margin-top:-4px}
+
+  .chilled{left:0;right:0;top:214px;text-align:center;font-family:"Dancing Script",cursive;font-size:76px;color:var(--gold);transform:rotate(-6deg);text-shadow:0 4px 0 rgba(74,8,22,.6)}
+  .name{left:0;right:0;top:322px;text-align:center;font-family:"Anton",sans-serif;font-size:178px;line-height:1;letter-spacing:2px;color:#fff;text-shadow:0 8px 0 rgba(74,8,22,.55),0 18px 30px rgba(0,0,0,.35)}
+
+  .art{left:50px;top:520px;width:500px;height:300px}
+
+  .band{left:110px;right:110px;top:842px;height:44px;border-radius:999px;background:#160409;display:grid;place-items:center;font-weight:800;font-size:17px;letter-spacing:3px}
+  .panel{left:0;right:0;bottom:0;height:200px;background:#fbf6ee;color:#1a0d08;padding:22px 66px 18px;display:grid;grid-template-columns:1.1fr 1fr;gap:16px;border-top:8px solid var(--g)}
+  .panel h4{font-size:15px;font-weight:800;color:var(--m);letter-spacing:.5px;margin-bottom:4px}
+  .panel p{font-size:14px;font-weight:600;line-height:1.35}
+  .panel .foot{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;border-top:2px dashed rgba(26,13,8,.2);padding-top:10px;font-size:15px;font-weight:800}
+  .panel .foot span{color:var(--g)}
+</style>
+</head>
+<body>
+  <div class="abs dots"></div>
+  <div class="abs rays"></div>
+  <div class="abs side l">BOOMiiS</div><div class="abs side r">SOBOLO</div>
+
+  <div class="abs brand"><div class="logo"><img src="../assets/logo.png" alt=""></div><b>BOOM<i>ii</i>S</b><small>RESTAURANT</small></div>
+  <div class="abs chilled">Chilled</div>
+  <div class="abs name">SOBOLO</div>
+
+  <svg class="abs art" viewBox="0 0 500 300" aria-hidden="true">
+    <defs>
+      <radialGradient id="pet" cx=".5" cy=".7" r=".8"><stop offset="0" stop-color="#ff5a6e"/><stop offset=".6" stop-color="#e01c3c"/><stop offset="1" stop-color="#9c0f27"/></radialGradient>
+      <radialGradient id="pet2" cx=".5" cy=".7" r=".8"><stop offset="0" stop-color="#ff8a9a"/><stop offset=".6" stop-color="#e83a58"/><stop offset="1" stop-color="#a8142f"/></radialGradient>
+      <linearGradient id="leaf" x1="0" x2="1"><stop offset="0" stop-color="#2f7d3a"/><stop offset="1" stop-color="#5fb04f"/></linearGradient>
+      <linearGradient id="glass" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity=".2"/></linearGradient>
+      <linearGradient id="drink" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#9c1530"/><stop offset="1" stop-color="#3d0612"/></linearGradient>
+      <linearGradient id="pine" x1="0" x2="1"><stop offset="0" stop-color="#f6c443"/><stop offset="1" stop-color="#e59a1c"/></linearGradient>
+      <linearGradient id="ginger" x1="0" x2="1"><stop offset="0" stop-color="#e9c98f"/><stop offset="1" stop-color="#c79a55"/></linearGradient>
+    </defs>
+    <ellipse cx="250" cy="282" rx="230" ry="16" fill="#000" opacity=".25"/>
+    <!-- leaves -->
+    <path d="M150 140c-40-60 10-110 70-96-10 50-30 80-70 96z" fill="url(#leaf)"/><path d="M150 140L208 52" stroke="#1f5a2a" stroke-width="3"/>
+    <path d="M345 130c50-50 110-20 110 30-50 0-80-10-110-30z" fill="url(#leaf)"/><path d="M345 130L452 158" stroke="#1f5a2a" stroke-width="3"/>
+    <!-- glass of sobolo -->
+    <g transform="translate(40 120)">
+      <path d="M0 0h110l-12 140H12z" fill="url(#drink)"/>
+      <path d="M8 30h94" stroke="#fff" stroke-opacity=".35" stroke-width="3"/>
+      <path d="M0 0h110l-12 140H12z" fill="url(#glass)" opacity=".35"/>
+      <path d="M0 0h110l-12 140H12z" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="4"/>
+      <rect x="18" y="40" width="22" height="22" rx="4" fill="#fff" opacity=".45" transform="rotate(14 29 51)"/>
+      <rect x="58" y="58" width="20" height="20" rx="4" fill="#fff" opacity=".4" transform="rotate(-10 68 68)"/>
+      <rect x="12" y="8" width="8" height="120" rx="4" fill="#fff" opacity=".35"/>
+    </g>
+    <!-- small hibiscus -->
+    <g transform="translate(405 205) scale(.58) rotate(30)">
+      <path d="M0 0c-60-20-80-90-20-110 30-8 40 30 20 110z" fill="url(#pet2)"/>
+      <path d="M0 0c-60-20-80-90-20-110 30-8 40 30 20 110z" fill="url(#pet)" transform="rotate(72)"/>
+      <path d="M0 0c-60-20-80-90-20-110 30-8 40 30 20 110z" fill="url(#pet2)" transform="rotate(144)"/>
+      <path d="M0 0c-60-20-80-90-20-110 30-8 40 30 20 110z" fill="url(#pet)" transform="rotate(216)"/>
+      <path d="M0 0c-60-20-80-90-20-110 30-8 40 30 20 110z" fill="url(#pet2)" transform="rotate(288)"/>
+      <circle r="16" fill="#6d0a1f"/><path d="M0 0l40 -46" stroke="#f2b544" stroke-width="6" stroke-linecap="round"/><circle cx="40" cy="-48" r="7" fill="#ffd36a"/>
+    </g>
+    <!-- dried petals -->
+    <g fill="#5c0a1c"><path d="M180 262c10-14 30-12 34 2-14 8-26 8-34-2z"/><path d="M226 270c8-12 26-10 30 2-12 7-22 7-30-2z"/><path d="M300 266c10-12 28-8 30 4-14 6-24 5-30-4z"/></g
+>
+    <!-- hibiscus flower -->
+    <g transform="translate(262 140)">
+      <g>
+        <path d="M0 0c-60-20-80-90-20-110 30-8 40 30 20 110z" fill="url(#pet)"/>
+        <path d="M0 0c-60-20-80-90-20-110 30-8 40 30 20 110z" fill="url(#pet)" transform="rotate(72)"/>
+        <path d="M0 0c-60-20-80-90-20-110 30-8 40 30 20 110z" fill="url(#pet2)" transform="rotate(144)"/>
+        <path d="M0 0c-60-20-80-90-20-110 30-8 40 30 20 110z" fill="url(#pet)" transform="rotate(216)"/>
+        <path d="M0 0c-60-20-80-90-20-110 30-8 40 30 20 110z" fill="url(#pet2)" transform="rotate(288)"/>
+      </g>
+      <g stroke="#7a0a1e" stroke-width="2" opacity=".6"><path d="M0 0L-20 -95M0 0L85 -45M0 0L70 80M0 0L-60 80M0 0L-92 -10"/></g>
+      <circle r="16" fill="#6d0a1f"/>
+      <path d="M0 0l40 -46" stroke="#f2b544" stroke-width="6" stroke-linecap="round"/>
+      <g fill="#ffd36a"><circle cx="40" cy="-48" r="6"/><circle cx="32" cy="-54" r="4"/><circle cx="48" cy="-42" r="4"/><circle cx="46" cy="-54" r="4"/></g>
+    </g>
+  </svg>
+
+  <div class="abs band">KEEP REFRIGERATED</div>
+  <div class="abs panel">
+    <div><h4>INGREDIENTS</h4><p>Made fresh at BOOMiiS with hibiscus (sobolo) leaves &amp; natural flavours.</p></div>
+    <div><h4>SERVE</h4><p>Shake well. Best served ice-cold with your BOOMiiS jollof.</p></div>
+    <div class="foot"><span>boomiisgh.com</span>050 638 7636</div>
+  </div>
+</body>
+</html>

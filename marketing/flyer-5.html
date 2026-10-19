@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BOOMiiS flyer 5 · Today's Special</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+  /* 1080 x 1350 (Instagram portrait). Render at 2x for print. */
+  :root{--g:#0f2e20;--m:#7a1f33;--m0:#5a1424;--red:#c8344f;--sand:#e9d6b4;--gold:#f2b866}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1350px}
+  body{position:relative;overflow:hidden;font-family:"Plus Jakarta Sans",system-ui,sans-serif;background:var(--m0);color:#fff}
+  .abs{position:absolute}
+
+  /* photo collage backdrop */
+  .collage{left:0;top:0;width:1080px;height:680px;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr;overflow:hidden}
+  .collage img{width:100%;height:100%;object-fit:cover;filter:saturate(1.1) brightness(.55) blur(1.5px);transform:scale(1.05)}
+  .collage::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.35),rgba(10,10,10,.15) 40%,rgba(10,10,10,.55))}
+
+  .brand{left:44px;top:40px;display:flex;align-items:center;gap:12px;z-index:3}
+  .brand img{width:64px;height:64px;border-radius:50%;background:#fff;border:3px solid var(--gold)}
+  .brand b{font-size:34px;font-weight:800;letter-spacing:-1px;line-height:1}
+  .brand b i{font-style:normal;color:var(--gold)}
+  .brand small{display:block;font-size:12px;font-weight:700;letter-spacing:4px;color:var(--sand);margin-top:4px}
+
+  .circ{border-radius:50%;overflow:hidden;border:12px solid #fff;box-shadow:0 26px 50px rgba(0,0,0,.55)}
+  .circ img{width:100%;height:100%;object-fit:cover}
+  .cl{left:-120px;top:250px;width:420px;height:420px}
+  .cr{right:-120px;top:250px;width:420px;height:420px}
+  .cc{left:285px;top:150px;width:510px;height:510px;z-index:2}
+
+  /* lower panel */
+  .panel{left:0;top:640px;width:1080px;height:710px;background:radial-gradient(90% 70% at 50% 0,#8b2a40,transparent 70%),linear-gradient(180deg,var(--m),var(--m0))}
+  .contour{position:absolute}
+  .order{left:50%;top:614px;transform:translateX(-50%);z-index:4;padding:18px 54px;border-radius:999px;background:linear-gradient(180deg,#f7c97c,var(--gold));color:#3a1018;font-weight:800;font-size:36px;letter-spacing:.5px;box-shadow:0 16px 30px rgba(0,0,0,.45),0 0 0 6px rgba(255,255,255,.18)}
+  .script{left:0;right:0;top:730px;text-align:center;font-family:"Dancing Script",cursive;font-size:76px;color:var(--gold);transform:rotate(-4deg)}
+  .head{left:0;right:0;top:810px;text-align:center;font-weight:800;font-size:92px;line-height:.98;letter-spacing:-3px;text-shadow:0 8px 24px rgba(0,0,0,.35)}
+  .chips{left:0;right:0;top:1020px;display:flex;justify-content:center;gap:12px}
+  .chips span{padding:10px 18px;border-radius:999px;border:2px solid rgba(242,184,102,.65);font-size:19px;font-weight:700;color:#fff;background:rgba(0,0,0,.18);white-space:nowrap}
+  .chips b{color:var(--gold)}
+  .cu{left:0;right:0;top:1100px;text-align:center;font-size:28px;font-weight:800}
+  .pill{left:50%;top:1150px;transform:translateX(-50%);display:flex;align-items:center;gap:30px;padding:16px 34px;border-radius:999px;background:linear-gradient(180deg,#f7c97c,var(--gold));color:#2b0c13;font-size:24px;font-weight:800;white-space:nowrap;box-shadow:0 14px 28px rgba(0,0,0,.35)}
+  .pill span{display:flex;align-items:center;gap:10px}
+  .pill svg{width:28px;height:28px;flex:none}
+  .small{left:0;right:0;top:1262px;text-align:center;font-size:18px;font-weight:700;color:var(--sand);letter-spacing:.4px}
+</style>
+</head>
+<body>
+  <div class="abs collage">
+    <img src="../assets/swallow-soup.jpg" alt=""><img src="../assets/yam-soup.jpg" alt=""><img src="../assets/jollof-plate.jpg" alt=""><img src="../assets/eba-egusi.jpg" alt="">
+    <img src="../assets/rice-beef.jpg" alt=""><img src="../assets/yam-egusi.jpg" alt=""><img src="../assets/ofada.jpg" alt=""><img src="../assets/jollof-chicken.jpg" alt="">
+  </div>
+  <div class="abs brand"><img src="../assets/logo.png" alt=""><div><b>BOOM<i>ii</i>S</b><small>RESTAURANT</small></div></div>
+
+  <div class="abs panel">
+    <svg class="contour" style="left:-40px;top:20px" width="260" height="260" viewBox="0 0 260 260" aria-hidden="true"><g fill="none" stroke="#f2b866" stroke-opacity=".45" stroke-width="2.5"><path d="M0 40c80 0 150 50 170 130"/><path d="M0 70c64 0 120 40 138 104"/><path d="M0 100c48 0 90 30 104 78"/><path d="M0 130c32 0 60 20 70 52"/></g></svg>
+    <svg class="contour" style="right:-40px;top:20px;transform:scaleX(-1)" width="260" height="260" viewBox="0 0 260 260" aria-hidden="true"><g fill="none" stroke="#f2b866" stroke-opacity=".45" stroke-width="2.5"><path d="M0 40c80 0 150 50 170 130"/><path d="M0 70c64 0 120 40 138 104"/><path d="M0 100c48 0 90 30 104 78"/><path d="M0 130c32 0 60 20 70 52"/></g></svg>
+    <svg class="contour" style="left:-30px;bottom:-30px;transform:scaleY(-1)" width="220" height="220" viewBox="0 0 260 260" aria-hidden="true"><g fill="none" stroke="#f2b866" stroke-opacity=".35" stroke-width="2.5"><path d="M0 40c80 0 150 50 170 130"/><path d="M0 70c64 0 120 40 138 104"/><path d="M0 100c48 0 90 30 104 78"/></g></svg>
+    <svg class="contour" style="right:-30px;bottom:-30px;transform:scale(-1,-1)" width="220" height="220" viewBox="0 0 260 260" aria-hidden="true"><g fill="none" stroke="#f2b866" stroke-opacity=".35" stroke-width="2.5"><path d="M0 40c80 0 150 50 170 130"/><path d="M0 70c64 0 120 40 138 104"/><path d="M0 100c48 0 90 30 104 78"/></g></svg>
+  </div>
+
+  <div class="abs circ cl"><img src="../assets/ofada.jpg" alt=""></div>
+  <div class="abs circ cr"><img src="../assets/rice-beef.jpg" alt="" style="object-position:30% 50%"></div>
+  <div class="abs circ cc"><img src="../assets/jollof-chicken.jpg" alt="Jollof rice with chicken, plantain and coleslaw" style="object-position:40% 45%"></div>
+
+  <div class="abs order">ORDER NOW</div>
+  <div class="abs script">Today’s Special</div>
+  <div class="abs head">AUTHENTIC NAIJA<br>FOOD MENU</div>
+  <div class="abs chips"><span>Jollof &amp; Chicken <b>GH₵109</b></span><span>Mission’s Delight <b>GH₵138</b></span><span>Egusi <b>GH₵132</b></span></div>
+  <div class="abs cu">Contact Us</div>
+  <div class="abs pill">
+    <span><svg viewBox="0 0 24 24"><path fill="#2b0c13" d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11 11 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11 11 0 0 0 .6 3.6 1 1 0 0 1-.25 1Z"/></svg>+233 50 638 7636</span>
+    <span><svg viewBox="0 0 24 24"><path fill="#2b0c13" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.6A2.6 2.6 0 1 1 12 6.4a2.6 2.6 0 0 1 0 5.2Z"/></svg>47 Adjiringano Rd, East Legon</span>
+  </div>
+  <div class="abs small">Pickup · Delivery · Pay with MTN MoMo &amp; Telecel Cash · @boomiisgh</div>
+</body>
+</html>

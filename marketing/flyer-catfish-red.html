@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BOOMiiS · Open grilled catfish (red style)</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Poppins:wght@600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+  /* 1080 x 1350 (4:5). Style after the "Tasty Smoked Catfish" sample, BOOMiiS details. */
+  :root{--r1:#e2452f;--r2:#b51f23;--r3:#6e0d12;--gold:#ffc83d;--org:#ff7a1a;--ink:#2a0a08}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1350px}
+  body{position:relative;overflow:hidden;color:#fff;font-family:"Poppins","Plus Jakarta Sans",sans-serif;background:radial-gradient(70% 55% at 50% 42%,var(--r1),var(--r2) 55%,var(--r3))}
+  .abs{position:absolute}
+  .smoke{inset:0;opacity:.18;background:radial-gradient(40% 18% at 30% 38%,#fff,transparent 70%),radial-gradient(30% 14% at 70% 30%,#fff,transparent 70%),radial-gradient(26% 12% at 45% 52%,#fff,transparent 70%);filter:blur(30px)}
+  .stripes{inset:0;opacity:.08;background:repeating-linear-gradient(120deg,transparent 0 120px,#000 120px 240px)}
+
+  .brand{left:0;right:0;top:46px;display:flex;align-items:center;justify-content:center;gap:14px}
+  .brand img{width:64px;height:64px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px #fff}
+  .brand b{font-family:"Dancing Script",cursive;font-size:54px;line-height:1;text-shadow:0 3px 10px rgba(0,0,0,.3)}
+
+  .h-small{left:0;right:0;top:150px;text-align:center;font-weight:800;font-size:76px;letter-spacing:-1px;color:#fde6e3;text-shadow:0 6px 0 rgba(110,13,18,.45),0 18px 40px rgba(0,0,0,.35)}
+  .h-big{left:0;right:0;top:220px;text-align:center;font-weight:800;font-size:168px;line-height:1;letter-spacing:-5px;color:#fff;text-shadow:0 8px 0 #f3c9c3,0 16px 0 rgba(110,13,18,.5),0 30px 60px rgba(0,0,0,.4)}
+  .ghost{left:0;right:0;top:118px;text-align:center;font-weight:800;font-size:84px;color:rgba(255,255,255,.1);letter-spacing:-1px}
+
+  .sun{left:350px;top:430px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#ffe27a,var(--gold) 55%,#f2a51a);box-shadow:0 0 90px rgba(255,200,61,.55)}
+  .tray{left:250px;top:850px;width:600px;height:80px;border-radius:14px;background:linear-gradient(180deg,#d8dde3,#9aa3ad 60%,#6d7681);transform:perspective(600px) rotateX(48deg);box-shadow:0 40px 50px rgba(0,0,0,.45)}
+  .fish{left:250px;top:412px;width:580px;filter:drop-shadow(0 30px 30px rgba(0,0,0,.55)) saturate(1.1) contrast(1.05)}
+  .tag-nofoil{left:740px;top:448px;padding:10px 18px;border-radius:999px;background:#fff;color:var(--r2);font-weight:800;font-size:22px;transform:rotate(8deg);box-shadow:0 12px 26px rgba(0,0,0,.35)}
+
+  /* floating garnish */
+  .leaf{filter:drop-shadow(0 10px 12px rgba(0,0,0,.35))}
+  .blur{filter:blur(7px)}
+  .onion{width:150px;height:150px;border-radius:50%;border:16px solid #f6e9f2;box-shadow:inset 0 0 0 7px #c58cb3,0 0 0 5px #c58cb3,0 14px 24px rgba(0,0,0,.3)}
+
+  /* price cards */
+  .cards{left:330px;top:960px;display:flex;gap:22px}
+  .card{width:230px;border-radius:6px;overflow:hidden;background:#fff;color:var(--ink);box-shadow:0 18px 36px rgba(0,0,0,.35)}
+  .card h4{background:var(--org);color:#fff;text-align:center;padding:16px 8px;font-size:22px;font-weight:800;letter-spacing:.5px}
+  .card ul{list-style:none;padding:16px 18px 18px;font-size:19px;font-weight:600;line-height:1.55;text-align:center}
+  .card .big{font-size:52px;font-weight:800;line-height:1;margin:6px 0 2px;color:var(--r2)}
+  .card .big small{font-size:24px;vertical-align:18px;margin-right:2px}
+
+  .order{left:56px;top:990px;width:240px;height:96px;background:#fff;color:var(--ink);display:grid;place-items:center;font-weight:800;font-size:30px;clip-path:polygon(0 0,100% 0,92% 50%,100% 100%,0 100%,8% 50%);box-shadow:0 14px 28px rgba(0,0,0,.35)}
+  .phone{left:56px;top:1104px;width:250px;text-align:center;font-size:22px;font-weight:700;line-height:1.4}
+  .phone small{display:block;font-size:16px;opacity:.85;font-weight:600}
+
+  .checks{left:820px;top:968px;width:240px;list-style:none;display:grid;gap:8px;font-size:18px;font-weight:600;line-height:1.25}
+  .checks li{display:flex;gap:8px;align-items:flex-start}
+  .checks li::before{content:"✓";flex:none;width:22px;height:22px;border-radius:50%;background:var(--gold);color:var(--r2);font-size:14px;font-weight:800;display:grid;place-items:center;margin-top:1px}
+
+  .site{left:0;right:0;bottom:44px;text-align:center;font-size:22px;font-weight:700;opacity:.92}
+  .site b{color:var(--gold)}
+</style>
+</head>
+<body>
+  <div class="abs stripes"></div>
+  <div class="abs smoke"></div>
+
+  <div class="abs brand"><img src="../assets/logo.png" alt=""><b>Boomiis Restaurant</b></div>
+  <div class="abs h-small">Open Grilled</div>
+  <div class="abs h-big">Catfish</div>
+
+  <div class="abs sun"></div>
+  <div class="abs tray"></div>
+  <img class="abs fish" src="catfish-cutout.png" alt="Open grilled catfish">
+  <div class="abs tag-nofoil">No tin-foil</div>
+
+  <!-- garnish -->
+  <svg class="abs leaf blur" style="left:-60px;top:260px;width:300px;transform:rotate(-30deg)" viewBox="0 0 120 60"><path d="M4 30C30 0 90 0 116 30 90 60 30 60 4 30z" fill="#55b52b"/><path d="M4 30h112" stroke="#2f7d17" stroke-width="2"/></svg>
+  <svg class="abs leaf" style="left:860px;top:300px;width:150px;transform:rotate(-50deg)" viewBox="0 0 120 60"><path d="M4 30C30 0 90 0 116 30 90 60 30 60 4 30z" fill="#6cc43a"/><path d="M4 30h112" stroke="#2f7d17" stroke-width="2"/></svg>
+  <svg class="abs leaf" style="left:150px;top:840px;width:140px;transform:rotate(35deg)" viewBox="0 0 120 60"><path d="M4 30C30 0 90 0 116 30 90 60 30 60 4 30z" fill="#4fae2a"/><path d="M4 30h112" stroke="#2f7d17" stroke-width="2"/></svg>
+  <svg class="abs leaf blur" style="left:860px;top:1190px;width:280px;transform:rotate(-15deg)" viewBox="0 0 120 60"><path d="M4 30C30 0 90 0 116 30 90 60 30 60 4 30z" fill="#55b52b"/></svg>
+  <div class="abs onion" style="left:880px;top:560px;transform:rotate(20deg) scale(.8)"></div>
+  <div class="abs onion blur" style="left:60px;top:640px;transform:scale(.9)"></div>
+  <svg class="abs blur" style="left:900px;top:760px;width:170px" viewBox="0 0 100 100"><circle cx="50" cy="54" r="42" fill="#e3261b"/><circle cx="36" cy="40" r="10" fill="#ff8a7a" opacity=".6"/><path d="M50 12l-6 8M50 12l8 6M50 12l-2-8" stroke="#2f7d17" stroke-width="5" stroke-linecap="round"/></svg>
+
+  <div class="abs cards">
+    <div class="card"><h4>MEAL OF THE DAY</h4><ul><li>Open grilled catfish</li><li>+ Boli (roasted plantain)</li><li class="big"><small>GH₵</small>199</li></ul></div>
+    <div class="card"><h4>+ SOFT DRINK</h4><ul><li>Comes with a</li><li>soft drink of</li><li>your choice</li><li><svg viewBox="0 0 64 64" width="56" height="56" style="margin-top:6px"><rect x="8" y="14" width="22" height="40" rx="5" fill="#d9232e"/><rect x="8" y="22" width="22" height="16" fill="#fff" opacity=".9" stroke="#eee"/><rect x="10" y="10" width="18" height="6" rx="3" fill="#b8bcc2"/><path d="M42 8h8v8l4 8v28a4 4 0 0 1-4 4h-8a4 4 0 0 1-4-4V24l4-8z" fill="#1f8a4c"/><rect x="40" y="30" width="14" height="12" fill="#ffd77a"/><rect x="42" y="4" width="8" height="5" rx="2" fill="#f6b93b"/></svg></li></ul></div>
+  </div>
+
+  <div class="abs order">Order Now!</div>
+  <div class="abs phone">050 638 7636<small>Call / WhatsApp</small></div>
+
+  <ul class="abs checks">
+    <li>Open-fire grilled</li>
+    <li>No tin-foil, just char</li>
+    <li>Served with boli</li>
+    <li>Dine-in, pickup or delivery</li>
+    <li>Pay easily with MoMo</li>
+  </ul>
+
+  <div class="abs site">Order online at <b>boomiisgh.com</b> · 47 Adjiringano Rd, East Legon</div>
+</body>
+</html>

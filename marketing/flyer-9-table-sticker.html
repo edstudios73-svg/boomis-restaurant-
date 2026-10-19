@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BOOMiiS · Table-top QR sticker</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Anton&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+  /* Square table sticker 1080 x 1080 (print 10 x 10 cm or larger). */
+  :root{--bg:#0a1a13;--m:#a3304a;--md:#7a1f33;--sand:#e9d6b4;--gold:#d9b46a}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1080px}
+  body{position:relative;overflow:hidden;background:radial-gradient(70% 60% at 50% 45%,#17392a,var(--bg) 70%);color:#fff;font-family:"Plus Jakarta Sans",system-ui,sans-serif}
+  .abs{position:absolute}
+  .ring{inset:26px;border-radius:56px;border:3px solid rgba(233,214,180,.55)}
+  .ring2{inset:40px;border-radius:44px;border:1.5px dashed rgba(233,214,180,.25)}
+  .dots{inset:0;opacity:.06;background-image:radial-gradient(#fff 1.2px,transparent 1.4px);background-size:22px 22px}
+  .brand{left:0;right:0;top:82px;display:flex;align-items:center;justify-content:center;gap:16px}
+  .brand img{width:78px;height:78px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px var(--sand)}
+  .brand b{font-weight:800;font-size:44px;letter-spacing:-1px;line-height:1}
+  .brand b i{font-style:normal;color:var(--sand)}
+  .brand small{display:block;font-size:14px;font-weight:700;letter-spacing:7px;margin-top:6px}
+  .kick{left:0;right:0;top:168px;text-align:center;font-family:"Dancing Script",cursive;font-size:50px;color:var(--sand)}
+  .head{left:0;right:0;top:236px;text-align:center;font-family:"Anton",sans-serif;font-size:96px;line-height:1;text-transform:uppercase;letter-spacing:1px}
+  .head em{font-style:normal;background:linear-gradient(180deg,#fffaf0,#f0dfbf 40%,#d9b46a);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .qrwrap{left:50%;top:370px;width:470px;height:470px;margin-left:-235px}
+  .qrwrap::before,.qrwrap::after{content:"";position:absolute;width:80px;height:80px;border:9px solid var(--m)}
+  .qrwrap::before{left:-16px;top:-16px;border-right:0;border-bottom:0;border-radius:24px 0 0 0}
+  .qrwrap::after{right:-16px;bottom:-16px;border-left:0;border-top:0;border-radius:0 0 24px 0}
+  .qr{position:absolute;inset:0;background:#fff;border-radius:30px;padding:20px;box-shadow:0 24px 60px rgba(0,0,0,.55)}
+  .qr img.code{width:100%;height:100%;image-rendering:pixelated;display:block}
+  .qr .mid{position:absolute;left:50%;top:50%;width:104px;height:104px;margin:-52px 0 0 -52px;border-radius:50%;background:#fff;padding:7px;box-shadow:0 0 0 6px #fff}
+  .qr .mid img{width:100%;height:100%;border-radius:50%}
+  .cam{left:0;right:0;top:872px;text-align:center;font-size:24px;font-weight:800;letter-spacing:.5px}
+  .cam span{color:var(--sand)}
+  .web{left:50%;top:928px;transform:translateX(-50%);padding:14px 34px;border-radius:999px;background:linear-gradient(90deg,var(--md),var(--m));font-family:"Anton",sans-serif;font-size:40px;letter-spacing:1px;white-space:nowrap;box-shadow:0 12px 30px rgba(163,48,74,.4)}
+</style>
+</head>
+<body>
+  <div class="abs dots"></div>
+  <div class="abs ring"></div><div class="abs ring2"></div>
+  <div class="abs brand"><img src="../assets/logo.png" alt=""><div><b>BOOM<i>ii</i>S</b><small>RESTAURANT</small></div></div>
+  <div class="abs kick">Hungry?</div>
+  <div class="abs head">Scan for the <em>menu</em></div>
+  <div class="abs qrwrap"><div class="qr"><img class="code" src="qr-table-menu.png" alt="QR code to boomiisgh.com/table"><div class="mid"><img src="../assets/logo.png" alt=""></div></div></div>
+  <div class="abs cam">Open your camera <span>·</span> point <span>·</span> tap the link</div>
+  <div class="abs web">boomiisgh.com</div>
+</body>
+</html>

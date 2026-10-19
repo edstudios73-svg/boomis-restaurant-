@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BOOMiiS flyer 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  /* 1080 x 1350 (Instagram portrait). Render at 2x for print. */
+  :root{--g:#0f2e20;--g2:#163d2b;--g3:#0b2318;--m:#a3304a;--m2:#7a1f33;--red:#c8344f;--sand:#e9d6b4;--sand2:#f2c96d;--cream:#f6ecd9}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1350px}
+  body{position:relative;overflow:hidden;font-family:"Plus Jakarta Sans",system-ui,sans-serif;background:linear-gradient(180deg,var(--cream) 0 66%,#fff 66%)}
+  .abs{position:absolute}
+
+  /* right maroon panel */
+  .panel{left:610px;top:-20px;right:-40px;bottom:-20px;border-radius:150px 0 0 150px;background:linear-gradient(160deg,#c23b57 0%,var(--m) 40%,var(--m2) 100%);overflow:hidden}
+  .panel::before{content:"";position:absolute;left:-40px;top:-10%;width:180px;height:130%;background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,0));transform:rotate(14deg)}
+  .panel::after{content:"";position:absolute;right:-120px;top:120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(233,214,180,.22),transparent 65%)}
+  .handle{right:26px;top:560px;transform:rotate(90deg);transform-origin:right top;color:rgba(255,255,255,.7);font-weight:700;font-size:18px;letter-spacing:2px;white-space:nowrap}
+
+  /* left card */
+  .card{left:96px;top:112px;width:520px;height:1010px;border-radius:6px;overflow:hidden;box-shadow:0 30px 60px rgba(11,35,24,.35)}
+  .top{position:absolute;left:0;right:0;top:0;height:370px;background:var(--g3)}
+  .mid{position:absolute;left:0;right:0;top:370px;height:490px;background:linear-gradient(180deg,var(--g2),var(--g));}
+  .mid::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,.025) 0 2px,transparent 2px 9px)}
+  .bot{position:absolute;left:0;right:0;bottom:0;height:150px;background:var(--g3);overflow:hidden}
+  .bot svg.tri{position:absolute;inset:0;width:100%;height:100%;opacity:.07}
+
+  .logo{position:absolute;left:52px;top:134px}
+  .logo .row{display:flex;align-items:flex-end;gap:14px}
+  .logo b{display:block;font-size:96px;font-weight:800;letter-spacing:-4px;line-height:.86;color:#fbf3e4}
+  .logo b i{font-style:normal;color:var(--sand2)}
+  .logo .cloche{margin-bottom:6px}
+  .logo .sub{display:block;margin-top:14px;font-size:27px;font-weight:700;letter-spacing:12px;color:#fbf3e4}
+  .logo .swoosh{display:block;margin-top:10px}
+  .seal{position:absolute;left:52px;top:44px;width:70px;height:70px;border-radius:50%;border:3px solid rgba(233,214,180,.6);background:#fff}
+
+  .tagline{position:absolute;left:52px;top:30px;font-size:30px;font-weight:600;color:var(--sand2)}
+  .label{position:absolute;left:52px;top:88px;background:var(--sand2);color:var(--g3);font-weight:800;font-size:26px;padding:12px 22px;border-radius:4px}
+  .list{position:absolute;left:52px;top:162px;list-style:none;display:grid;gap:5px}
+  .list li{display:flex;align-items:center;gap:14px;color:#fff;font-size:28px;font-weight:600;letter-spacing:-.2px}
+  .list li::before{content:"»";color:var(--sand2);font-weight:800;font-size:30px;line-height:1}
+  .momo{position:absolute;left:52px;top:800px;display:flex;align-items:center;gap:8px}
+  .momo span{font-size:16px;font-weight:800;padding:6px 12px;border-radius:999px}
+  .momo .y{background:#ffcc00;color:#111}
+  .momo .r{background:#e3001b;color:#fff}
+  .momo em{font-style:normal;color:rgba(255,255,255,.75);font-size:17px;font-weight:600;margin-right:4px}
+
+  .ribbon{left:72px;top:900px;width:440px;height:96px;display:flex;align-items:center;justify-content:center;border-radius:6px 26px 26px 6px;background:linear-gradient(180deg,#d8405c,var(--red) 55%,#a92a42);color:#fff;font-weight:800;font-size:30px;box-shadow:0 14px 28px rgba(122,31,51,.45)}
+  .ribbon::before{content:"";position:absolute;left:0;bottom:-18px;border-top:18px solid #6d1a2b;border-left:24px solid transparent}
+  .arrow{left:500px;top:784px}
+
+  .loc{position:absolute;left:52px;bottom:42px;display:flex;align-items:center;gap:14px;color:#fff}
+  .loc svg{width:46px;height:46px;flex:none;color:#fff}
+  .loc b{display:block;font-size:42px;font-weight:800;letter-spacing:-1.5px;line-height:1}
+  .loc small{display:block;font-size:19px;color:var(--sand);font-weight:600;margin-top:6px}
+
+  /* photos */
+  .ph{width:282px;height:282px;border-radius:50%;padding:13px;background:#fff;box-shadow:0 18px 36px rgba(0,0,0,.35)}
+  .ph img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+  .p1{left:680px;top:64px}.p2{left:680px;top:356px}.p3{left:680px;top:648px}.p4{left:680px;top:940px}
+
+  /* bottom row */
+  .phones{left:96px;top:1162px;display:grid;gap:14px}
+  .pr{display:flex;align-items:center;gap:16px}
+  .pr .ic{width:62px;height:62px;border-radius:50%;background:var(--g);display:grid;place-items:center;box-shadow:0 8px 18px rgba(15,46,32,.3)}
+  .pr .ic.wa{background:#25d366}
+  .pr .ic svg{width:32px;height:32px}
+  .pr b{font-size:54px;font-weight:800;letter-spacing:-1.5px;line-height:1;color:var(--g3)}
+  .order{left:690px;top:1215px;width:280px;height:88px;border-radius:999px;background:#fff;display:grid;place-items:center;font-size:36px;font-weight:800;letter-spacing:-1px;color:var(--m2);box-shadow:0 14px 30px rgba(0,0,0,.3)}
+  .web{left:690px;top:1316px;width:280px;text-align:center;color:rgba(255,255,255,.85);font-size:15px;font-weight:700;letter-spacing:.5px}
+
+  .leaf{position:absolute;filter:drop-shadow(0 10px 14px rgba(0,0,0,.25))}
+</style>
+</head>
+<body>
+  <div class="abs panel"></div>
+  <div class="abs handle">@boomiisgh</div>
+
+  <div class="abs card">
+    <div class="top">
+      <div class="logo">
+        <div class="row">
+          <b>BOOM<i>ii</i>S</b>
+        </div>
+        <span class="sub">RESTAURANT</span>
+        <svg class="swoosh" width="300" height="22" viewBox="0 0 420 22" aria-hidden="true"><path d="M4 16C120 4 300 2 416 10" stroke="#f2c96d" stroke-width="6" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <svg class="abs" style="left:372px;top:216px" width="112" height="104" viewBox="0 0 130 120" aria-hidden="true">
+        <path d="M52 30c-6-8 6-12 0-20M66 30c-6-8 6-12 0-20M80 30c-6-8 6-12 0-20" stroke="#f2c96d" stroke-width="4" fill="none" stroke-linecap="round" opacity=".85"/>
+        <circle cx="66" cy="44" r="6" fill="#f2c96d"/>
+        <path d="M14 96a52 50 0 0 1 104 0z" fill="#f2c96d"/>
+        <path d="M30 80a38 36 0 0 1 22-26" stroke="#fff3d0" stroke-width="5" fill="none" stroke-linecap="round" opacity=".7"/>
+        <rect x="6" y="96" width="120" height="12" rx="6" fill="#f2c96d"/>
+      </svg>
+      <img class="seal" src="../assets/logo.png" alt=""><span style="position:absolute;left:138px;top:58px;color:var(--sand);font-size:17px;font-weight:700;letter-spacing:3px;line-height:1.4">AUTHENTIC NIGERIAN<br>&amp; GHANAIAN KITCHEN</span>
+    </div>
+    <div class="mid">
+      <p class="tagline">Hungry? Taste home.</p>
+      <span class="label">Dishes Served:</span>
+      <ul class="list">
+        <li>Jollof &amp; Fried Rice</li>
+        <li>Egusi &amp; Pounded Yam</li>
+        <li>Amala, Ewedu &amp; Gbegiri</li>
+        <li>Waakye &amp; Palava Sauce</li>
+        <li>Banku &amp; Light Soup</li>
+        <li>Ofada &amp; Pepper Soup</li>
+      </ul>
+    </div>
+    <div class="bot">
+      <svg class="tri" viewBox="0 0 520 150" preserveAspectRatio="none" aria-hidden="true"><g fill="#fff"><path d="M20 20l40 70H-20z"/><path d="M140 -10l50 80H90z"/><path d="M260 40l40 70h-80z"/><path d="M380 0l46 76h-92z"/><path d="M490 50l40 70h-80z"/><path d="M80 110l34 56H46z"/><path d="M330 110l34 56h-68z"/></g></svg>
+      <div class="loc"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.6A2.6 2.6 0 1 1 12 6.4a2.6 2.6 0 0 1 0 5.2Z"/></svg><div><b>East Legon</b><small>No. 47 Adjiringano Road, Accra</small></div></div>
+    </div>
+  </div>
+
+  <div class="abs momo" style="left:148px;top:916px;display:none"></div>
+  <div class="abs ribbon">Pickup &amp; Delivery</div>
+  <svg class="abs arrow" width="250" height="180" viewBox="0 0 250 180" aria-hidden="true">
+    <path d="M10 170c30-10 34-60 10-70-26-10-30 40 10 40 60 0 110-60 190-100" stroke="#fff" stroke-width="4" stroke-dasharray="10 10" fill="none" stroke-linecap="round"/>
+    <path d="M206 30l22-8-8 22" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+
+  <div class="abs ph p1"><img src="../assets/yam-soup.jpg" alt="" style="object-position:50% 55%"></div>
+  <div class="abs ph p2"><img src="../assets/eba-egusi.jpg" alt="" style="object-position:30% 50%"></div>
+  <div class="abs ph p3"><img src="../assets/rice-beef.jpg" alt=""></div>
+  <div class="abs ph p4"><img src="../assets/jollof-chicken.jpg" alt="" style="object-position:38% 45%"></div>
+
+  <!-- leaves -->
+  <svg class="leaf" style="left:610px;top:262px;transform:rotate(-20deg)" width="110" height="70" viewBox="0 0 110 70" aria-hidden="true"><path d="M4 40C30 0 90 0 106 30 80 64 30 70 4 40z" fill="#43a047"/><path d="M8 40c30-6 60-10 96-10" stroke="#a5d6a7" stroke-width="3" fill="none"/></svg>
+  <svg class="leaf" style="left:40px;top:640px;transform:rotate(30deg)" width="80" height="52" viewBox="0 0 110 70" aria-hidden="true"><path d="M4 40C30 0 90 0 106 30 80 64 30 70 4 40z" fill="#66bb6a"/><path d="M8 40c30-6 60-10 96-10" stroke="#c8e6c9" stroke-width="3" fill="none"/></svg>
+  <svg class="leaf" style="left:560px;top:1260px;transform:rotate(-55deg)" width="100" height="64" viewBox="0 0 110 70" aria-hidden="true"><path d="M4 40C30 0 90 0 106 30 80 64 30 70 4 40z" fill="#388e3c"/><path d="M8 40c30-6 60-10 96-10" stroke="#a5d6a7" stroke-width="3" fill="none"/></svg>
+
+  <div class="abs phones">
+    <div class="pr"><span class="ic wa"><svg viewBox="0 0 24 24"><path fill="#fff" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.6-.1 1.1Z"/></svg></span><b>0506387636</b></div>
+    <div class="pr"><span class="ic"><svg viewBox="0 0 24 24"><path fill="#f2c96d" d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11 11 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11 11 0 0 0 .6 3.6 1 1 0 0 1-.25 1Z"/></svg></span><b>0242165783</b></div>
+  </div>
+  <div class="abs order">Order Now!</div>
+  <div class="abs web">Pay with MoMo · MTN &amp; Telecel</div>
+</body>
+</html>

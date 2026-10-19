@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BOOMiiS · Hello, October (dark)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Anton&display=swap" rel="stylesheet">
+<style>
+  /* 1080 x 1350 (Instagram portrait). Render at 2x for print. */
+  :root{--copper:#e0782f;--copper2:#f3a35a;--sand:#e9d6b4;--m:#a3304a;--g:#0f2e20}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1350px}
+  body{position:relative;overflow:hidden;background:#0b0907;color:#fff;font-family:"Plus Jakarta Sans",system-ui,sans-serif}
+  .abs{position:absolute}
+  .glow{inset:0;background:radial-gradient(55% 40% at 50% 38%,rgba(224,120,47,.22),transparent 70%),radial-gradient(70% 45% at 50% 85%,rgba(163,48,74,.18),transparent 70%)}
+  .grain{inset:0;opacity:.22;mix-blend-mode:overlay}
+  .swirl{right:-60px;top:-30px;filter:blur(2px)}
+
+  .badge{left:50%;top:52px;width:170px;height:170px;margin-left:-85px;border-radius:50%;border:3px solid var(--copper2);display:grid;place-items:center;background:#0b0907;box-shadow:0 0 0 8px rgba(224,120,47,.12)}
+  .badge img{width:126px;height:126px;border-radius:50%;background:#fff}
+  .hello{left:0;right:0;top:252px;text-align:center;font-weight:800;font-size:46px;letter-spacing:26px;padding-left:26px}
+
+  .month{left:0;right:0;top:300px;text-align:center;font-family:"Anton",sans-serif;font-size:330px;line-height:1;letter-spacing:-4px;
+    background:linear-gradient(180deg,#ffb871 0%,var(--copper) 45%,#9c4416 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 10px 30px rgba(224,120,47,.35))}
+  .month-tex{left:0;right:0;top:300px;text-align:center;font-family:"Anton",sans-serif;font-size:330px;line-height:1;letter-spacing:-4px;color:transparent;
+    background:repeating-linear-gradient(115deg,rgba(0,0,0,.09) 0 2px,transparent 2px 8px);-webkit-background-clip:text;background-clip:text;mix-blend-mode:multiply}
+
+  /* food: photo fades into the dark */
+  .food{left:-20px;top:520px;width:1120px;height:720px;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 30%,#000 72%,transparent 100%),linear-gradient(90deg,transparent 0,#000 18%,#000 82%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(180deg,transparent 0,#000 30%,#000 72%,transparent 100%),linear-gradient(90deg,transparent 0,#000 18%,#000 82%,transparent 100%);mask-composite:intersect}
+  .food img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;filter:contrast(1.12) saturate(1.15) brightness(.92)}
+  .shade{left:0;right:0;top:540px;height:160px;background:linear-gradient(180deg,#0b0907,transparent)}
+
+  .price{right:64px;top:760px;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f3a35a,var(--copper) 60%,#a84b18);display:grid;place-content:center;text-align:center;box-shadow:0 20px 40px rgba(0,0,0,.6),0 0 0 6px rgba(11,9,7,.85),0 0 0 9px rgba(243,163,90,.6);transform:rotate(-8deg)}
+  .price small{font-size:15px;font-weight:800;letter-spacing:1.5px;color:#2a0f04}
+  .price b{font-family:"Anton",sans-serif;font-weight:400;font-size:66px;line-height:1;color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.2)}
+  .price em{font-style:normal;font-size:15px;font-weight:800;color:#2a0f04}
+  .dish{left:64px;top:1072px;text-shadow:0 2px 10px rgba(0,0,0,.8);font-weight:800;font-size:28px;letter-spacing:.3px}
+  .dish span{display:block;font-size:18px;font-weight:600;color:var(--sand);margin-top:4px}
+
+  .bar{left:44px;right:44px;top:1170px;height:136px;border-radius:22px;border:2px solid rgba(224,120,47,.55);background:rgba(14,12,10,.9);display:grid;grid-template-columns:1fr 2px 1.15fr;align-items:center;padding:0 28px}
+  .bar i{height:96px;background:rgba(255,255,255,.35)}
+  .bar .c{display:grid;gap:8px}
+  .bar .c span{display:flex;align-items:center;gap:12px;font-size:20px;font-weight:700}
+  .bar svg{width:24px;height:24px;flex:none}
+  .bar .loc{display:flex;align-items:center;gap:16px;padding-left:26px}
+  .bar .loc svg{width:52px;height:52px}
+  .bar .loc p{font-size:22px;font-weight:700;line-height:1.35}
+  .bar .loc p small{display:block;font-size:16px;color:var(--sand);font-weight:600}
+</style>
+</head>
+<body>
+  <div class="abs glow"></div>
+  <svg class="abs swirl" width="280" height="460" viewBox="0 0 280 460" aria-hidden="true"><path d="M170 10c80 20 90 90 30 120s-120 50-40 110 110 100 40 200" stroke="#f28c28" stroke-width="44" fill="none" stroke-linecap="round" opacity=".85"/></svg>
+
+  <div class="abs badge"><img src="../assets/logo.png" alt="BOOMiiS Restaurant"></div>
+  <div class="abs hello">HELLO,</div>
+  <div class="abs month">OCTOBER</div>
+  <div class="abs month-tex" aria-hidden="true">OCTOBER</div>
+
+  <div class="abs food"><img src="yam-soup-hd.jpg" alt="Pounded yam with efo riro and assorted meats"></div>
+
+  <div class="abs price"><small>EFO RIRO</small><b>₵190</b><em>+ SWALLOW</em></div>
+  <div class="abs dish">Pounded Yam &amp; Efo Riro<span>Efo Riro GH₵190 · Egusi GH₵132 · Pounded Yam GH₵35 · Eba GH₵8</span></div>
+
+  <svg class="abs grain" width="1080" height="1350" aria-hidden="true"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="2"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+
+  <div class="abs bar">
+    <div class="c">
+      <span><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="#f3a35a" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="#f3a35a" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="#f3a35a"/></svg>@boomiisgh</span>
+      <span><svg viewBox="0 0 24 24"><path fill="#25d366" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.6-.1 1.1Z"/></svg>0506387636</span>
+      <span><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="3" fill="none" stroke="#f3a35a" stroke-width="2"/><path d="M3 7l9 6 9-6" fill="none" stroke="#f3a35a" stroke-width="2"/></svg>boomiisgh@gmail.com</span>
+    </div>
+    <i></i>
+    <div class="loc">
+      <svg viewBox="0 0 24 24"><path fill="#e0782f" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.6A2.6 2.6 0 1 1 12 6.4a2.6 2.6 0 0 1 0 5.2Z"/></svg>
+      <p>No. 47 Adjiringano Road,<br>East Legon, Accra<small>Dine in · Pickup · Delivery · Pay with MoMo</small></p>
+    </div>
+  </div>
+</body>
+</html>

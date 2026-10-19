@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BOOMiiS · Catfish Point &amp; Grill (dark style)</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Anton&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* 1080 x 1528 (A-ratio portrait). Style after the "Point & Grill" sample, BOOMiiS details. */
+  :root{--red:#e3171f;--yel:#ffd21a;--ink:#0d0806}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1528px}
+  body{position:relative;overflow:hidden;color:#fff;font-family:"Plus Jakarta Sans",system-ui,sans-serif;background:var(--ink)}
+  .abs{position:absolute}
+
+  /* top: blurred restaurant + wood table */
+  .room{left:-40px;top:-40px;width:1160px;height:620px;background:url(../assets/interior.jpg) center 40%/cover;filter:blur(14px) brightness(.85) saturate(1.2)}
+  .wood{left:0;right:0;top:420px;height:520px;background:repeating-linear-gradient(90deg,#8a5a30 0 150px,#7a4d27 150px 154px,#966437 154px 300px,#7a4d27 300px 304px);filter:saturate(.9)}
+  .wood::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),transparent 30%,rgba(0,0,0,.25))}
+
+  /* hero dish */
+  .hero{left:40px;top:250px;width:1000px;height:640px;border-radius:50%;overflow:hidden;
+    -webkit-mask-image:radial-gradient(closest-side,#000 82%,transparent 100%);mask-image:radial-gradient(closest-side,#000 82%,transparent 100%)}
+  .hero img{width:100%;height:100%;object-fit:cover;object-position:45% 55%;filter:saturate(1.15) contrast(1.06)}
+
+  /* brush banner */
+  .brush{left:30px;top:96px;width:1020px;height:250px}
+  .t1{left:0;right:0;top:120px;text-align:center;font-weight:800;font-size:76px;letter-spacing:-1px;text-shadow:0 4px 0 rgba(0,0,0,.25)}
+  .t2{left:0;right:0;top:206px;text-align:center;font-family:"Anton",sans-serif;font-size:96px;letter-spacing:2px;color:var(--yel);text-shadow:0 5px 0 #8a0b10}
+  .logo{left:50%;top:22px;width:92px;height:92px;margin-left:-46px;border-radius:50%;background:#fff;box-shadow:0 0 0 5px var(--yel),0 10px 24px rgba(0,0,0,.4)}
+
+  /* dark lower half */
+  .dark{left:0;right:0;top:860px;bottom:0;background:radial-gradient(40% 30% at 12% 70%,rgba(255,110,20,.45),transparent 70%),radial-gradient(30% 25% at 90% 40%,rgba(255,150,40,.25),transparent 70%),linear-gradient(180deg,#1a0d08,var(--ink))}
+  .curve{left:-100px;right:-100px;top:800px;height:200px;border-radius:50% 50% 0 0/100% 100% 0 0;background:#1a0d08;box-shadow:0 -10px 0 var(--red)}
+  .bokeh{left:20px;top:1180px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,140,40,.45),transparent 70%);filter:blur(20px)}
+
+  .circ{border-radius:50%;overflow:hidden;border:8px solid #fff;box-shadow:0 20px 40px rgba(0,0,0,.6)}
+  .circ img{width:100%;height:100%;object-fit:cover}
+  .c1{left:40px;top:810px;width:300px;height:300px}
+  .c1 img{object-position:50% 40%}
+  .c2{left:350px;top:760px;width:380px;height:380px;z-index:2}
+  .c2 img{object-position:72% 40%;transform:scale(1.9);transform-origin:72% 58%}
+  .c3{left:740px;top:810px;width:300px;height:300px}
+  .c3 img{object-position:0% 0%;transform:scale(2.4);transform-origin:6% 18%}
+
+  .price{left:820px;top:690px;width:200px;height:200px;border-radius:50%;background:var(--yel);color:var(--ink);display:grid;place-content:center;text-align:center;z-index:3;transform:rotate(10deg);box-shadow:0 0 0 8px var(--red),0 20px 40px rgba(0,0,0,.5)}
+  .price small{display:block;font-weight:800;font-size:17px;letter-spacing:2px}
+  .price b{display:block;font-family:"Anton",sans-serif;font-weight:400;font-size:62px;line-height:1}
+  .price em{display:block;font-style:normal;font-weight:800;font-size:14px}
+
+  .meal{left:0;right:0;top:1150px;text-align:center}
+  .meal h3{font-family:"Anton",sans-serif;font-weight:400;font-size:46px;letter-spacing:1px;text-transform:uppercase}
+  .meal h3 span{color:var(--yel)}
+  .meal p{margin-top:6px;font-size:22px;font-weight:600;color:rgba(255,255,255,.85)}
+
+  .info{left:190px;top:1296px;display:grid;gap:14px;font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:23px;letter-spacing:.5px;text-transform:uppercase}
+  .info div{display:flex;align-items:center;gap:16px}
+  .info svg{width:30px;height:30px;flex:none}
+  .info .low{text-transform:none;font-family:"Plus Jakarta Sans",sans-serif;font-weight:600;font-size:23px}
+
+  .btns{left:160px;top:1414px;width:760px;height:84px;display:grid;grid-template-columns:1fr 1fr;box-shadow:0 14px 30px rgba(0,0,0,.5)}
+  .btns div{display:flex;align-items:center;justify-content:center;gap:14px;font-family:"Anton",sans-serif;font-weight:400;font-size:34px;letter-spacing:1px}
+  .btns .w{background:var(--red)}
+  .btns .c{background:var(--yel);color:var(--ink)}
+  .btns svg{width:42px;height:42px}
+</style>
+</head>
+<body>
+  <div class="abs room"></div>
+  <div class="abs wood"></div>
+  <div class="abs hero"><img src="catfish-grilled.jpg" alt="Open grilled catfish"></div>
+
+  <svg class="abs brush" viewBox="0 0 1020 250" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="#e3171f" d="M30 40c120-20 300-10 480-18 170-8 340-4 480 6l-10 22 26 14-24 18 14 20-22 16 18 24-26 14 16 26-20 18 14 22-30 10 6 24c-150 10-320 6-500 10-170 4-330 0-470-8l14-20-28-14 22-18-16-22 24-16-20-22 26-14-18-24 22-18-12-22 22-16z"/>
+    <path fill="#b80f16" opacity=".55" d="M60 210c200-10 420 0 620-6 120-4 230 2 300 8l-6 12c-150 8-330 4-500 8-170 4-300 0-420-6z"/>
+  </svg>
+  <img class="abs logo" src="../assets/logo.png" alt="">
+  <div class="abs t1">BOOMiiS Catfish</div>
+  <div class="abs t2">OPEN GRILL &amp; BOLI</div>
+
+  <div class="abs curve"></div>
+  <div class="abs dark"></div>
+  <div class="abs bokeh"></div>
+
+  <div class="abs circ c1"><img src="grill-fire.jpg" alt="Fish grilling over open fire"></div>
+  <div class="abs circ c2"><img src="catfish-grilled.jpg" alt="Close-up of grilled catfish"></div>
+  <div class="abs circ c3"><img src="catfish-grilled.jpg" alt="Pepper sauce and salad"></div>
+  <div class="abs price"><small>MEAL OF THE DAY</small><b>GH₵199</b><em>+ soft drink</em></div>
+
+  <div class="abs meal">
+    <h3>Open grilled catfish <span>+ Boli</span> + soft drink</h3>
+    <p>No tin-foil. Grilled over open fire, served with roasted plantain and a drink of your choice.</p>
+  </div>
+
+  <div class="abs info">
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>47 Adjiringano Road, East Legon, Accra</div>
+    <div class="low"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>boomiisgh@gmail.com &nbsp;·&nbsp; boomiisgh.com</div>
+  </div>
+
+  <div class="abs btns">
+    <div class="w"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#fff"/><path fill="#e3171f" d="M12 4.5a7.5 7.5 0 0 0-6.4 11.4L4.7 19.3l3.5-.9A7.5 7.5 0 1 0 12 4.5zm3.9 10.2c-.2.5-1 .9-1.4.9-.4.1-.8.1-2.5-.5-2.1-.8-3.4-3-3.5-3.1-.1-.2-.8-1.1-.8-2.1s.5-1.5.7-1.7c.2-.2.4-.2.5-.2h.4c.1 0 .3 0 .4.4l.6 1.5c.1.1.1.3 0 .4l-.2.4-.3.3c-.1.1-.2.2-.1.4.2.3.6 1 1.3 1.6.9.8 1.6 1 1.8 1.1.2.1.4.1.5-.1l.7-.8c.1-.2.3-.2.5-.1l1.4.7c.2.1.4.2.4.3.1.1.1.5-.1.9z"/></svg>+233 50 638 7636</div>
+    <div class="c"><svg viewBox="0 0 24 24" fill="none" stroke="#0d0806" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>027 290 0911</div>
+  </div>
+</body>
+</html>
